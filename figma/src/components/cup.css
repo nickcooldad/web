@@ -1,0 +1,27 @@
+*{
+  box-sizing: border-box;
+}
+
+.cupIsWreath{
+  height: auto;
+  width: auto;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-content: center;
+}
+.cup{
+  width: auto;
+  height: auto;
+  position: relative;
+  top: 2px;
+}
+
+.leftWreath{
+  width: auto;
+  height: auto;
+}
+.rightWreath{
+  width: auto;
+  height: auto;
+}
