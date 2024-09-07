@@ -1,0 +1,57 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.topBlock {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttonLeft, .buttonRight {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    background-color: rgba(99, 99, 95, 0.822);
+}
+
+.imgButtonLeft, .imgButtonRight{
+    width: 15px;
+    height: 40px;
+}
+
+.imgButtonLeft{
+   transform: rotate(180deg);
+}
+
+.mothYear{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 500px;
+    height: 60px;
+    font-size: 65px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+}
+
+.tableAttedance{
+    margin-top: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+    font-weight: bold;
+    gap: 10px;
+}

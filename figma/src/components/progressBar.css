@@ -1,0 +1,106 @@
+*{
+  box-sizing: border-box;
+}
+body{
+  width: 900;
+  display: flex;
+  justify-content: center;
+  align-content: center;  
+
+}
+.rating{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;  
+  height: 102.57px;
+  width: 903.02px;
+}
+.topBlock{
+  height: auto;
+  width: 900px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 130px
+}
+
+.restangle{
+  margin-top: 5px;
+  width: 900px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: #e0e0e0;
+
+}
+
+
+.lines{
+  width: 900px;
+  height: 40px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 130px
+}
+
+.line5 {
+  width: 1px;
+  height: 40px;
+  background-color: 'rgba(0, 0, 0, 0)';
+}
+
+.line {
+  width:1px;
+  height: 40px;
+  background-color: rgb(151, 147, 147);
+}
+
+.cupLine{
+  width: 48px;
+  display: flex;
+  justify-content: center;
+}
+
+.lineStar{
+  width: 18px;
+  display: flex;
+  justify-content: center;
+}
+
+.lineBigStar{
+  width: 25px;
+  display: flex;
+  justify-content: center;
+}
+
+.bottomBlockNumber{
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 90px;
+  color: rgb(151, 147, 147);
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 14px;
+}
+
+.bottomBlock{
+  display: flex;
+  gap: 130px;
+}
+
+.numberBigStar {
+  width: 25px;
+  display: flex;
+  justify-content: center;
+}
+
+.numberStar{
+  width: 18px;
+  display: flex;
+  justify-content: center;
+}
+.numberCup {
+  width: 48px;
+  display: flex;
+  justify-content: center;
+}
