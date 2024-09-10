@@ -11,7 +11,15 @@ body{
     width: 1000px;
     height: 102px;
 }
+.progressBar:first-child .centerBlock{
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+}
 
+.progressBar:last-child .centerBlock{
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
 .topBlock{
     height: 20px;
     margin-bottom: 10px;
@@ -21,11 +29,15 @@ body{
 }
 
 .centerBlock{
-
+    display: flex;
     height: 40px;
-    /* border-radius: 10px; */
+    border-radius: 10px;
     background-color: rgb(233, 233, 233);
+    border-right: 2px solid #c4bebe;
+    position: relative;
 }
+
+
 .bottomBlock{
     margin-top: 10px;
     display: flex;
