@@ -1,18 +1,9 @@
 import {ProgressBar} from './components/progressBar.jsx'
 import './App.css';
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 
 function App() {
   const [data, setData] = useState({arrayInput:[], value:0})
-
-   const hundleInputArrayChange = (event) => {
-   const array = event.target.value.split(',').map(item => item.trim())
-    setData(prev => ({
-      ...prev,
-      arrayInput: array
-    }))
-  }
-
   const hundleInputValueChange = (event) => {
   setData(prev => ({
   ...prev,
@@ -20,13 +11,11 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="App" style={{ width: 600 }}>
+      <input className='inputValue' placeholder='Введите значение' value={data.value} onChange={hundleInputValueChange}></input>
      <ProgressBar 
-     thresholds={data.arrayInput} 
+     thresholds={[10, 30, 60, 100, 200, 1000]} 
      value={data.value} 
-     hundleInputArrayChange={hundleInputArrayChange} 
-     hundleInputValueChange={hundleInputValueChange}
-     width={100 / data.arrayInput.length}
      />
     </div>  
   );

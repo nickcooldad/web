@@ -8,9 +8,45 @@ body{
 }
 .parentBar{
     display: flex;
-    width: 100vh;
     height: 102px;
+    padding-top: 30px;
+    position: relative;
 }
+
+.progressBar {
+    flex-grow: 1;
+    position: relative;
+    flex-basis: 0;
+    /* z-index: 1; */
+}
+
+.progressBar::before {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 25px;
+    top: -31px;
+    right: -9px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url(./images/emptyStar.svg);
+}
+
+.progressBar:last-child::before {
+    background-image: url(./images/emptyCup.svg);
+    width: 48px;
+    right: 0;
+}
+
+.colored::before {
+    background-image: url(./images/starFullBlue.svg);
+}
+
+.colored:last-child::before {
+    background-image: url(./images/cupFullBlue.svg);
+}
+
 .progressBar:first-child .centerBlock{
     border-top-left-radius: 25px;
     border-bottom-left-radius: 25px;
@@ -19,21 +55,13 @@ body{
 .progressBar:last-child .centerBlock{
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
+    border-right: none;
 }
 
-.topBlock{
-    width: 100%;
-    height: 20px;
-    margin-bottom: 10px;
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
-}
 
 .centerBlock{
     display: flex;
     height: 40px;
-    background-color: rgb(233, 233, 233);
     border-right: 2px solid #c4bebe;
     position: relative;
  
@@ -41,30 +69,16 @@ body{
 
 
 .bottomBlock{
-    width: 100%;
-    margin-top: 10px;
-    display: flex;
-    justify-content: space-between;
+    position: absolute;
+    bottom: 10px;
+    right: 0;
     font-size: 14px;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     color: #cac7c7;
-
+    background: yellow;
 }
 
-.bottomBlockNumber{
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.bottomBlockNull{
-    width: 15%;
-}
-.inputArray{
-    width: 450px;
-    display: flex;
-    justify-content: center;
-  
+.progressBar:not(:last-child) .bottomBlock {
+    transform: translateX(50%);
 }
 
 .inputValue{
@@ -74,4 +88,32 @@ body{
     margin-bottom: 15px;
     align-items: center;
     flex-direction: column;
+}
+
+.parentBar::before{
+    content: "0";
+    position: absolute;
+    left:4px;
+    bottom: 4px;
+    font-size: 14px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: #cac7c7;
+}
+
+.progressBarBackground {
+    position: absolute;
+    /* top: 100; */
+    left: 0;
+    right: 0;
+    height: 40px;
+    background-color: rgb(233, 233, 233);
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+.progressBarFill {
+    height: 100%;
+    background: rgb(70, 27, 242);
+    transition: width 0.5s ease-in-out;
+    position: relative;
 }
