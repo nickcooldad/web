@@ -74,7 +74,6 @@ body{
     right: 0;
     font-size: 14px;
     color: #cac7c7;
-    background: yellow;
 }
 
 .progressBar:not(:last-child) .bottomBlock {
@@ -94,7 +93,7 @@ body{
     content: "0";
     position: absolute;
     left:4px;
-    bottom: 4px;
+    bottom: 10px;
     font-size: 14px;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     color: #cac7c7;
