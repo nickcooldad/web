@@ -1,0 +1,31 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inputs {
+    display: flex;
+    flex-wrap: wrap;
+    position: absolute;
+}
+
+
+.rangeInput, .inputValue{
+    width: 100%;
+}
+
+
+.inputValue{
+    position: relative;
+    height: 30px;
+}
+
+.rangeInput{
+    position: relative;
+    bottom: 10px;
+}

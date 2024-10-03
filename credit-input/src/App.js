@@ -1,10 +1,8 @@
 import './App.css';
-
+import {InitialPayment} from './components/initialPayment.jsx'
 function App() {
   return (
-    <div className="App">
-    <input type='range' />
-    </div>
+    <InitialPayment/>
   );
 }
 
