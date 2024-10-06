@@ -6,26 +6,67 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
 }
 
 .inputs {
     display: flex;
     flex-wrap: wrap;
-    position: absolute;
-}
-
-
-.rangeInput, .inputValue{
-    width: 100%;
+    justify-content: center;
+    position: relative;
 }
 
 
 .inputValue{
-    position: relative;
+    width: 100%;
     height: 30px;
+    border: 2px solid #b8b6b6;
+    outline: none;
+    border-radius: 3px;
+   
 }
 
 .rangeInput{
+    bottom: 5px;
     position: relative;
-    bottom: 10px;
+    width: 90%;
+    height: 4px;
+}
+
+
+.placeholderInput{
+    position: absolute;
+    right: 1%;
+    top: 2px
+}
+
+.name{
+    display: flex;
+    justify-content: flex-start;
+    font-size: 14px;
+    font-weight: normal;
+    margin-top: 10px;
+}
+
+.buttons{
+    width: 80%;
+    display: flex;
+    justify-content: flex-start;
+    gap: 5px;
+}
+
+.button{
+    height: 15px;
+    border: 0 solid #b8b6b6;
+    border-radius: 8px;
+    font-size: 8px;
+    flex: 1;
+    color:#888585;
+    font-weight: bold;
+}
+
+.buttonActive{
+    background-color: rgb(3, 87, 212);
+    color: rgb(123, 123, 243);
 }
