@@ -1,3 +1,3 @@
 export const banksConditions = {
-    12
+    12:0
 }
