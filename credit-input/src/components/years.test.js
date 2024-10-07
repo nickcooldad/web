@@ -1,4 +1,4 @@
-import { definitionOnYear } from "./buttonsArrayCreate/definitionOnYear"
+import { definitionOnYear } from "./definitionOnYear/definitionOnYear"
 
 describe('проверка написания количества лет в зависимости от года', () => {
     test('1 год', () => { 

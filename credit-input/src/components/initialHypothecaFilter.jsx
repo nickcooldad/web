@@ -1,8 +1,8 @@
 import React from 'react'
-import './initialPayment.css'
+import './initialHypothecaFilter.css'
 import cn from 'classnames'
 
-export function InitialPayment({title, min, max, value, suggestedValues, onValueChange, unit}) {
+export function InitialHypothecaFilter({title, min, max, value, suggestedValues, onValueChange, unit}) {
 
   function hudnleChangeValue (event){
     onValueChange(Number(event.target.value))
