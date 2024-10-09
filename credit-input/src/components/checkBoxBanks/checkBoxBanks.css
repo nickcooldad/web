@@ -1,37 +1,44 @@
-*{
+* {
     box-sizing: border-box;
 }
 
-.table{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-.title{
+.title {
     font-size: 14px;
     color: rgb(2, 2, 68);
 }
-.checkbox-custom{
+
+.checkbox-label {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    margin-bottom: 10px;
+    padding: 6px;
+    border-radius: 40px;
+    transition: background-color 0.3s;
+    position: relative;
+    background-color: transparent;
+}
+
+.checkbox-custom {
     display: none;
 }
 
-.checkbox-custom + label{
-    display: inline-block;
-    padding-left: 30px;
-    position: relative;
-    cursor:pointer
+.bank-image {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
 }
 
-.checkbox-custom + label::before{
-    content: '';
-    position: absolute;
-    width: 24px;
-    height: 24px;
-    left: 0;
-    top: 0;
-    background-image: url("./../../../public/images/vtb.svg");
-    background-size: contain;
-    background-repeat: no-repeat;
-}   
+.text {
+    font-size: 14px;
+    color: rgb(2, 2, 68);
+}
 
-.checkbox-custom:checked + label::before{
-    background-image: url("./../../../public/images/vtb.svg");
+.checkbox-custom:checked ~ .text {
+    font-weight: bold;
+}
+
+.checkbox-label-color {
+    background-color: #f0f0f0; /* Серый фон */
 }

@@ -1,6 +1,13 @@
 import cn from 'classnames'
 import './checkBoxBanks.css'
-
+import {namesBanks} from './namesBanks'
+import Райффайзенбанк from './images/Райффайзенбанк.svg'
+import ВТБ from './images/ВТБ.svg'
+import Открытие from './images/Открытие.svg'
+import ПСБ from './images/ПСБ.svg'
+import Росбанк from './images/Росбанк.svg'
+import Газпромбанк from './images/Газпромбанк.svg'
+import СовкомБанк from './images/СовкомБанк.svg'
 export function CheckBoxBanks({options, onValueChange}){
 
   function hudnleChangeValue (event){
@@ -9,110 +16,45 @@ export function CheckBoxBanks({options, onValueChange}){
       [name]:checked
     }))
   }
-
-  function hundleSubmit(event){
-    event.preventDefault()
+  const bankImages = {
+    ВТБ,
+    СовкомБанк,
+    Росбанк,
+    Газпромбанк,
+    Открытие,
+    ПСБ,
+    Райффайзенбанк
   }
-
-  return <form onSubmit={hundleSubmit}
-    className='table'>
+  return (
+    <>
     <h1 className='title'>Банк</h1>
-    <label>
-      <input
-      type="checkBox"
-      name="vtb"
-      checked={options.vtb}
-      onChange={hudnleChangeValue}
-      className={cn({
-        'checkbox-custom':true
-      })}
-      />
-      ВТБ
-    </label>
-    <br/>
-
-    <label>
-      <input
-      type="checkBox"
-      name="sovcombank"
-      checked={options.sovcombank}
-      onChange={hudnleChangeValue}
-      className={cn({
-        'checkbox-custom':true
-      })}
-      />
-      СовкомБанк
-    </label>
-    <br/>
-
-    <label>
-      <input
-      type="checkBox"
-      name="rosbank"
-      checked={options.rosbank}
-      onChange={hudnleChangeValue}
-      className={cn({
-        'checkbox-custom':true
-      })}
-      />
-      Росбанк
-    </label>
-    <br/>
-
-    <label>
-      <input
-      type="checkBox"
-      name="gazprombank"
-      checked={options.gazprombank}
-      onChange={hudnleChangeValue}
-      className={cn({
-        'checkbox-custom':true
-      })}
-      />
-      Газпромбанк
-    </label>
-    <br/>
-
-    <label>
-      <input
-      type="checkBox"
-      name="otkritie"
-      checked={options.otkritie}
-      onChange={hudnleChangeValue}
-      className={cn({
-        'checkbox-custom':true
-      })}
-      />
-      Открытие
-    </label>
-    <br/>
-
-    <label>
-      <input
-      type="checkBox"
-      name="psb"
-      checked={options.psb}
-      onChange={hudnleChangeValue}
-      className={cn({
-        'checkbox-custom':true
-      })}
-      />
-      ПСБ
-    </label>
-    <br/>
-
-    <label>
-      <input
-      type="checkBox"
-      name="raifaizen"
-      checked={options.raifaizen}
-      onChange={hudnleChangeValue}
-      className={cn({
-        'checkbox-custom':true
-      })}s
-      />
-      Райффайзенбанк
-    </label>
-    <br/>
-    </form>
+    <div>
+      {
+        Object.keys(namesBanks).map((bank, index) => {
+          console.log(options)
+          return (
+            <div>
+            <label
+              key={index}
+              className={cn('checkbox-label', {
+                'checkbox-label-color': options[bank]
+              })}
+            >
+              <input
+                type="checkbox"
+                name={`${bank}`}
+                checked={options[bank]}
+                onChange={hudnleChangeValue}
+                className='checkbox-custom'
+              />
+              <img src={bankImages[bank]} alt={bank} className='bank-image' />
+              <span className='text'>{bank}</span>
+            </label>
+            </div>
+          )
+        })
+      }
+    </div>
+  </>
+  )
 }
