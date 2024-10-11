@@ -1,4 +1,4 @@
-import { definitionOnYear } from "./definitionOnYear/definitionOnYear"
+import { definitionOnYear } from "./definitionOnYear"
 
 describe('проверка написания количества лет в зависимости от года', () => {
     test('1 год', () => { 

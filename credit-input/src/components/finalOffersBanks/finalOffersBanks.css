@@ -1,0 +1,60 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    font-size: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.table{
+    border-radius: 5px;
+    margin-top: 10px;
+    box-shadow: 0 0 10px rgba(146, 145, 145, 0.5);
+
+}
+
+.nameBank::before, .nameBank::after {
+    content: '';
+}
+
+.bank{
+    font-weight: bold;
+    width: 240px;
+}
+
+.bank-images{
+    position: relative;
+    top: 10px
+}
+.nameBank{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.typeObject{
+    position: relative;
+    bottom: 5px;
+    left: 13px;
+}
+
+.characteristicsNames {
+    color: rgb(43, 219, 36);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    
+}
+
+.characteristicsValues {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-weight: bold;
+}
+
+.rate, .minInitialPayment, .maxAmount{
+    color: #7e7979;
+    font-style: oblique;
+}

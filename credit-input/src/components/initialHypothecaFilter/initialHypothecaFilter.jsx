@@ -9,7 +9,7 @@ export function InitialHypothecaFilter({title, min, max, value, suggestedValues,
   }
   return (
     <>
-    <h1 className='name'>{title}</h1>
+    <h1 className='tableOfContents'>{title}</h1>
     <div className='inputs'>  
         <input className='inputValue' value={value} onChange={hudnleChangeValue} />
         <span className='placeholderInput'>{unit(value)}</span>

@@ -42,7 +42,7 @@ body{
     top: 2px
 }
 
-.name{
+.tableOfContents{
     display: flex;
     justify-content: flex-start;
     font-size: 14px;

@@ -31,7 +31,6 @@ export function CheckBoxBanks({options, onValueChange}){
     <div>
       {
         Object.keys(namesBanks).map((bank, index) => {
-          console.log(options)
           return (
             <div>
             <label
