@@ -36,7 +36,7 @@ return(
                     </div>
 
                     <div className='characteristicsValues'>
-                        <span>{offer.rate}</span>
+                        <span>{`${offer.rate} %`}</span>
                         <span>{`${offer.maxAmount} млн ₽`}</span>
                         <span>{`${offer.minInitialPayment} %`}</span>
                     </div>

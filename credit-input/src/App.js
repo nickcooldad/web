@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './App.css';
+import { banksInd } from './components/checkBoxBanks/namesBanks.js';
 import {InitialHypothecaFilter} from './components/initialHypothecaFilter/initialHypothecaFilter.jsx'
 import { definitionOnYear } from './components/definitionOnYear/definitionOnYear.js';
 import { namesBanks } from './components/checkBoxBanks/namesBanks.js';
@@ -13,10 +14,12 @@ import { FinalOffersBanks } from './components/finalOffersBanks/finalOffersBnaks
 function App() {
   const [downPayment, setDownPayment] = useState(0)
   const [term, setTerm] = useState(0);
-  const [banks, setBanks] = useState(namesBanks)
+  const [banks, setBanks] = useState(new Set())
   const [typeObject, setTypeObject] = useState('Все')
   const [typeDwelling, setTypeDweling] = useState('Дом')
 
+  
+const banksList = [...new Set(response.offers.list.values().map(offer => offer.bankId))]
   return (<>
     <InitialHypothecaFilter
       title={'Срок кредита'}
@@ -39,6 +42,7 @@ function App() {
     />
 
     <CheckBoxBanks
+    banksList={banksList}
     options={banks}
     onValueChange={setBanks}/>
 

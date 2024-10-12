@@ -2,52 +2,45 @@ import cn from 'classnames'
 import './checkBoxBanks.css'
 import {namesBanks} from './namesBanks'
 import Райффайзенбанк from './images/Райффайзенбанк.svg'
-import ВТБ from './images/ВТБ.svg'
-import Открытие from './images/Открытие.svg'
-import ПСБ from './images/ПСБ.svg'
-import Росбанк from './images/Росбанк.svg'
-import Газпромбанк from './images/Газпромбанк.svg'
-import СовкомБанк from './images/СовкомБанк.svg'
-export function CheckBoxBanks({options, onValueChange}){
+import { banksImages } from './namesBanks'
 
-  function hudnleChangeValue (event){
-    const {name, checked} = event.target
-    onValueChange((prev) => ({...prev,
-      [name]:checked
-    }))
+console.log(">>>", Райффайзенбанк);
+
+export function CheckBoxBanks({banksList, options, onValueChange}){
+
+function hundleChangeValue (event) {
+  const value = event.target.name
+  const data = new Set(options)
+  if(options.has(value)){
+    data.delete(value)
+  } else{
+    data.add(value)
   }
-  const bankImages = {
-    ВТБ,
-    СовкомБанк,
-    Росбанк,
-    Газпромбанк,
-    Открытие,
-    ПСБ,
-    Райффайзенбанк
-  }
+  onValueChange(data);
+}
   return (
     <>
     <h1 className='title'>Банк</h1>
     <div>
       {
-        Object.keys(namesBanks).map((bank, index) => {
+        banksList.map((bank, index) => {
           return (
             <div>
             <label
               key={index}
               className={cn('checkbox-label', {
-                'checkbox-label-color': options[bank]
+                'checkbox-label-color': options.has(bank)
               })}
             >
               <input
                 type="checkbox"
-                name={`${bank}`}
-                checked={options[bank]}
-                onChange={hudnleChangeValue}
+                name={bank}
+                checked={options.has(bank)}
+                onChange={hundleChangeValue}
                 className='checkbox-custom'
               />
-              <img src={bankImages[bank]} alt={bank} className='bank-image' />
-              <span className='text'>{bank}</span>
+              <img src={banksImages[bank]} alt={bank} className='bank-image' />
+              <span className='text'>{namesBanks[bank]}</span>
             </label>
             </div>
           )

@@ -5,7 +5,7 @@ export function CheckProduct({title, value, suggestedValues, onValueChangeProduc
     function hundleProductChange(event){
         onValueChangeProduct(event.target.value)
     }
-
+     
     return (
         <>
         <h1 className='tableOfContents'>{title}</h1>
