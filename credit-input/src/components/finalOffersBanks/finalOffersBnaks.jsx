@@ -1,52 +1,37 @@
-import { namesBanks } from '../checkBoxBanks/namesBanks'
-import Райффайзенбанк from './../checkBoxBanks/images/Райффайзенбанк.svg'
-import ВТБ from './../checkBoxBanks/images/ВТБ.svg'
-import Открытие from './../checkBoxBanks/images/Открытие.svg'
-import ПСБ from './../checkBoxBanks/images/ПСБ.svg'
-import Росбанк from './../checkBoxBanks/images/Росбанк.svg'
-import Газпромбанк from './../checkBoxBanks/images/Газпромбанк.svg'
-import СовкомБанк from './../checkBoxBanks/images/СовкомБанк.svg'
-import './finalOffersBanks.css'
-export function FinalOffersBanks({offers}){
-const bankImages = {
-    Райффайзенбанк,
-    ВТБ,
-    Открытие,
-    ПСБ,
-    Росбанк,
-    Газпромбанк,
-    СовкомБанк
+import { Offer } from "./offer"
+import { filterConditionsResponse } from "../filterConditionsResponse/filterConditionsResponse"
+export function FinalOffersBanks({response,term,downPayment, object, dwelling, banks}){
+
+const getBankInformation = (response) =>{
+   return response.offers.list.map(offer => {
+        return {
+            bank: offer.bankId,
+            maxInitialPayment : offer.maxInitialPayment*100,
+            minInitialPayment : parseFloat((offer.minInitialPayment*100).toFixed(1)),
+            minTerm : offer.minTerm/12,
+            maxTerm : offer.maxTerm/12,
+            typeObject : offer.product,
+            typeDwelling : getTypeDwelling(offer.requirements),
+            maxAmount : (offer.maxAmount/1000000).toFixed(1),
+            rate : parseFloat((offer.rate*100).toFixed(1))
+          
+        }
+    })
 }
+
+function getTypeDwelling(data){
+    for(const item of data){
+        if(item.key === 'PROPERTY_TYPE'){
+            return item.value
+        }
+    }
+}
+
+const data = getBankInformation(response)
+
 return(
     <>
-        <div>{
-            offers.map(offer => {
-                return (
-                <div className='table'>
-                    <div className='nameBank'>
-                    <span className="bank">{offer.bank}</span>
-                    <img src={bankImages[offer.bank]} alt={offer.bank} className='bank-images' />
-                    </div>
-                    <span className='typeObject'>{offer.typeObject}</span>
-
-                    <div className='characteristicsNames'>
-                        <span className='rate'>Ставка</span>
-                        <span className='maxAmount'>Макс.кредит</span>
-                        <span className='minInitialPayment'>Взнос от</span> 
-                    </div>
-
-                    <div className='characteristicsValues'>
-                        <span>{`${offer.rate} %`}</span>
-                        <span>{`${offer.maxAmount} млн ₽`}</span>
-                        <span>{`${offer.minInitialPayment} %`}</span>
-                    </div>
-                    <br/>
-                </div>
-          
-                )
-            })
-        }
-        </div>
-    </>
-    )
-}
+        <Offer banks={filterConditionsResponse(data, banks, term, downPayment, object, dwelling)}/>
+    </>)
+    
+} 

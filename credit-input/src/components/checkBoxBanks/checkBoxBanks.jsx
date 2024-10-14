@@ -1,10 +1,8 @@
 import cn from 'classnames'
 import './checkBoxBanks.css'
 import {namesBanks} from './namesBanks'
-import Райффайзенбанк from './images/Райффайзенбанк.svg'
 import { banksImages } from './namesBanks'
 
-console.log(">>>", Райффайзенбанк);
 
 export function CheckBoxBanks({banksList, options, onValueChange}){
 

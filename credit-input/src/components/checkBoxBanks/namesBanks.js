@@ -42,4 +42,16 @@ export const banksImages = {
     'bank-raif' : Райффайзенбанк,
 }
 
+export const typeNameObject = {
+    'ALL' : 'Все',
+    'USED' : 'Вторичка',
+    'NEW' : 'Новостройка',
+    'BUILD' : 'Дом не сдан',
+    'FLAT' : 'Квартира',
+    'APARTMENTS' : 'Апартаменты',
+    'TOWNHOUSE' : 'Дом',
+    'COTTAGE': 'Коттедж',
+    'ROOM' : 'Комната'
+}
+
 

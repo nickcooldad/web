@@ -1,6 +1,6 @@
 import './checkProduct.css'
-
-export function CheckProduct({title, value, suggestedValues, onValueChangeProduct}){
+import { typeNameObject } from '../checkBoxBanks/namesBanks'
+export function CheckProduct({title, value, listFilter, onValueChangeProduct}){
 
     function hundleProductChange(event){
         onValueChangeProduct(event.target.value)
@@ -10,7 +10,7 @@ export function CheckProduct({title, value, suggestedValues, onValueChangeProduc
         <>
         <h1 className='tableOfContents'>{title}</h1>
         <div>{
-            suggestedValues.map(product => {
+            listFilter.map(product => {
                 return (
                     <div className='radio-custom'>
                         <label className='radio-button-label'>
@@ -23,7 +23,7 @@ export function CheckProduct({title, value, suggestedValues, onValueChangeProduc
                              >
                              </input>
                              <span className='radio-button-custom'></span>
-                             <span>{product}</span>
+                             <span>{typeNameObject[product]}</span>
                         </label>
                     </div>
                 )
