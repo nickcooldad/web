@@ -5,7 +5,10 @@ import { definitionOnYear } from './components/definitionOnYear/definitionOnYear
 import { CheckBoxBanks } from './components/checkBoxBanks/checkBoxBanks.jsx';
 import { CheckProduct } from './components/checkProduct/checkProduct.jsx';
 import { response } from './components/response/response.js';
-import { FinalOffersBanks } from './components/finalOffersBanks/finalOffersBnaks.jsx';
+// import { FinalOffersBanks } from './components/finalOffersBanks/finalOffersBnaks.jsx';
+import { nameObject, nameType } from './components/checkBoxBanks/namesBanks.js';
+import { VisualOffer } from './components/finalOffersBanks/visualOffer.jsx';
+import { filterConditionsResponse } from './components/filterConditionsResponse/filterConditionsResponse.js';
 
 function App() {
   const [downPayment, setDownPayment] = useState(0)
@@ -25,7 +28,16 @@ function App() {
 // }))]
 
 const banksList = [...new Set(response.offers.list.values().map(offer => offer.bankId))]
+const responseFilter = filterConditionsResponse(
+  response.offers.list,
+  {downPayment, 
+  term, 
+  banks, 
+  object, 
+  dwelling}
+);
 
+console.log(responseFilter);
   return (<>
     <InitialHypothecaFilter
       title={'Срок кредита'}
@@ -57,23 +69,28 @@ const banksList = [...new Set(response.offers.list.values().map(offer => offer.b
     listFilter={['ALL', 'USED', 'NEW']}
     value={object}
     onValueChangeProduct={setObject}
+    nameType={nameObject}
     />
-
+ 
     <CheckProduct
     title={'Тип объекта'}
     listFilter={['FLAT', 'APARTMENTS', 'TOWNHOUSE']}
     value={dwelling}
     onValueChangeProduct={setDweling}
+    nameType={nameType}
     />
 
-    <FinalOffersBanks
+    {/* <FinalOffersBanks
     response={response}
     term={term}
     downPayment={downPayment}
     object={object}
     dwelling={dwelling}
     banks={banks}
-    />
+    /> */}
+
+    {responseFilter.map(offer => <VisualOffer key={offer.offerId} offer={offer} />)}
+    
   </>)
 }
 

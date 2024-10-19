@@ -6,7 +6,7 @@ import { banksImages } from './namesBanks'
 
 export function CheckBoxBanks({banksList, options, onValueChange}){
 
-function hundleChangeValue (event) {
+function handleChangeValue (event) {
   const value = event.target.name
   const data = new Set(options)
   if(options.has(value)){
@@ -34,7 +34,7 @@ function hundleChangeValue (event) {
                 type="checkbox"
                 name={bank}
                 checked={options.has(bank)}
-                onChange={hundleChangeValue}
+                onChange={handleChangeValue}
                 className='checkbox-custom'
               />
               <img src={banksImages[bank]} alt={bank} className='bank-image' />

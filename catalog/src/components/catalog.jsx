@@ -1,23 +1,22 @@
 import { ParentList } from './parentList';
 import x from './categories.json'
+import { useState } from 'react';
 
-console.log(x);
+//console.log(x);
 
 export function Catalog(){
-  return(
+  const parentIdArray = x.filter(item => item.parentId === undefined)
+  //new Set(parentIdArray.map(item => item.id))
+  const [parentId, setParentId] = useState(new Set())
+  
+  return( 
     <div>
-      <ParentList data={x.filter(item => item.parentId === undefined)}/>
+      <ParentList 
+      data={parentIdArray}
+      parentId={parentId}
+      onAddParent={setParentId}
+      />
     </div>
   )
-   // console.log(searchParentItem(responseParent))
-
-    // const renderCategory = (category) => {
-    //   const children = x.filter(item => item.parentId === category.id)
-    //   return <div> 
-    //          <div>{category.name}</div>
-    //          <div>{
-    //           children.length > 0 ?? children.map(child => renderCategory(child))
-    //           }</div>
-    //        </div>
-    // }
-  }
+  } 
+  

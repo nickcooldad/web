@@ -1,6 +1,6 @@
 import './checkProduct.css'
 import { typeNameObject } from '../checkBoxBanks/namesBanks'
-export function CheckProduct({title, value, listFilter, onValueChangeProduct}){
+export function CheckProduct({title, value, listFilter, onValueChangeProduct, nameType}){
 
     function hundleProductChange(event){
         onValueChangeProduct(event.target.value)
@@ -23,7 +23,7 @@ export function CheckProduct({title, value, listFilter, onValueChangeProduct}){
                              >
                              </input>
                              <span className='radio-button-custom'></span>
-                             <span>{typeNameObject[product]}</span>
+                             <span>{nameType[product]}</span>
                         </label>
                     </div>
                 )

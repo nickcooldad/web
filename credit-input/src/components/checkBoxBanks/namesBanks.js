@@ -54,4 +54,18 @@ export const typeNameObject = {
     'ROOM' : 'Комната'
 }
 
+export const nameObject = {
+    'ALL' : 'Все',
+    'USED' : 'Вторичка',
+    'NEW' : 'Новостройка',
+    'BUILD' : 'Дом не сдан',
+}
 
+export const nameType = {
+    'ALL' : 'Все',
+    'FLAT' : 'Квартира',
+    'APARTMENTS' : 'Апартаменты',
+    'TOWNHOUSE' : 'Дом',
+    'COTTAGE': 'Коттедж',
+    'ROOM' : 'Комната'
+}

@@ -1,17 +1,30 @@
 
-export function filterConditionsResponse(response, banks,term, downPayment, object, dweling){
-    return response.filter(data => 
-        banks.has(data.bank)
-        && (downPayment >=  data.minInitialPayment && downPayment <= data.maxInitialPayment)
-        && (data.minTerm <= term && term <= data.maxTerm)
-        && (data.typeObject === object || object === 'ALL')
-        && data.typeDwelling === dweling
-    )
+export function filterConditionsResponse(offers, {banks,term, downPayment, object, dwelling}){
+
+    return offers.filter(data => 
+        banksPredicate(data, banks)
+        && termPredicate(data, term)
+        && downPaymentPredicate(data, downPayment)
+        && objectPredicate(data, object)
+        && dwelingPredicate(data, dwelling)
+)}
+
+function banksPredicate(offer, banks) {
+    return banks.has(offer.bankId);
 }
 
-//banks.has(data.bank)
-//&& (downPayment >=  data.minInitialPayment*100 && downPayment <= data.maxInitialPayment*100))
-// && (data.minTerm/12 <= term && term <= data.maxTerm/12)
-//  && (data.offer.product === typeObject || typeObject === 'Все')
- //&& (data.offer.requirements.at(-1) === typeDweling)
-// &&
+function termPredicate(offer, term){
+    return offer.minTerm/12 <= term && term <= offer.maxTerm/12
+}
+
+function downPaymentPredicate(offer, downPayment){
+    return downPayment >= offer.minInitialPayment*100 && downPayment <= offer.maxInitialPayment*100
+}
+
+function objectPredicate(offer, object){
+    return offer.product === object || object === 'ALL'
+}
+
+function dwelingPredicate(offer, dweling){
+return offer.requirements.some(el => el.key === 'PROPERTY_TYPE' && el.value === dweling)
+}
