@@ -1,4 +1,4 @@
-import { nameObject, nameType, namesBanks, banksImages } from "../checkBoxBanks/namesBanks"
+import { nameObject, namesBanks, banksImages } from "../checkBoxBanks/namesBanks"
 import './visualOffer.css'
 export function VisualOffer({offer}){
 

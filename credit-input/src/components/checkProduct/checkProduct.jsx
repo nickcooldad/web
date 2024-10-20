@@ -1,5 +1,4 @@
 import './checkProduct.css'
-import { typeNameObject } from '../checkBoxBanks/namesBanks'
 export function CheckProduct({title, value, listFilter, onValueChangeProduct, nameType}){
 
     function hundleProductChange(event){

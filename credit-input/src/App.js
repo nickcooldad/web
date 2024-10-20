@@ -5,7 +5,6 @@ import { definitionOnYear } from './components/definitionOnYear/definitionOnYear
 import { CheckBoxBanks } from './components/checkBoxBanks/checkBoxBanks.jsx';
 import { CheckProduct } from './components/checkProduct/checkProduct.jsx';
 import { response } from './components/response/response.js';
-// import { FinalOffersBanks } from './components/finalOffersBanks/finalOffersBnaks.jsx';
 import { nameObject, nameType } from './components/checkBoxBanks/namesBanks.js';
 import { VisualOffer } from './components/finalOffersBanks/visualOffer.jsx';
 import { filterConditionsResponse } from './components/filterConditionsResponse/filterConditionsResponse.js';
@@ -17,15 +16,6 @@ function App() {
   const [object, setObject] = useState('Все')
   const [dwelling, setDweling] = useState('Дом')
 
-// const typesObject = [...new Set(response.offers.list.values().map(offer => offer.product))] 
-
-// const typesDwelling = [...new Set(response.offers.list.values().map(offer => {
-//   for(let requirement of offer.requirements){
-//     if(requirement.key === 'PROPERTY_TYPE'){
-//       return requirement.value
-//     }
-//   }
-// }))]
 
 const banksList = [...new Set(response.offers.list.values().map(offer => offer.bankId))]
 const responseFilter = filterConditionsResponse(
@@ -79,15 +69,6 @@ console.log(responseFilter);
     onValueChangeProduct={setDweling}
     nameType={nameType}
     />
-
-    {/* <FinalOffersBanks
-    response={response}
-    term={term}
-    downPayment={downPayment}
-    object={object}
-    dwelling={dwelling}
-    banks={banks}
-    /> */}
 
     {responseFilter.map(offer => <VisualOffer key={offer.offerId} offer={offer} />)}
     
