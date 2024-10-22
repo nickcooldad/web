@@ -1,7 +1,6 @@
-import { useState } from 'react';
-import x from './categories.json'
 import './parentList.css'
 import cn from 'classnames'
+
 
 export function ParentList({data, parentId, onAddParent,sections, onAddsections}){
   function handleChangeValue(event){
@@ -32,14 +31,15 @@ export function ParentList({data, parentId, onAddParent,sections, onAddsections}
           return <li >
             <span className={cn({
               arrow: true,
-              arrowDown: sections.includes(item.id)
+              arrowDown: sections.includes(item.id),
+              none: item.children.length === 0
             })}
             onClick={() => handleArrowClick(item.id)}
             />
             <label>
               <input
               id={item.id}
-              type='checkbox' 
+              type='checkbox'  
               checked={parentId.includes(item.id)}
               onChange={handleChangeValue}
               />
@@ -48,12 +48,12 @@ export function ParentList({data, parentId, onAddParent,sections, onAddsections}
               </span>
             </label>{
             sections.includes(item.id) &&
-            (<ParentList 
-            data={x.filter(el => el.parentId === item.id)}
-            parentId={parentId}
-            onAddParent={onAddParent}
-            sections={sections}
-            onAddsections={onAddsections}
+              (<ParentList 
+              data={item.children}
+              parentId={parentId}
+              onAddParent={onAddParent}
+              sections={sections}
+              onAddsections={onAddsections}
             /> )}
             </li>
         })

@@ -1,11 +1,11 @@
 import { ParentList } from './parentList';
 import x from './categories.json'
 import { useState } from 'react';
+import { createTree } from './createTree';
 
-//console.log(x);
 
 export function Catalog(){
-  const parentIdArray = x.filter(item => item.parentId === undefined)
+  const parentIdArray = createTree(x)
   const [parentId, setParentId] = useState([])
   const [sections, setSections] = useState([])
   
