@@ -7,6 +7,7 @@ import { useState } from 'react';
 export function Catalog(){
   const parentIdArray = x.filter(item => item.parentId === undefined)
   const [parentId, setParentId] = useState([])
+  const [sections, setSections] = useState([])
   
   return( 
     <div>
@@ -14,6 +15,8 @@ export function Catalog(){
       data={parentIdArray}
       parentId={parentId}
       onAddParent={setParentId}
+      sections={sections}
+      onAddsections={setSections}
       />
     </div>
   )

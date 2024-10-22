@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import x from './categories.json'
+import './parentList.css'
+import cn from 'classnames'
 
-export function ParentList({data, parentId, onAddParent}){
-
+export function ParentList({data, parentId, onAddParent,sections, onAddsections}){
   function handleChangeValue(event){
-    const value = event.target.id
+    const value = Number(event.target.id)
     const isChecked = event.target.checked
       if(isChecked){
         onAddParent([...parentId, value])
@@ -12,25 +14,46 @@ export function ParentList({data, parentId, onAddParent}){
      }
   }
 
-      return <ul>{
+  const handleArrowClick = (itemId) => {
+    onAddsections((prevExpandedItems) =>{
+      if(prevExpandedItems.includes(itemId)){
+       return prevExpandedItems.filter((id) => id !== itemId)
+      }else{
+       return [...prevExpandedItems, itemId]
+      }}
+      
+    );
+  };
+      return <ul className={cn({
+        list: true,
+        arrowDown: true
+        })}>{
         data.map(item => {
-          return <li> 
+          return <li >
+            <span className={cn({
+              arrow: true,
+              arrowDown: sections.includes(item.id)
+            })}
+            onClick={() => handleArrowClick(item.id)}
+            />
             <label>
               <input
               id={item.id}
               type='checkbox' 
-              checked={parentId.includes(String(item.id))}
+              checked={parentId.includes(item.id)}
               onChange={handleChangeValue}
               />
               <span>
                 {item.name}
               </span>
             </label>{
-            parentId.includes(String(item.id)) &&
+            sections.includes(item.id) &&
             (<ParentList 
             data={x.filter(el => el.parentId === item.id)}
             parentId={parentId}
             onAddParent={onAddParent}
+            sections={sections}
+            onAddsections={onAddsections}
             /> )}
             </li>
         })

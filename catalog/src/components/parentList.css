@@ -1,0 +1,38 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-size: 14px;
+    color: rgb(40, 160, 240);
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.list li {
+    position: relative;
+    padding-left: 20px;
+    margin-top: 3px;
+    
+    margin-top: 5px;
+}
+
+
+.list li .arrow {
+    position: absolute;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background-image: url('./images/arrowRight.svg');
+    background-size: contain;
+   
+}
+
+
+.list li .arrow.arrowDown {
+    background-image: url('./images/arrowDown.svg');
+}
