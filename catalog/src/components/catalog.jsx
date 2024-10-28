@@ -15,7 +15,7 @@ export function Catalog(){
     const value = event.target.id
 
     setSelectedIds(prev => {
-      if(!selectedIds.includes(value)){
+      if(!prev.includes(value)){
         
         const addChildId = (id) => {
         let result = [id]
@@ -28,7 +28,7 @@ export function Catalog(){
       const addParenId = (id, selectedItems) => {
         const parentId = categoriesDict[id].parentId;
         if (parentId !== null && categoriesDict[parentId].children.every(childId => selectedItems.includes(childId))) {
-          return [parentId, ...addParenId(parentId, [...selectedIds, parentId])]
+          return [parentId, ...addParenId(parentId, [...prev, parentId])]
           } else{ 
           return []
           }
