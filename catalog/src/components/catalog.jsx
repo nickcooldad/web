@@ -3,29 +3,14 @@ import x from './categories.json'
 import { useState } from 'react';
 import { createData, createDataParentId } from './createTree';
 
-// +A
-//   ✓B
-//   +C
-//     ✓D
-//     +E
-//   ✓F
-
 export function Catalog(){
   const topLevelIds = createDataParentId(x)
   const categoriesDict = createData(x)
 
   
   const [selectedIds, setSelectedIds] = useState([]);
-      // '1': { parentId: null, name: 'name1', url: 'https1', children: ['2', '3', '4'] },
-      // '2': { parentId: '1', name: 'name2', url: 'https2', children: [] },
-      // '3': { parentId: '1', name: 'name3', url: 'https3', children: ['5', '6'] },
-      // '4': { parentId: '1', name: 'name4', url: 'https4', children: [] },
-      // '5': { parentId: '3', name: 'name5', url: 'https5', children: [] },
-      // '6': { parentId: '3', name: 'name6', url: 'https6', children: [] }
-  //console.log(selectedIds)
 
-
-  function toggleId(event, item) {
+  function toggleId(event) {
 
     const value = event.target.id
 
