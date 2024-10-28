@@ -22,7 +22,7 @@ export function Catalog(){
       // '4': { parentId: '1', name: 'name4', url: 'https4', children: [] },
       // '5': { parentId: '3', name: 'name5', url: 'https5', children: [] },
       // '6': { parentId: '3', name: 'name6', url: 'https6', children: [] }
-  console.log(selectedIds)
+  //console.log(selectedIds)
 
 
   function toggleId(event, item) {
@@ -31,35 +31,45 @@ export function Catalog(){
 
     setSelectedIds(prev => {
       if(!selectedIds.includes(value)){
-        const addChildId = (ids) => {
-        let result = []
-          ids.forEach(id => {
-            result.push(id)
-            result = [...result, ...addChildId(categoriesDict[id].children)]
+        
+        const addChildId = (id) => {
+        let result = [id]
+          categoriesDict[id].children.forEach(childId => {
+            result = [...result, ...addChildId(childId)]
           })
         return result
       }
-      return [...prev, value, ...addChildId(categoriesDict[value].children)]
+
+      const addParenId = (id, selectedItems) => {
+        const parentId = categoriesDict[id].parentId;
+        if (parentId !== null && categoriesDict[parentId].children.every(childId => selectedItems.includes(childId))) {
+          return [parentId, ...addParenId(parentId, [...selectedIds, parentId])]
+          } else{ 
+          return []
+          }
+        }
+      
+      return [...prev, value, ...addChildId(value), ...addParenId(value, [...prev, value])]
+
   } else{
     
-    const unSelectedParentId = (id) =>{
-      let result = []
-      if(categoriesDict[id].parentId !== null){
-        result.push(categoriesDict[id].parentId)
-        result = [...result, ...unSelectedParentId(categoriesDict[id].parentId)]
-      }
-      return result
-    }
-    const unSulectedChild = (ids) => {
-      let result = []
-      ids.forEach(child => {
-        result.push(child)
-        result = [...result, ...unSulectedChild(ids.children)]
-      })
-      return result
-    }
+    const removeChildIds = (id) => {
+      let ids = [id];
+      categoriesDict[id].children.forEach(childId => {
+        ids = [...ids, ...removeChildIds(childId)]
+      });
+      return ids;
+    };
 
-     return prev.filter(id => id !== value && !unSelectedParentId(value).includes(id) )
+    const removeParentIds = (id) => {
+      const parentId = categoriesDict[id].parentId;
+      if (parentId && categoriesDict[parentId].children.some(childId => !removeChildIds(value).includes(childId))) {
+        return [parentId, ...removeParentIds(parentId)];
+      }
+      return [];
+    };
+
+     return prev.filter(id => !removeChildIds(value).includes(id) && !removeParentIds(value).includes(id))
   }
     })  
   }
