@@ -1,14 +1,4 @@
 
-// export function createTree(data, parentId = undefined) {
-
-import { Children } from "react"
-
-    
-//     return data
-//       .filter(item => item.parentId === parentId)
-//       .map(item => ({...item, children: createTree(data, item.id)
-//       }));
-//   }
 export function createData(data){
   let result = {}
   data.forEach(el => {

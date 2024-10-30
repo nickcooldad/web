@@ -1,7 +1,7 @@
 import { ParentList } from './parentList';
 import x from './categories.json'
 import { useState } from 'react';
-import { createData, createDataParentId } from './createTree';
+import { createData, createDataParentId } from './createData';
 
 export function Catalog(){
   const topLevelIds = createDataParentId(x)
@@ -10,6 +10,14 @@ export function Catalog(){
   
   const [selectedIds, setSelectedIds] = useState([]);
 
+  const removeAndAddChildId = (id) => {
+    let result = [id]
+      categoriesDict[id].children.forEach(childId => {
+        result = [...result, ...removeAndAddChildId(childId)]
+      })
+    return result
+  }
+
   function toggleId(event) {
 
     const value = event.target.id
@@ -17,14 +25,6 @@ export function Catalog(){
     setSelectedIds(prev => {
       if(!prev.includes(value)){
         
-        const addChildId = (id) => {
-        let result = [id]
-          categoriesDict[id].children.forEach(childId => {
-            result = [...result, ...addChildId(childId)]
-          })
-        return result
-      }
-
       const addParenId = (id, selectedItems) => {
         const parentId = categoriesDict[id].parentId;
         if (parentId !== null && categoriesDict[parentId].children.every(childId => selectedItems.includes(childId))) {
@@ -32,29 +32,21 @@ export function Catalog(){
           } else{ 
           return []
           }
-        }
-      
-      return [...prev, value, ...addChildId(value), ...addParenId(value, [...prev, value])]
+        } 
+
+      return [...prev, value, ...removeAndAddChildId(value), ...addParenId(value, [...prev, value])]
 
   } else{
     
-    const removeChildIds = (id) => {
-      let ids = [id];
-      categoriesDict[id].children.forEach(childId => {
-        ids = [...ids, ...removeChildIds(childId)]
-      });
-      return ids;
-    };
-
     const removeParentIds = (id) => {
       const parentId = categoriesDict[id].parentId;
-      if (parentId && categoriesDict[parentId].children.some(childId => !removeChildIds(value).includes(childId))) {
+      if (parentId && categoriesDict[parentId].children.some(childId => !removeAndAddChildId(value).includes(childId))) {
         return [parentId, ...removeParentIds(parentId)];
       }
       return [];
     };
 
-     return prev.filter(id => !removeChildIds(value).includes(id) && !removeParentIds(value).includes(id))
+     return prev.filter(id => !removeAndAddChildId(value).includes(id) && !removeParentIds(value).includes(id))
   }
     })  
   }
