@@ -20,7 +20,7 @@ export function ListItem({ id, dict, selectedIds, toggleId }) {
         <input
           id={id}
           type='checkbox'
-          onChange={toggleId}
+          onChange={() => toggleId(id)}
           checked={selectedIds.includes(id)}
         />
         <span>

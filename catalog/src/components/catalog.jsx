@@ -3,6 +3,21 @@ import x from './categories.json'
 import { useState } from 'react';
 import { createData, createDataParentId } from './createData';
 
+//          1
+//       /  |  \ 
+//      2   3   4
+//         / \
+//        5   6
+//       / \
+//      7   8
+
+
+// id = 3 → removeAndAddChildId → [3, 5, 6, 7, 8]
+// getDescendants(dict, id)
+
+// id = 5 → removeParentIds     → [1, 3] или ([3], [])
+// getAncestors(dict, selectedIds, id)
+
 export function Catalog(){
   const topLevelIds = createDataParentId(x)
   const categoriesDict = createData(x)
@@ -18,9 +33,7 @@ export function Catalog(){
     return result
   }
 
-  function toggleId(event) {
-
-    const value = event.target.id
+  function toggleId(value) {
 
     setSelectedIds(prev => {
       if(!prev.includes(value)){

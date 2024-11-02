@@ -16,7 +16,7 @@ describe('Преобразование объекта', () => {
     { id: 1, name: 'name1', url: 'https1' },
     { id: 2, name: 'name2', parentId: 1, url: 'https2' },
   ]
-  test('Массив с объектами json', () => {
+  test ('Массив с объектами json', () => {
     const expectedResult = {
       '1': { parentId: null, name: 'name1', url: 'https1', children: ['2', '3', '4'] },
       '2': { parentId: '1', name: 'name2', url: 'https2', children: [] },
