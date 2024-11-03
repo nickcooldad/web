@@ -1,5 +1,4 @@
 
-
 export function getDescendants(dict, id) {
     let result = [id]
     dict[id].children.forEach(childId => {

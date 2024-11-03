@@ -2,21 +2,8 @@ import { ParentList } from './parentList';
 import x from './categories.json'
 import { useState } from 'react';
 import { createData, createDataParentId } from './createData';
-
-//          1
-//       /  |  \ 
-//      2   3   4
-//         / \
-//        5   6
-//       / \
-//      7   8
-
-
-// id = 3 → removeAndAddChildId → [3, 5, 6, 7, 8]
-// getDescendants(dict, id)
-
-// id = 5 → removeParentIds     → [1, 3] или ([3], [])
-// getAncestors(dict, selectedIds, id)
+import { getAncestors } from './getIds/getAncestor';
+import { getDescendants } from './getIds/getDescendats';
 
 export function Catalog(){
   const topLevelIds = createDataParentId(x)
@@ -25,45 +12,23 @@ export function Catalog(){
   
   const [selectedIds, setSelectedIds] = useState([]);
 
-  const removeAndAddChildId = (id) => {
-    let result = [id]
-      categoriesDict[id].children.forEach(childId => {
-        result = [...result, ...removeAndAddChildId(childId)]
-      })
-    return result
-  }
-
   function toggleId(value) {
 
     setSelectedIds(prev => {
       if(!prev.includes(value)){
-        
-      const addParenId = (id, selectedItems) => {
-        const parentId = categoriesDict[id].parentId;
-        if (parentId !== null && categoriesDict[parentId].children.every(childId => selectedItems.includes(childId))) {
-          return [parentId, ...addParenId(parentId, [...prev, parentId])]
-          } else{ 
-          return []
-          }
-        } 
-
-      return [...prev, value, ...removeAndAddChildId(value), ...addParenId(value, [...prev, value])]
-
+      return [
+        ...prev, 
+        value,
+         ...getDescendants(categoriesDict, value),
+         ...getAncestors(categoriesDict , [...prev, value], value)]
   } else{
-    
-    const removeParentIds = (id) => {
-      const parentId = categoriesDict[id].parentId;
-      if (parentId && categoriesDict[parentId].children.some(childId => !removeAndAddChildId(value).includes(childId))) {
-        return [parentId, ...removeParentIds(parentId)];
-      }
-      return [];
-    };
 
-     return prev.filter(id => !removeAndAddChildId(value).includes(id) && !removeParentIds(value).includes(id))
-  }
+      return prev.filter(id => !getAncestors(categoriesDict , [...prev, value], value).includes(id) 
+      && !getDescendants(categoriesDict, value).includes(id))
+      }
     })  
   }
-
+    
   return( 
     <div>
       <ParentList 
