@@ -1,0 +1,20 @@
+*{
+    box-sizing: border-box;
+}
+
+.cell {
+    width: 40px;
+    height: 40px;
+    background-color: rgb(185, 180, 180);
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.hasLetter{
+    background-color: yellow;
+}
+
+.exactPosition{
+    background-color: rgb(23, 153, 23);
+}
