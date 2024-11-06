@@ -1,29 +1,29 @@
 //приходит загаданное слово, выбранные буквы, необходимо вернуть есть ли буква и на своем ли она месте
 
- export function defenitionLetterPosition(hiddenWord, index, letter){
+  export function defenitionLetterPosition(hiddenWord, index, letter){
     return hiddenWord[index] === letter
-}
+  }
 
-export  function isLetterInWord(hiddenWord, index, letter,quantityLetter){
+  export function isLetterInWord(hiddenWord, index, letter, quantityLetter){
     console.log(quantityLetter)
-    if(quantityLetter[letter] !== undefined && hiddenWord[index] !== letter) {
-        
-        if(quantityLetter[letter] > 0){
-            return true
-        } else {
-            quantityLetter[letter] -= 1
-        }
-
+    if(quantityLetter[letter] !== undefined && quantityLetter[letter].quantity > 1) {
+        quantityLetter[letter].quantity -= 1
+        return !quantityLetter[letter].index.some(el => el === index)
+    }
+    if(quantityLetter[letter] !== undefined && quantityLetter[letter].quantity === 1){
+      quantityLetter[letter].quantity -= 1
+      return true
     }
     return false
-}
+  }
   
 
- export function defenitionQuantityLetter(hiddenWord){
+  export function defenitionQuantityLetter(word){
     const result = {}
-    hiddenWord.split('').forEach(letter => {
-        result[letter] ??= 0
-        result[letter] += 1 
+    word.split('').forEach((letter, index) => {
+        result[letter] ??= {quantity : 0, index : []}
+        result[letter].quantity += 1
+        result[letter].index.push(index)
     })
     return result
   }

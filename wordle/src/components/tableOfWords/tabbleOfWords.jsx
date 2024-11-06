@@ -4,7 +4,7 @@ import { defenitionQuantityLetter } from "../../functionsLogic/defenitionLetterP
 
 export function TableOfWords({selectedWords, enteredLetters, hiddenWord}){
     const wordsData = selectedWords.length === 6 ? selectedWords
-     : [...selectedWords, ...new Array(6 - selectedWords.length).fill(null)]
+     : [...selectedWords, ...new Array(6 - selectedWords.length).fill('')]
    
  
     return (
@@ -12,7 +12,6 @@ export function TableOfWords({selectedWords, enteredLetters, hiddenWord}){
             <tbody>
                 {
                     wordsData.map(word => {
-                        
                         return <LineOfWords
                         word={word}
                         selectedWords={selectedWords}
