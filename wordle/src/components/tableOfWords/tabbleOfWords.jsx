@@ -11,8 +11,9 @@ export function TableOfWords({selectedWords, enteredLetters, hiddenWord}){
         <table className="table">
             <tbody>
                 {
-                    wordsData.map(word => {
+                    wordsData.map((word, index) => {
                         return <LineOfWords
+                        key={index}
                         word={word}
                         selectedWords={selectedWords}
                         enteredLetters={enteredLetters}

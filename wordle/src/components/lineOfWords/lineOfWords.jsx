@@ -14,7 +14,7 @@ return (
           key={index}
           className={cn({
             cell:true,
-            hasLetter : isLetterInWord(hiddenWord, index, letter, quantityLetter),
+            hasLetter : isLetterInWord(index, letter, quantityLetter),
             exactPosition :defenitionLetterPosition(hiddenWord, index, letter),
           })}
           >{
