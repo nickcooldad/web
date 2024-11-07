@@ -1,4 +1,4 @@
-//приходит загаданное слово, выбранные буквы, необходимо вернуть есть ли буква и на своем ли она месте
+
 
   export function defenitionLetterPosition(hiddenWord, index, letter){
     return hiddenWord[index] === letter

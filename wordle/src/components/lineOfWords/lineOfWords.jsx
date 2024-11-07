@@ -15,8 +15,8 @@ return (
           className={cn({
             cell:true,
             hasLetter : isLetterInWord(letter, quantityHiddenLetter, quantityEnteredLetter),
-           // exactPosition :defenitionLetterPosition(hiddenWord, index, letter),
-          })}
+            exactPosition :defenitionLetterPosition(hiddenWord, index, letter),
+          })} 
           >{
             letter.toUpperCase()
             }</td>
