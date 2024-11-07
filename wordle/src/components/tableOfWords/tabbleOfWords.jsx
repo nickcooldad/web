@@ -18,7 +18,7 @@ export function TableOfWords({selectedWords, enteredLetters, hiddenWord}){
                         selectedWords={selectedWords}
                         enteredLetters={enteredLetters}
                         hiddenWord={hiddenWord}
-                        quantityLetter={defenitionQuantityLetter(hiddenWord)}
+                        quantityHiddenLetter={defenitionQuantityLetter(hiddenWord)}
                         />
                     }
                     )

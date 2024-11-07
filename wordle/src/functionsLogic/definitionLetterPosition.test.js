@@ -4,35 +4,44 @@ import {defenitionQuantityLetter, isLetterInWord } from "./defenitionLetterPosit
 describe('Определение позиции буквы в слове', () => {
 
     const hiddenWord = 'peace'
-    test('Одна буква находится в слове не на своем месте', ()=>{
+
+    test('Введенная буква находится в слове', ()=>{
         const enteredWord = 'sport'
-        const test =  enteredWord.split('').map((item, index )=> {
-            return isLetterInWord(index, item, defenitionQuantityLetter(hiddenWord) )
+        const quantityHiddenLetter = defenitionQuantityLetter(hiddenWord)
+        const quantityEnteredLetter = defenitionQuantityLetter(enteredWord)
+        const result =  enteredWord.split('').map((item)=> {
+            return isLetterInWord(item, quantityHiddenLetter, quantityEnteredLetter)
           })
-        expect(test).toEqual([false, true, false, false, false])
+        expect(result).toEqual([false, true, false, false, false])
     }) 
 
-    test('В введенем слове две одинаковые буквы, и одна из них на своем месте, а в загаданном две', ()=>{
+    test('Из двух букв первая на своем месте, вторая находится в загаднном слове', ()=>{
         const enteredWord = 'eagle'
-        const test =  enteredWord.split('').map((item, index )=> {
-            return isLetterInWord(index, item, defenitionQuantityLetter(hiddenWord) )
+        const quantityHiddenLetter = defenitionQuantityLetter(hiddenWord)
+        const quantityEnteredLetter = defenitionQuantityLetter(enteredWord)
+        const result =  enteredWord.split('').map((item)=> {
+            return isLetterInWord(item, quantityHiddenLetter, quantityEnteredLetter)
           })
-        expect(test).toEqual([true, true, false, false, false])
+        expect(result).toEqual([true, true, false, false, false])
     })
 
-    test('В вводимом слове, две буквы, не на своих местах, а в загаданном одна', ()=>{
+    test('Из двух одинаковых букв, только одна находится в загаднном слове', ()=>{
         const enteredWord = 'salad'
-        const test =  enteredWord.split('').map((item, index )=> {
-            return isLetterInWord(index, item, defenitionQuantityLetter(hiddenWord) )
+        const quantityHiddenLetter = defenitionQuantityLetter(hiddenWord)
+        const quantityEnteredLetter = defenitionQuantityLetter(enteredWord)
+        const result =  enteredWord.split('').map((item)=> {
+            return isLetterInWord(item, quantityHiddenLetter, quantityEnteredLetter)
           })
-        expect(test).toEqual([false, true, false, false, false])
+        expect(result).toEqual([false, true, false, false, false])
     })
 
-    test('В вводимом слове, две буквы, одна из них на своем месте , а в загаданном одна', ()=>{
+    test('Из двух одинаковых букв, одна находится на своем месте, как в загаданном слове', ()=>{
         const enteredWord = 'award'
-        const test =  enteredWord.split('').map((item, index )=> {
-            return isLetterInWord(index, item, defenitionQuantityLetter(hiddenWord) )
+        const quantityHiddenLetter = defenitionQuantityLetter(hiddenWord)
+        const quantityEnteredLetter = defenitionQuantityLetter(enteredWord)
+        const result =  enteredWord.split('').map((item)=> {
+            return isLetterInWord(item, quantityHiddenLetter, quantityEnteredLetter)
           })
-        expect(test).toEqual([false, false, false, false, false])
+        expect(result).toEqual([false, false, false, false, false])
     })
 })
