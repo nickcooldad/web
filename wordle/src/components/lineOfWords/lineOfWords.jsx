@@ -1,22 +1,20 @@
 import cn from "classnames"
 import './lineOfWords.css'
-import { defenitionLetterPosition, isLetterInWord, defenitionQuantityLetter} from "../../functionsLogic/defenitionLetterPosition"
+import { defenitionLetterColor} from "../../functionsLogic/defenitionLetterPosition"
 
-export function LineOfWords({word, enteredLetters, hiddenWord, quantityHiddenLetter}){
+export function LineOfWords({selectedWords, word, enteredLetters, hiddenWord}){
 
-let lettersData = word.length === 5 ? word.split('') : new Array(5).fill('')
-const quantityEnteredLetter = defenitionQuantityLetter(lettersData.join('')) 
+let lettersData = word.length === 5 ? word.split('') : [...word, ...new Array(5 - word.length).fill('')] 
+const colorsLetter = defenitionLetterColor(hiddenWord, word)
+
+console.log(selectedWords.indexOf(enteredLetters))
 return (
     <tr>
       {
         lettersData.map((letter, index) => { 
           return <td 
            key={index}
-          className={cn({
-            cell:true,
-            hasLetter : isLetterInWord(letter, quantityHiddenLetter, quantityEnteredLetter),
-            exactPosition :defenitionLetterPosition(hiddenWord, index, letter),
-          })} 
+           className={cn('cell', colorsLetter[index])} 
           >{
             letter.toUpperCase()
             }</td>

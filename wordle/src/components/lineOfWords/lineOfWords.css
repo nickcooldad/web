@@ -6,19 +6,21 @@
     width: 40px;
     height: 40px;
     background-color: rgb(204, 200, 200);
-    border-color: grey;
-    border: 1px;
+
+    border: 1px solid grey;
     border-radius: 5px;
     font-size: 16px;
     font-weight: bold;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-
-.hasLetter{
+.absent{
+    background-color: rgb(110, 107, 107);
+}
+.present{
     background-color: rgb(202, 202, 26);
 }
 
-.exactPosition{
+.correct{
     background-color: rgb(23, 153, 23);
 }

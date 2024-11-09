@@ -1,28 +1,35 @@
 import { LineOfWords } from "../lineOfWords/lineOfWords"
+import { LineEnteredWords } from "../lineEnteredWord/lineEnteredWords"
+import { EmptyLineWord } from "../emptyLineWord/emptyLineWord"
 import './tabbleOfWords.css'
-import { defenitionQuantityLetter } from "../../functionsLogic/defenitionLetterPosition"
 
 export function TableOfWords({selectedWords, enteredLetters, hiddenWord}){
-    const wordsData = selectedWords.length === 6 ? selectedWords
-     : [...selectedWords, ...new Array(6 - selectedWords.length).fill('')]
-   
- 
+    const emptyLine = selectedWords.length <= 6 ? [new Array(5 - selectedWords.length)] : []
     return (
         <table className="table">
             <tbody>
                 {
-                    wordsData.map((word, index) => {
+                    selectedWords.map((word, index) => {
                         return <LineOfWords
                         key={index}
                         word={word}
                         selectedWords={selectedWords}
                         enteredLetters={enteredLetters}
                         hiddenWord={hiddenWord}
-                        quantityHiddenLetter={defenitionQuantityLetter(hiddenWord)}
                         />
                     }
                     )
                 }
+                {
+                    <LineEnteredWords
+                        enteredLetters={enteredLetters}/>
+                }
+                {
+                    emptyLine.map(el => {
+                        return <EmptyLineWord/>
+                    })
+                }
+
             </tbody>
         </table>
     )

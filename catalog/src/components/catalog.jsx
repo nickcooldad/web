@@ -15,16 +15,17 @@ export function Catalog(){
   function toggleId(value) {
 
     setSelectedIds(prev => {
+      const ancestorIds = getAncestors(categoriesDict , prev, value)
+      const descendatsIds = getDescendants(categoriesDict, value)
       if(!prev.includes(value)){
-      return [
+      return [...new Set([
         ...prev, 
         value,
-         ...getDescendants(categoriesDict, value),
-         ...getAncestors(categoriesDict , [...prev, value], value)]
+         ...descendatsIds,
+         ...ancestorIds])]
   } else{
-
-      return prev.filter(id => !getAncestors(categoriesDict , [...prev, value], value).includes(id) 
-      && !getDescendants(categoriesDict, value).includes(id))
+      return prev.filter(id => !ancestorIds.includes(id) 
+      && !descendatsIds.includes(id) && id !== value)
       }
     })  
   }
