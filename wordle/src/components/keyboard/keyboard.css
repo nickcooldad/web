@@ -1,39 +1,7 @@
 *{
     box-sizing: border-box;
 }
-body{
-    display: flex;
-    justify-content: center;
-}
-.key{
-    height: 35px;
-    width: 35px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    border: 1px solid grey;
-    font-weight: bold;
-}
 
 .keyboard{
-    margin-top: 10px;
-    width: 350px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 5px;
-}
-
-.hasLetterInWord{
-    background-color: rgb(202, 202, 26);
-}
-
-.noneLetterInWord{
-    background-color: white;
-}
-
-.exactPositionLeeterInWord{
-    background-color: rgb(23, 153, 23);
+    margin-top: 25px;
 }

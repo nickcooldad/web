@@ -1,0 +1,20 @@
+.keyMiddle{
+    height: 35px;
+    width: 35px;
+    border: 1px solid grey;
+    font-weight: bold;
+    margin: 2px 2px 2px 2px;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.absent{
+    background-color: rgb(197, 196, 196);
+}
+.present{
+    background-color: rgb(223, 223, 82);
+}
+
+.correct{
+    background-color: rgb(23, 153, 23);
+}

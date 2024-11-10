@@ -1,4 +1,4 @@
-import {defenitionQuantityLetter, isLetterInWord , defenitionLetterColor} from "./defenitionLetterPosition";
+import { defenitionLetterColor} from "./defenitionLetterColor";
 
 
 describe('Определение позиции буквы в слове', () => {
@@ -18,6 +18,23 @@ describe('Определение позиции буквы в слове', () =>
         expect(result).toEqual(['absent', 'absent', 'present', 'present', 'absent'])
       })
 
+      test('Введены 2 одинаковых буквы, которые есть в загаданном слове, и одна из них на своем месте', () => {
+        const result = defenitionLetterColor(hiddenWord, 'eagle')
+        //present(желтый), correct(зеленый), absent(серый)
+        expect(result).toEqual(['present', 'present', 'absent', 'absent', 'correct'])
+      })
+
+      test('Из двух одинаковых букв, одна находится на своем месте, как в загаданном слове', () => {
+        const result = defenitionLetterColor(hiddenWord, 'award')
+        //present(желтый), correct(зеленый), absent(серый)
+        expect(result).toEqual(['absent', 'absent', 'correct', 'absent', 'absent'])
+      })
+
+      test('Из двух одинаковых букв, только одна находится в загаднном слове', () => {
+        const result = defenitionLetterColor(hiddenWord, 'salad')
+        //present(желтый), correct(зеленый), absent(серый)
+        expect(result).toEqual(['absent', 'present', 'absent', 'absent', 'absent'])
+      })
 
 
     // test('Введенная буква находится в слове', ()=>{

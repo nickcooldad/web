@@ -7,7 +7,9 @@ export function EmptyLineWord(){
         <tr>
             {
                 word.map((item, index) => {
-                    return <td className="colorKey">
+                    return <td 
+                    key={index}
+                    className="emptyCell">
                         {
                             item
                         }

@@ -5,9 +5,7 @@
 .cell {
     width: 40px;
     height: 40px;
-    background-color: rgb(204, 200, 200);
-
-    border: 1px solid grey;
+    border: 2px solid rgb(158, 157, 157);
     border-radius: 5px;
     font-size: 16px;
     font-weight: bold;
@@ -15,10 +13,10 @@
 }
 
 .absent{
-    background-color: rgb(110, 107, 107);
+    background-color: rgb(197, 196, 196);
 }
 .present{
-    background-color: rgb(202, 202, 26);
+    background-color: rgb(223, 223, 82);
 }
 
 .correct{

@@ -1,0 +1,32 @@
+.keyLower{
+    height: 35px;
+    width: 35px;
+    border: 1px solid grey;
+    font-weight: bold;
+    border-radius: 5px;
+    margin: 2px 2px 2px 2px;
+    background-color: white;
+ 
+}
+
+.enter, .delete{
+    height: 35px;
+    width: 65px;
+    border: 1px solid grey;
+    font-weight: bold;
+    border-radius: 5px;
+    margin: 2px 2px 2px 2px;
+    background-color: white;
+}
+
+
+.absent{
+    background-color: rgb(197, 196, 196);
+}
+.present{
+    background-color: rgb(223, 223, 82);
+}
+
+.correct{
+    background-color: rgb(23, 153, 23);
+}
