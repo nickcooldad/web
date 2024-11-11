@@ -22,11 +22,14 @@
 
 .absent{
     background-color: rgb(197, 196, 196);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 .present{
     background-color: rgb(223, 223, 82);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .correct{
     background-color: rgb(23, 153, 23);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }

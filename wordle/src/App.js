@@ -1,16 +1,17 @@
 
 import { useEffect, useState } from 'react';
 import './App.css';
-import {TableOfWords} from './components/tableOfWords/tabbleOfWords.jsx'
+import { TableOfWords } from './components/tableOfWords/tabbleOfWords.jsx'
 import { Keyboard } from './components/keyboard/keyboard.jsx';
 import { getLetter2Status } from './functionsLogic/defenitionLetterColor.js';
 import { response } from './response/response.js';
-
+import { ModalWindow } from './components/modalWindow/modalWindow.jsx';
 function App() {
   const hiddenWord = 'peace'
   const [selectedWords, setSelectedWords] = useState([])
   const [enteredLetters, setEnteredLetters] = useState('')
   const [pressedKey, setPressedKey] = useState(null)
+
 
   useEffect(() => {
 
@@ -60,16 +61,17 @@ function onBackspacePress () {
     setEnteredLetters(prev => prev.slice(0, -1))
   }
 }
+const getWindowCondition = () => selectedWords.length === 6 || selectedWords.includes((hiddenWord))
 
   return (
     <div className="App">
+      {getWindowCondition() && <ModalWindow condition={selectedWords.includes((hiddenWord))}/>}
       <TableOfWords   
         selectedWords={selectedWords}
         enteredLetters={enteredLetters}
         hiddenWord={hiddenWord}
- 
       />
-
+     
       <Keyboard
        letter2status={getLetter2Status(selectedWords, hiddenWord)}
        onLetterPress={onLetterPress}
