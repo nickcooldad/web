@@ -23,15 +23,17 @@ export function TableOfWords({selectedWords, enteredLetters, hiddenWord}){
                     )
                 }
                 {
-                    enteredLine.map(_ =>{
+                    enteredLine.map((_, index) =>{
                         return <LineEnteredWords
+                        key={index}
                         enteredLetters={enteredLetters}/>
                     })
                     
                 }
                 {
-                    emptyLine.map(_ => {
-                        return <EmptyLineWord/>
+                    emptyLine.map((_, index) => {
+                        return <EmptyLineWord
+                        key={index}/>
                     })
                 }
             </tbody>

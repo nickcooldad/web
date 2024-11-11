@@ -9,8 +9,9 @@ export function LowerLine({letter2status, onLetterPress, onEnterPress, onBackspa
             ENTER
         </button>
         {
-            keys3.map(key => {
+            keys3.map((key, index) => {
                 return <button
+                key={index}
                 className={cn('keyLower', letter2status[key])}
                 onClick={() => onLetterPress(key)}>
                     {
