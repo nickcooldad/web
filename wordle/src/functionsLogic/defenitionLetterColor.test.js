@@ -1,4 +1,4 @@
-import { defenitionLetterColor} from "./defenitionLetterColor";
+import { defenitionLetterColor, getLetter2Status} from "./defenitionLetterColor";
 
 
 describe('Определение позиции буквы в слове', () => {
@@ -36,44 +36,22 @@ describe('Определение позиции буквы в слове', () =>
         expect(result).toEqual(['absent', 'present', 'absent', 'absent', 'absent'])
       })
 
-
-    // test('Введенная буква находится в слове', ()=>{
-    //     const enteredWord = 'sport'
-    //     const quantityHiddenLetter = defenitionQuantityLetter(hiddenWord)
-    //     const quantityEnteredLetter = defenitionQuantityLetter(enteredWord)
-    //     const result =  enteredWord.split('').map((item)=> {
-    //         return isLetterInWord(item, quantityHiddenLetter, quantityEnteredLetter)
-    //       })
-    //     expect(result).toEqual([false, true, false, false, false])
-    // }) 
-
-    // test('Из двух букв первая на своем месте, вторая находится в загаднном слове', ()=>{
-    //     const enteredWord = 'eagle'
-    //     const quantityHiddenLetter = defenitionQuantityLetter(hiddenWord)
-    //     const quantityEnteredLetter = defenitionQuantityLetter(enteredWord)
-    //     const result =  enteredWord.split('').map((item)=> {
-    //         return isLetterInWord(item, quantityHiddenLetter, quantityEnteredLetter)
-    //       })
-    //     expect(result).toEqual([true, true, false, false, false])
-    // })
-
-    // test('Из двух одинаковых букв, только одна находится в загаднном слове', ()=>{
-    //     const enteredWord = 'salad'
-    //     const quantityHiddenLetter = defenitionQuantityLetter(hiddenWord)
-    //     const quantityEnteredLetter = defenitionQuantityLetter(enteredWord)
-    //     const result =  enteredWord.split('').map((item)=> {
-    //         return isLetterInWord(item, quantityHiddenLetter, quantityEnteredLetter)
-    //       })
-    //     expect(result).toEqual([false, true, false, false, false])
-    // })
-
-    // test('Из двух одинаковых букв, одна находится на своем месте, как в загаданном слове', ()=>{
-    //     const enteredWord = 'award'
-    //     const quantityHiddenLetter = defenitionQuantityLetter(hiddenWord)
-    //     const quantityEnteredLetter = defenitionQuantityLetter(enteredWord)
-    //     const result =  enteredWord.split('').map((item)=> {
-    //         return isLetterInWord(item, quantityHiddenLetter, quantityEnteredLetter)
-    //       })
-    //     expect(result).toEqual([false, false, false, false, false])
-    // })
 })
+
+
+  describe('Выбор приоритетных цветов', () => {
+    test('Буква находится в первом слове не на своем месте, во втором на своем', () => {
+      const result = getLetter2Status(['eagle', 'award'], 'peace')
+
+      expect(result).toEqual({
+        e : 'correct',
+        a : 'correct',
+        g : 'absent',
+        l : 'absent',
+        w : 'absent',
+        r : 'absent',
+        d : 'absent'
+      })
+
+    })
+  })

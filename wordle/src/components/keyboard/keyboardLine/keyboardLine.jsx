@@ -1,20 +1,25 @@
-import { keys2 } from '../keyboard'
-import './middleLine.css'
+
 import cn from 'classnames'
-export function MiddleLine({letter2status, onLetterPress}){
+import s from  './keyboardLine.module.css'
+export function KeyboardLine({letter2status, onLetterPress, keys, before, after}){
+
     return (<div>
+        {before}
         {
-            keys2.map((key, index) => {
+            keys.map((key, index) => {
                 return <button
                 key={index}
-                className={cn('keyMiddle', letter2status[key])}
+                className={cn(s.keyLine, s[letter2status[key]])
+                }
                 onClick={() => onLetterPress(key)}
-                >
+                 >
                     {
                         key.toUpperCase()
                     }
                 </button>
             })
         }
+        {after}
     </div>)
+
 }

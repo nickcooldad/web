@@ -10,44 +10,18 @@ function App() {
   const hiddenWord = 'peace'
   const [selectedWords, setSelectedWords] = useState([])
   const [enteredLetters, setEnteredLetters] = useState('')
-  const [pressedKey, setPressedKey] = useState(null)
 
 
-  useEffect(() => {
-
-    const hadleKeyDown = (e) => {
-      const key = e.key.toLowerCase()
-
-      if(/^[a-z]$/.test(key)){
-        onLetterPress(key)
-      }
-
-      else if(key === 'enter'){
-        onEnterPress()
-      }
-
-      else if(key === 'backspace'){
-        onBackspacePress()
-      }
-    }
-
-    const handleKeyUp = () => {
-      setPressedKey(null)
-    }
-
-    window.addEventListener('keydown', hadleKeyDown);
-    window.addEventListener('keyup', handleKeyUp)
-
-    return () => {
-      window.removeEventListener('keydown', hadleKeyDown)
-      window.removeEventListener('keyup', handleKeyUp)
-    }
-  }, [enteredLetters, selectedWords])
 
 
 function onLetterPress(key){
-    if(enteredLetters.length < 5) {
-      setEnteredLetters(enteredLetters + key)}
+    setEnteredLetters(prev => {
+      if(prev.length < 5){
+        return prev + key
+      } else{
+        return prev
+      }
+    })
 }
 
 function onEnterPress() {

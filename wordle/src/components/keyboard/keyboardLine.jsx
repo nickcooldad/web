@@ -1,14 +1,15 @@
-import { keys1 } from '../keyboard'
-import cn from 'classnames'
-import './topLine.css'
 
-export function TopLine({letter2status, onLetterPress}){
+import cn from 'classnames'
+import s from  './keyboardLine.module.css'
+export function KeyboardLine({letter2status, onLetterPress, keys, before, after}){
+
     return (<div>
+        {before}
         {
-            keys1.map((key, index) => {
+            keys.map((key, index) => {
                 return <button
                 key={index}
-                className={cn('keyTop', letter2status[key])
+                className={cn(s.keyLine, s[letter2status[key]])
                 }
                 onClick={() => onLetterPress(key)}
                  >
@@ -18,5 +19,7 @@ export function TopLine({letter2status, onLetterPress}){
                 </button>
             })
         }
+        {after}
     </div>)
+
 }

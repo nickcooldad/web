@@ -38,33 +38,45 @@ export function defenitionLetterColor (hiddedWord, selectedWord){
 }
 
 
-export function getLetter2Status (selectedWords ,hiddedWord){
-  const colorKeys = {}
-  const priorityColorsData ={
-    'absent' : 1,
-    'present' : 2,
-    'correct' : 3, 
-    1 : 'absent',
-    2 : 'present',
-    3 : 'correct'
-  }
-  selectedWords.forEach(word => {
-    const colors = defenitionLetterColor(hiddedWord, word)
+export function getLetter2Status (selectedWords, hiddedWord){
+  const letters = selectedWords.flatMap(word => 
+    defenitionLetterColor(hiddedWord, word).map((color, i) => [word[i], color])
+  );
 
-    word.split('').forEach((letter, index) => {
-      const colorKey = colors[index]
+  const entries = ['absent', 'present', 'correct'].flatMap(priority =>
+    letters.filter(([_, color]) => color === priority)
+  );
 
-      if(colorKeys[letter] === undefined){
-        colorKeys[letter] = colorKey
-        return
-      }
+  return Object.fromEntries(entries);
+  
+
+  // const colorKeys = {}
+  // const priorityColorsData ={
+  //   'absent' : 1,
+  //   'present' : 2,
+  //   'correct' : 3, 
+  //   1 : 'absent',
+  //   2 : 'present',
+  //   3 : 'correct'
+  // }
+  // selectedWords.forEach(word => {
+  //   const colors = defenitionLetterColor(hiddedWord, word)
+
+  //   word.split('').forEach((letter, index) => {
+  //     const colorKey = colors[index]
+
+  //     if(colorKeys[letter] === undefined){
+  //       colorKeys[letter] = colorKey
+  //       return
+  //     }
      
-      const priorityColor = Math.max(priorityColorsData[colorKey],priorityColorsData[colorKeys[letter]])
-      colorKeys[letter] = priorityColorsData[priorityColor]
-    })
-  })
+  //     const priorityColor = Math.max(priorityColorsData[colorKey],priorityColorsData[colorKeys[letter]])
+      
+  //     colorKeys[letter] = priorityColorsData[priorityColor]
+  //   })
+  // })
 
-  return colorKeys
+  // return colorKeys
 }
 
 //salad [absent, present, absent, absent, absent] peace
