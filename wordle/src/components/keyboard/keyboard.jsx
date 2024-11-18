@@ -2,7 +2,6 @@
 import { useEffect } from "react"
 import { KeyboardLine } from "./keyboardLine/keyboardLine"
 import { keys1, keys2, keys3 } from "./keyboard"
-import cn from 'classnames'
 import s from './keyboard.module.css'
 
 
