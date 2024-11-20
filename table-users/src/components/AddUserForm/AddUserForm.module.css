@@ -1,0 +1,28 @@
+*{
+    box-sizing: border-box;
+}
+
+.userForm{
+    /* display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; */
+    border: 2px solid grey;
+    width: 250px;
+    height: 250px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.1);;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+}
+
+.save_button{
+    position: relative;
+    height: 30px;
+    width: 150px;
+    left: 50px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    border-radius: 10px;
+    background-color: aquamarine;
+}

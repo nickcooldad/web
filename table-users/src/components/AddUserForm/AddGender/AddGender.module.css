@@ -1,0 +1,15 @@
+*{
+    box-sizing: border-box;
+}
+
+.addGender{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 20px 20px 20px;
+}
+
+.formGender{
+    display: flex;
+    flex-direction: column;
+    border: 1px;
+}

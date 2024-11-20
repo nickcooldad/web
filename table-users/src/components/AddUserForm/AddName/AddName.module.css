@@ -1,0 +1,17 @@
+*{
+    box-sizing: border-box;
+}
+
+.addName{
+    padding: 20px 20px 20px 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.inputName{
+    text-align: center;
+    height: 20px;
+    width: 150px;
+    border-radius: 8px;
+    border: 1px solid grey;
+}

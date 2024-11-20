@@ -1,0 +1,17 @@
+*{
+    box-sizing: border-box;
+}
+
+.addAge{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 20px 20px 20px;
+}
+
+.selectAge{
+    text-align: center;
+    height: 20px;
+    width: 150px;
+    border-radius: 8px;
+    border: 1px solid grey;
+}
