@@ -1,6 +1,11 @@
+import s from './TableUsers.module.css'
+import {useSelector, useDispatch} from 'react-redux'
+import {v4 as uuidv4} from 'uuid'
 
 export function TableUsers (){
 
+const users = useSelector(state => state.users)
+const dispatch = useDispatch()
     return(
         <table>
             <thead>
@@ -13,11 +18,14 @@ export function TableUsers (){
             </thead>
             <tbody>
                 {
-                    <td>
-                        <th>alex</th>
-                        <th>5</th>
-                        <th>m</th>
+                    users.map(user => {
+                        return <td key={uuidv4()}>
+                                <th>{user.name}</th>
+                                <th>{user.age}</th>
+                                <th>{user.gender}</th>
                     </td>
+                    })
+                    
                 }
             </tbody>
         </table>
