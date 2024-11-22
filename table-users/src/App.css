@@ -1,0 +1,13 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+
+}
+
+.App{
+    display: flex;
+    justify-content: center;
+    gap: 10px
+}

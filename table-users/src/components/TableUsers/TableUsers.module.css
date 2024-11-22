@@ -1,0 +1,97 @@
+*{
+    box-sizing: border-box;
+}
+
+table {
+    margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 20px;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+
+  .table thead {
+    background-color: #4CAF50;
+    color: rgb(117, 116, 116);
+    text-transform: uppercase;
+    border: 1px solid;
+  }
+  
+  .table th {
+    padding: 12px 12px 12px 12px;
+    border: 1px solid;
+  }
+  
+
+  .table td {
+    padding: 12px 12px 12px 12px;
+    border-bottom: 1px solid #ddd;
+    border: 1px solid;
+    text-align: center;
+  }
+  
+
+  .table tr:nth-child(even) {
+    background-color: #f9f9f9;
+    height: auto;
+    
+  }
+  
+  .table tr:nth-child(odd) {
+    background-color: #fff;
+  }
+  
+
+  .table tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+  }
+  
+
+  .table td.highlight {
+    font-weight: bold;
+    color: #ff5722;
+  }
+
+
+  .button {
+    width: 30px; /* Ширина кнопки */
+    height: 30px; /* Высота кнопки */
+    background: url('./imagesIcons/minus.svg') no-repeat center; 
+    background-size: contain; 
+    border: none; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease, transform 0.2s ease; 
+    position: relative;
+    top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  
+  
+  .button:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.05); 
+  }
+  
+
+  .button:active {
+    transform: scale(0.95); 
+  }
+
+  .plus {
+    background: url('./imagesIcons/plus.svg') no-repeat center;
+  }
+
+  .reset {
+    background: url('./imagesIcons/reset.svg') no-repeat center;
+  }
+
+  .delete {
+    background: url('./imagesIcons/delete.svg') no-repeat center;
+  }
