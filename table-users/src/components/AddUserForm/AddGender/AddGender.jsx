@@ -10,7 +10,7 @@ export function AddGender({value, onChange}){
     return(
         <div className={s.addGender}>
             gender
-                <foarm className={s.formGender}>
+                <form className={s.formGender}>
                     <label>
                       <input 
                         type='radio' 
@@ -31,8 +31,7 @@ export function AddGender({value, onChange}){
                         />
                         female
                     </label>
-                </foarm>
+                </form>
         </div>
     )
-
 }

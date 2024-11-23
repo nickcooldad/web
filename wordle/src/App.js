@@ -6,27 +6,50 @@ import { Keyboard } from './components/keyboard/keyboard.jsx';
 import { getLetter2Status } from './functionsLogic/defenitionLetterColor.js';
 import { response } from './response/response.js';
 import { ModalWindow } from './components/modalWindow/modalWindow.jsx';
+import { getRandomWord } from './functionsLogic/getRandomWords.js';
 
 // https://react.dev/reference/react/useReducer
 // после окончания игры показывать кнопку «Играть заново» и загадывать новое слово
 
 function reducer(state, action){
   switch (action.type) {
+
     case 'addWord' : 
-      if(state.selectedWords.length < 6){
+      if(state.selectedWords.length < 6 && response.includes(state.enteredLetters)){
         return {...state,
-          selectedWords : [...state.selectedWords, action.payload.word],
+          selectedWords : [...state.selectedWords, state.enteredLetters],
+          enteredLetters : ''
         }
       } else {
-        return {
-          ...state
-        }
+        return state
       };
-      case 'remote':
+
+      case 'addLetters' :
+        if(state.enteredLetters.length < 5){
         return {
-          selectedWords : [],
-          updateHiidenWord : !state.updateHiidenWord
+          ...state,
+          enteredLetters : state.enteredLetters + action.payload
         }
+      } else {
+        return state
+      }
+
+      case 'deleteLetter' :
+        if(state.enteredLetters.length > 0){
+          return {
+            ...state,
+            enteredLetters: state.enteredLetters.slice(0, -1)
+            } 
+          }else{
+            return state
+        }
+
+      case 'againGame':
+        return {
+          selectedWords : [], 
+          enteredLetters : [], 
+          hiddenWord : getRandomWord(response)}
+
     default :
       throw new Error('Error')
   }
@@ -35,74 +58,56 @@ function reducer(state, action){
 
 function App() {
 
-  const [enteredLetters, setEnteredLetters] = useState('')
-  const [state, dispatch] = useReducer(reducer, {selectedWords : [], updateHiidenWord : false})
-  const [hiddenWord, setHiddenWord] = useState('')
 
-  useEffect(() => {
-  const randomIndex = Math.floor(Math.random() * response.length)
-   setHiddenWord(response[randomIndex])
-  },[state.updateHiidenWord])
-  
+  const [state, dispatch] = useReducer(reducer, {selectedWords : [], enteredLetters : '', hiddenWord : getRandomWord(response)})
+  console.log(state)
+
+
 function onLetterPress(key){
-    setEnteredLetters(prev => {
-      if(prev.length < 5){
-        return prev + key
-      } else{
-        return prev
-      }
-    })
-}
+      dispatch({
+        type : 'addLetters',
+        payload : key
+      })
+    }
+
 
 function onEnterPress() {
-
-  setEnteredLetters(prev => {
-    if(prev.length === 5 && response.includes(prev)){
-      dispatch({
-        type : 'addWord',
-        payload : { word : prev }
-      })
-      return ''
-    } else{
-      return prev
-    }
+  dispatch({
+    type : 'addWord',
   })
 }
 
 function onBackspacePress () {
-    setEnteredLetters(prev => {
-      if(prev.length > 0){
-        return prev.slice(0, -1)
-      } else {
-        return ''
-      }
-    })
+  dispatch({
+    type : 'deleteLetter'
+  })
 }
 
 function handleClickAgainPlay (){
   dispatch({
-    type : 'remote',
+    type : 'againGame'
   })
-  setEnteredLetters('')
 }
+  
 
-const getWindowCondition = () => state.selectedWords.length === 6 || state.selectedWords.includes((hiddenWord))
+
+const getWindowCondition = () => state.selectedWords.length === 6 || state.selectedWords.includes((state.hiddenWord))
   return (
     <div className="App">
       {getWindowCondition() && 
       <ModalWindow 
-      condition={state.selectedWords.includes((hiddenWord))}
+      condition={state.selectedWords.includes((state.hiddenWord))}
       handleClickAgainPlay={handleClickAgainPlay}
       />}
       
       <TableOfWords   
         selectedWords={state.selectedWords}
-        enteredLetters={enteredLetters}
-        hiddenWord={hiddenWord}
+        enteredLetters={state.enteredLetters}
+        hiddenWord={state.hiddenWord}
       />
      
       <Keyboard
-       letter2status={getLetter2Status(state.selectedWords, hiddenWord)}
+       letter2status={getLetter2Status(state.selectedWords, state.hiddenWord)}
        onLetterPress={onLetterPress}
        onEnterPress={onEnterPress}
        onBackspacePress={onBackspacePress}

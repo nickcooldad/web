@@ -4,7 +4,7 @@ import s from './AddAge.module.css'
 
 export function AddAge({value, onChange}){
     const handleInputChange = (e) =>{
-        onChange(e.target.value)
+        onChange(+e.target.value)
     }
 
     return(

@@ -20,9 +20,9 @@ const reducer = (state = initialState, action) => {
                     ...state,
                     users : state.users.map( user => {
                         if(user.id === action.payload){
-                            return {...user, age : Number(user.age) + 1}
+                            return {...user, age : user.age + 1}
                         }
-                        return {...user}
+                        return user
                     })
                 }
 
@@ -31,9 +31,9 @@ const reducer = (state = initialState, action) => {
                     ...state,
                     users : state.users.map( user => {
                         if(user.id === action.payload){
-                            return {...user, age :  Number(user.age) > 0 ? Number(user.age) - 1 : 0}
+                            return {...user, age :  user.age > 0 ? user.age - 1 : 0}
                         }
-                        return {...user}
+                        return user
                     })
                 }
 
@@ -44,7 +44,7 @@ const reducer = (state = initialState, action) => {
                             if(user.id === action.payload){
                                 return {...user, gender :  user.gender === 'male' ? 'female' : 'male'}
                             }
-                            return {...user}
+                            return user
                         })
                     }
                     case 'updateNameUser' :
@@ -54,15 +54,13 @@ const reducer = (state = initialState, action) => {
                               if(user.id === action.payload.id){
                                 return { ...user, name: action.payload.name } 
                             } 
-                                return {...user}
+                                return user
                             }
                             )
                           }
                     default :
                     return state
                     }
-    
-
 }
 
 
