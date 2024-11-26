@@ -8,6 +8,7 @@ import { Select } from './components/select';
 import { catchOrReleasePokemons } from './redux/actionCatchOrReleasePokemons';
 import { enteredPageBack, enteredSelectPage, enteredPageNext } from './redux/actionPageNumber';
 import {useSelector, useDispatch} from 'react-redux'
+import { actionfetchPokemons } from './redux/actionFetchPokemons';
 
 //fetchPokemons()
 // async function catchPokemonApi(id) {
@@ -18,6 +19,7 @@ import {useSelector, useDispatch} from 'react-redux'
  //console.log(await resultJson.next, await resultJson.results)
  //link = await resultJson.next
  
+  
  //console.log(pokemonsList)
 //  const links = (await result.json()).next
 //  return ((await result.json()).result)
@@ -52,34 +54,36 @@ import {useSelector, useDispatch} from 'react-redux'
 
 
 function App() {
-  const page = useSelector(state => state.pageData)
+  const {number, size} = useSelector(state => state.pageData)
   const caughtPokemon = useSelector(state => state.caughtPokemons)
+  const list = useSelector(state => state.list)
+  const count = useSelector(state => state.count)
   const dispatch = useDispatch()
-  console.log(page)
+
 
   console.log("🎨 App")
   //const [caughtPokemons, setCaughtPokemons] = useState([])
-  const [list, setList] = useState([])
+  //const [list, setList] = useState([])
   //const [pageData, setPageData] = useState({number: 0, size: 8})
-  const [count, setCount] = useState(0);
+  //const [count, setCount] = useState(0);
  // const [isLoading, setIsLoading] = useState(true)
 
 
-
+console.log(actionfetchPokemons(number, size)())
   useEffect(() => {
-    const controller = new AbortController();
+    //const controller = new AbortController();
+    actionfetchPokemons(number, size)()
       //setIsLoading(true);
-        fetchPokemons(page.number, page.size, controller.signal).then(({results, count}) => {
-          setList(results);
-          setCount(count)
-            //setIsLoading(false)
-        }, () => {})
-        
+        // fetchPokemons(number, size, controller.abort()).then(({results, count}) => {
+        //   setList(results);
+        //   setCount(count)
+        //     //setIsLoading(false)
+        // }, () => {})
         
     return () => {
-      controller.abort();
+      ;
     };
-  }, [page]);
+  }, [number, size]);
 
 
     //console.log(pageData.number,'>>>><<')
@@ -114,21 +118,21 @@ function App() {
     // })
     dispatch(catchOrReleasePokemons(pokemon))
   }
-  const lastNumberPage = getLastPageNumber(count, page.size)
+  const lastNumberPage = getLastPageNumber(count, size)
 
   console.log(">>>", list);
   return ( 
     <div className="home">
       <h1 className='title'>Поймано покемонов</h1>
       <h1 className='counter'>{`${caughtPokemon.length} / ${count}`}</h1>
-      <Select hundleclickSelect={hundlClickSelect} pageDataSize={page.size} selectList={[8,12,20,24,40]}/>
+      <Select hundleclickSelect={hundlClickSelect} pageDataSize={size} selectList={[8,12,20,24,40]}/>
       <div className='buttonsNextAndBack'>
-      <button className='fetchButtonNext' onClick={hundleClickBottonBack}  disabled={page.number === 0 } >Назад...</button>
-      <button className='fetchButtonBack'onClick={hundleClickBottonNext} disabled={page.number === lastNumberPage}>Вперед...</button>
+      <button className='fetchButtonNext' onClick={hundleClickBottonBack}  disabled={number === 0 } >Назад...</button>
+      <button className='fetchButtonBack'onClick={hundleClickBottonNext} disabled={number === lastNumberPage}>Вперед...</button>
       </div>
       <div className='note'>{
         list.map(pokemon => {
-          return <Pokemon
+          return <Pokemon 
             id={pokemon.id}
             name={pokemon.name}
             // catchOrReleasePokemon={() => {}}

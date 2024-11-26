@@ -1,6 +1,8 @@
-import {createStore} from "redux"
+import {createStore, applyMiddleware} from "redux"
+import {thunk} from 'redux-thunk'
 
 const initialState = {
+    loading : false,
     caughtPokemons : [],
     list : [],
     pageData : {number: 0, size : 8},
@@ -52,12 +54,28 @@ const reducer = (state = initialState, action) => {
                 }
             }
         }
+
+        case 'fetchRequest' : {
+            return {
+                ...state,
+                loading : true
+            }
+        }
+
+        case 'fetchSuccess' : {
+            return {
+                ...state,
+                loading : false,
+                list : action.list,
+                count : action.count
+            }
+        }
         default :
         return state
     }
 }
 
 
-const store = createStore(reducer)
+const store = createStore(reducer, applyMiddleware(thunk))
 
 export default store
