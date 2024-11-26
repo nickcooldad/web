@@ -7,7 +7,7 @@ import { ChangeName } from './ChangeName/ChangeName'
 
 export function TableUsers (){
 
-const users = useSelector(state => state.users)
+const users = useSelector()
 const dispatch = useDispatch()
 
 
