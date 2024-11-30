@@ -1,81 +1,65 @@
-import {createStore, applyMiddleware} from "redux"
-import {thunk} from 'redux-thunk'
+import {createStore, applyMiddleware, combineReducers} from "redux"
+// import {thunk} from 'redux-thunk'
+import { composeWithDevTools } from 'redux-devtools-extension';
+import {paginationPokemons} from './reducerPaginationPokemons.js';
+import {caughtOrReleaserPokemons} from './reducerCaughtPokemons.js';
+import {getVisibleListPokemons} from './reducerVisibleListPokemons.js';
+import {actionFetchPokemons} from './actionFetchPokemons.js'
 
-const initialState = {
-    loading : false,
-    caughtPokemons : [],
-    list : [],
-    pageData : {number: 0, size : 8},
-    count : 0
-}
+// const initialState = {
+//     caughtPokemons : [],
 
-const reducer = (state = initialState, action) => {
-    switch (action.type){
-        case 'pageSelect' : {
-            return {
-                ...state, 
-                pageData : {
-                    number : Math.floor(state.pageData.number*state.pageData.size/action.sizeSelect),
-                    size : action.sizeSelect
-                }
-            }
-        }
+//     list : [],
 
-        case 'nextPage' : {
-            return {
-                ...state,
-                pageData : {
-                    ...state.pageData,
-                    number : state.pageData.number + 1
-                }
-            }
-        }
+//     pagination: {
+//         loading : false,
+//         pageData : {number: 0, size : 8},
+//         count : paginationPokemons
+//     },
+// }
 
-        case 'backPage' : {
-            return {
-                ...state,
-                pageData : {
-                    ...state.pageData,
-                    number : state.pageData.number - 1
-                }
-            }
-        }
+const rootReducer = combineReducers({
+    caughtPokemons : caughtOrReleaserPokemons,
+    list : getVisibleListPokemons,
+    pagination : paginationPokemons
+})
 
-        case 'catchOrRelease' : {
-            if(state.caughtPokemons.includes(action.pokemon)){
-                return {
-                    ...state,
-                    caughtPokemons : state.caughtPokemons.filter(el => el !== action.pokemon)
-                }
-            } else {
-                return {
-                    ...state,
-                    caughtPokemons : [...state.caughtPokemons, action.pokemon]
-                }
-            }
-        }
-
-        case 'fetchRequest' : {
-            return {
-                ...state,
-                loading : true
-            }
-        }
-
-        case 'fetchSuccess' : {
-            return {
-                ...state,
-                loading : false,
-                list : action.list,
-                count : action.count
-            }
-        }
-        default :
-        return state
+const thunk = storeApi => next => action => {
+    if (typeof action === "function") {
+        action(storeApi.dispatch, storeApi.getState);
+    } else {
+        next(action);
     }
 }
 
 
-const store = createStore(reducer, applyMiddleware(thunk))
+const m1 = storeApi => next => action => {
+    console.log("m1", {storeApi, action, next});
+    next(action);
+}
+
+
+const m2 = storeApi => next => action => {
+    console.log("m2");
+    next(action);
+}
+
+const paginationMiddleware = storeApi => next => action => {
+    next(action)
+    if(action.type === 'pageSelect' || action.type === 'nextPage' || action.type === 'backPage'){
+        storeApi.dispatch(actionFetchPokemons())
+    }
+}
+
+const store = createStore(rootReducer, applyMiddleware(paginationMiddleware, m1, m2, thunk))
+store.dispatch(actionFetchPokemons());
 
 export default store
+
+// добавлять в локалсторадж список пойманных покемонов, если этот список поменялся
+// с помощью middleware
+
+// https://redux.js.org/api/store
+// https://redux.js.org/api/applymiddleware
+
+// https://react.dev/reference/react/createContext

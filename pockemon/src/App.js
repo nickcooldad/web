@@ -8,7 +8,7 @@ import { Select } from './components/select';
 import { catchOrReleasePokemons } from './redux/actionCatchOrReleasePokemons';
 import { enteredPageBack, enteredSelectPage, enteredPageNext } from './redux/actionPageNumber';
 import {useSelector, useDispatch} from 'react-redux'
-import { actionfetchPokemons } from './redux/actionFetchPokemons';
+import { actionFetchPokemons } from './redux/actionFetchPokemons';
 
 //fetchPokemons()
 // async function catchPokemonApi(id) {
@@ -54,39 +54,41 @@ import { actionfetchPokemons } from './redux/actionFetchPokemons';
 
 
 function App() {
-  const {number, size} = useSelector(state => state.pageData)
+  const {number, size} = useSelector(state => state.pagination.pageData)
+  //const page = useSelector(state => state.pageData)
+
   const caughtPokemon = useSelector(state => state.caughtPokemons)
   const list = useSelector(state => state.list)
-  const count = useSelector(state => state.count)
+  const count = useSelector(state => state.pagination.count)
   const dispatch = useDispatch()
 
-
-  console.log("🎨 App")
+  console.log(list, count)
+  //console.log("🎨 App")
   //const [caughtPokemons, setCaughtPokemons] = useState([])
   //const [list, setList] = useState([])
   //const [pageData, setPageData] = useState({number: 0, size: 8})
   //const [count, setCount] = useState(0);
  // const [isLoading, setIsLoading] = useState(true)
 
-
-console.log(actionfetchPokemons(number, size)())
-  useEffect(() => {
-    //const controller = new AbortController();
-    actionfetchPokemons(number, size)()
-      //setIsLoading(true);
-        // fetchPokemons(number, size, controller.abort()).then(({results, count}) => {
-        //   setList(results);
-        //   setCount(count)
-        //     //setIsLoading(false)
-        // }, () => {})
+// console.log(number, size)
+//   useEffect(() => {
+//     //const controller = new AbortController();
+//     dispatch(actionFetchPokemons(number, size))
+    
+//       //setIsLoading(true);
+//         // fetchPokemons(number, size, controller.abort()).then(({results, count}) => {
+//         //   setList(results);
+//         //   setCount(count)`
+//         //     //setIsLoading(false)
+//         // }, () => {})
         
-    return () => {
-      ;
-    };
-  }, [number, size]);
+//     // return () => {
+//     //   ;
+//     // };
+//   }, []);
 
 
-    //console.log(pageData.number,'>>>><<')
+    //console.log(pageData.number,'>>>><<')  
 
   const hundlClickSelect = (sizeSelect) => {
     // setPageData((prev) => ({
@@ -120,7 +122,7 @@ console.log(actionfetchPokemons(number, size)())
   }
   const lastNumberPage = getLastPageNumber(count, size)
 
-  console.log(">>>", list);
+  //console.log(">>>", list);
   return ( 
     <div className="home">
       <h1 className='title'>Поймано покемонов</h1>
