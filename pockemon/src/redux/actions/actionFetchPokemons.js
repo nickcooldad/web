@@ -1,4 +1,4 @@
-import { fetchPokemons } from "../API/fetchPokemons"
+import { fetchPokemons } from "../../API/fetchPokemons"
 
 export function actionFetchPokemons() {
     return async (dispatch, getState) => {
@@ -9,6 +9,7 @@ export function actionFetchPokemons() {
         })
 
         const {count, results} = await fetchPokemons(number, size)
+        
         dispatch({
             type : 'fetchSuccess',
             count,

@@ -1,3 +1,6 @@
+
+import { getDataLocalStorage } from "../getDataLocalStorage"
+
 export const caughtOrReleaserPokemons = (state = [], action) => {
     switch (action.type){
         case 'catchOrRelease' : {

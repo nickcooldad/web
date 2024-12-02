@@ -5,10 +5,10 @@ import {Pokemon} from './components/pokemon';
 import { fetchPokemons } from './API/fetchPokemons';
 import { getLastPageNumber } from './test/getLastPageNumber';
 import { Select } from './components/select';
-import { catchOrReleasePokemons } from './redux/actionCatchOrReleasePokemons';
-import { enteredPageBack, enteredSelectPage, enteredPageNext } from './redux/actionPageNumber';
+import { catchOrReleasePokemons } from './redux/actions/actionCatchOrReleasePokemons';
+import { enteredPageBack, enteredSelectPage, enteredPageNext } from './redux/actions/actionPageNumber';
 import {useSelector, useDispatch} from 'react-redux'
-import { actionFetchPokemons } from './redux/actionFetchPokemons';
+import { actionFetchPokemons } from './redux/actions/actionFetchPokemons';
 
 //fetchPokemons()
 // async function catchPokemonApi(id) {
@@ -123,7 +123,7 @@ function App() {
   const lastNumberPage = getLastPageNumber(count, size)
 
   //console.log(">>>", list);
-  return ( 
+  return (list.length > 0 &&
     <div className="home">
       <h1 className='title'>Поймано покемонов</h1>
       <h1 className='counter'>{`${caughtPokemon.length} / ${count}`}</h1>
