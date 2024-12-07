@@ -1,12 +1,9 @@
-import {createStore, applyMiddleware, combineReducers, __DO_NOT_USE__ActionTypes} from "redux"
+import {createStore, applyMiddleware, combineReducers} from "redux"
 // import {thunk} from 'redux-thunk'
-import { composeWithDevTools } from 'redux-devtools-extension';
 import {paginationPokemons} from './reducers/reducerPaginationPokemons.js';
 import {caughtOrReleaserPokemons} from './reducers/reducerCaughtPokemons.js';
 import {getVisibleListPokemons} from './reducers/reducerVisibleListPokemons.js';
 import {actionFetchPokemons} from './actions/actionFetchPokemons.js'
-import { catchOrReleasePokemons } from "./actions/actionCatchOrReleasePokemons.js";
-import { arrIsEqual } from "./arrEqual.js";
 import { getDataLocalStorage } from "./getDataLocalStorage.js";
 
 // const initialState = {
@@ -59,8 +56,7 @@ const addPokemonToList = storeApi => next => action => {
     const result = next(action)
     const nextList = storeApi.getState().caughtPokemons
     console.log(prevList, nextList)
-    if(!arrIsEqual(prevList, nextList)){
-        console.log('add++')
+    if(prevList !== nextList){
         localStorage.setItem('caughtPokemons', JSON.stringify(nextList))
     }
     return result
@@ -69,6 +65,7 @@ const addPokemonToList = storeApi => next => action => {
 const preloadedState = {
     caughtPokemons : getDataLocalStorage()
 }
+
 console.log(preloadedState)
 
 const store = createStore(rootReducer, preloadedState, applyMiddleware(paginationMiddleware, addPokemonToList, m1, m2, thunk))

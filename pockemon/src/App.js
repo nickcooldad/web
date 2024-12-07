@@ -60,6 +60,7 @@ function App() {
   const caughtPokemon = useSelector(state => state.caughtPokemons)
   const list = useSelector(state => state.list)
   const count = useSelector(state => state.pagination.count)
+  const loading = useSelector(state => state.pagination.loading)
   const dispatch = useDispatch()
 
   console.log(list, count)
@@ -129,10 +130,10 @@ function App() {
       <h1 className='counter'>{`${caughtPokemon.length} / ${count}`}</h1>
       <Select hundleclickSelect={hundlClickSelect} pageDataSize={size} selectList={[8,12,20,24,40]}/>
       <div className='buttonsNextAndBack'>
-      <button className='fetchButtonNext' onClick={hundleClickBottonBack}  disabled={number === 0 } >Назад...</button>
-      <button className='fetchButtonBack'onClick={hundleClickBottonNext} disabled={number === lastNumberPage}>Вперед...</button>
+      <button className='fetchButtonNext' onClick={hundleClickBottonBack}  disabled={number === 0 && loading} >Назад...</button>
+      <button className='fetchButtonBack'onClick={hundleClickBottonNext} disabled={number === lastNumberPage && loading}>Вперед...</button>
       </div>
-      <div className='note'>{
+      <div className='note'>{ !loading &&
         list.map(pokemon => {
           return <Pokemon 
             id={pokemon.id}
