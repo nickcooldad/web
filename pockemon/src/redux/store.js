@@ -5,7 +5,7 @@ import {caughtOrReleaserPokemons} from './reducers/reducerCaughtPokemons.js';
 import {getVisibleListPokemons} from './reducers/reducerVisibleListPokemons.js';
 import {actionFetchPokemons} from './actions/actionFetchPokemons.js'
 import { getDataLocalStorage } from "./getDataLocalStorage.js";
-
+import { combineReducersNew } from "./combineReducers.js";
 // const initialState = {
 //     caughtPokemons : [],
 
@@ -18,12 +18,17 @@ import { getDataLocalStorage } from "./getDataLocalStorage.js";
 //     },
 // }
 
-const rootReducer = combineReducers({
+const rootReducer = combineReducersNew({
     caughtPokemons : caughtOrReleaserPokemons,
     list : getVisibleListPokemons,
     pagination : paginationPokemons
 })
-
+console.log(rootReducer)
+console.log(combineReducersNew({
+    caughtPokemons : caughtOrReleaserPokemons,
+    list : getVisibleListPokemons,
+    pagination : paginationPokemons
+}))
 const thunk = storeApi => next => action => {
     if (typeof action === "function") {
         action(storeApi.dispatch, storeApi.getState);
@@ -68,7 +73,7 @@ const preloadedState = {
 
 console.log(preloadedState)
 
-const store = createStore(rootReducer, preloadedState, applyMiddleware(paginationMiddleware, addPokemonToList, m1, m2, thunk))
+const store = createStore(rootReducer, applyMiddleware(paginationMiddleware, addPokemonToList, m1, m2, thunk))
 store.dispatch(actionFetchPokemons());
 
 export default store

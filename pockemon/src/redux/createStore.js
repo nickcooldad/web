@@ -34,7 +34,7 @@ const reducer = (state = 0, action) => {
         return state + 1
     }
     else if(action.type === 'Dicrement'){
-        return state - 1
+        return state - 1 
     } 
     return state
 }
