@@ -6,6 +6,11 @@ import {getVisibleListPokemons} from './reducers/reducerVisibleListPokemons.js';
 import {actionFetchPokemons} from './actions/actionFetchPokemons.js'
 import { getDataLocalStorage } from "./getDataLocalStorage.js";
 import { combineReducersNew } from "./combineReducers.js";
+import {configureStore} from '@reduxjs/toolkit'
+import { reducerGetVisibleListPokemon } from "../reduxToolkit/reducers/reducerVisibleListPokemonsRTK.js";
+import { reducerPagination } from "../reduxToolkit/reducers/reducerPaginationPokemonsRTK.js";
+import { reducerCaughtPokemons } from "../reduxToolkit/reducers/reducerCaughtPokemonsRTK.js";
+import { fetchPokemonsAsyncThunk } from "../reduxToolkit/reducers/fetchPokemonsAsyncThunk.js";
 // const initialState = {
 //     caughtPokemons : [],
 
@@ -23,12 +28,7 @@ const rootReducer = combineReducersNew({
     list : getVisibleListPokemons,
     pagination : paginationPokemons
 })
-console.log(rootReducer)
-console.log(combineReducersNew({
-    caughtPokemons : caughtOrReleaserPokemons,
-    list : getVisibleListPokemons,
-    pagination : paginationPokemons
-}))
+
 const thunk = storeApi => next => action => {
     if (typeof action === "function") {
         action(storeApi.dispatch, storeApi.getState);
@@ -73,9 +73,28 @@ const preloadedState = {
 
 console.log(preloadedState)
 
-const store = createStore(rootReducer, applyMiddleware(paginationMiddleware, addPokemonToList, m1, m2, thunk))
-store.dispatch(actionFetchPokemons());
+// const store = createStore(rootReducer, applyMiddleware(paginationMiddleware, addPokemonToList, m1, m2, thunk))
+ 
+const store = configureStore({
+    reducer : {
+        caughtPokemons : reducerCaughtPokemons,
+        list : reducerGetVisibleListPokemon,
+        pagination : reducerPagination
+    },
 
+    middleware: (getDefaultMiddleware) =>
+    [
+        ...getDefaultMiddleware(),
+        paginationMiddleware,
+        addPokemonToList,
+        m1,
+        m2,
+        thunk
+    ]
+    
+})
+
+store.dispatch(fetchPokemonsAsyncThunk());
 export default store
 
 // добавлять в локалсторадж список пойманных покемонов, если этот список поменялся

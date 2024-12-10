@@ -1,5 +1,4 @@
 import { fetchPokemons } from "../../API/fetchPokemons"
-
 export function actionFetchPokemons() {
     return async (dispatch, getState) => {
         const {number, size} = getState().pagination.pageData

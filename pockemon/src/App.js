@@ -123,7 +123,7 @@ function App() {
   }
   const lastNumberPage = getLastPageNumber(count, size)
 
-  //console.log(">>>", list);
+  console.log(">>>", list);
   return (list.length > 0 &&
     <div className="home">
       <h1 className='title'>Поймано покемонов</h1>
