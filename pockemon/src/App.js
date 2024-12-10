@@ -5,11 +5,12 @@ import {Pokemon} from './components/pokemon';
 import { fetchPokemons } from './API/fetchPokemons';
 import { getLastPageNumber } from './test/getLastPageNumber';
 import { Select } from './components/select';
-import { catchOrReleasePokemons } from './redux/actions/actionCatchOrReleasePokemons';
+//import { catchOrReleasePokemons } from './redux/actions/actionCatchOrReleasePokemons';
 import { enteredPageBack, enteredSelectPage, enteredPageNext } from './redux/actions/actionPageNumber';
 import {useSelector, useDispatch} from 'react-redux'
 import { actionFetchPokemons } from './redux/actions/actionFetchPokemons';
-
+import { catchOrReleasePokemons } from './reduxToolkit/reducers/reducerCaughtPokemonsRTK';
+import { fetchRequest, fetchSuccess, pageSelect, nextPage, backPage } from './reduxToolkit/reducers/reducerPaginationPokemonsRTK';
 //fetchPokemons()
 // async function catchPokemonApi(id) {
 //   await new Promise(resolve => setTimeout(resolve, 1000));
@@ -96,7 +97,8 @@ function App() {
     //   number: Math.floor(prev.number*prev.size/sizeSelect),
     //   size: sizeSelect,
     // }))
-    dispatch(enteredSelectPage(sizeSelect))
+    dispatch(pageSelect(sizeSelect))
+    //dispatch(enteredSelectPage(sizeSelect))
   }
 
   const hundleClickBottonBack = async () => {
@@ -119,6 +121,7 @@ function App() {
     //   }
 
     // })
+    //dispatch(catchOrReleasePokemons(pokemon))
     dispatch(catchOrReleasePokemons(pokemon))
   }
   const lastNumberPage = getLastPageNumber(count, size)
@@ -130,8 +133,8 @@ function App() {
       <h1 className='counter'>{`${caughtPokemon.length} / ${count}`}</h1>
       <Select hundleclickSelect={hundlClickSelect} pageDataSize={size} selectList={[8,12,20,24,40]}/>
       <div className='buttonsNextAndBack'>
-      <button className='fetchButtonNext' onClick={hundleClickBottonBack}  disabled={number === 0 && loading} >Назад...</button>
-      <button className='fetchButtonBack'onClick={hundleClickBottonNext} disabled={number === lastNumberPage && loading}>Вперед...</button>
+      <button className='fetchButtonNext' onClick={() => dispatch(nextPage())}  disabled={number === 0 && loading} >Назад...</button>
+      <button className='fetchButtonBack'onClick={() => dispatch(backPage())} disabled={number === lastNumberPage && loading}>Вперед...</button>
       </div>
       <div className='note'>{ !loading &&
         list.map(pokemon => {

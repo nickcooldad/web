@@ -5,10 +5,11 @@ const caughtOrReleaserPokemonsSlice = createSlice({
     initialState: [],
     reducers : {
         catchOrReleasePokemons : (state, action) => {
-            if(state.includes(action.pokemon)){
-                return state.filter(el => el !== action.pokemon)
+            console.log("-=-=-", action.pokemon)
+            if(state.includes(action.payload)){
+                return state.filter(el => el !== action.payload)
             } else {
-                return [...state, action.pokemon]
+                return [...state, action.payload]
             }
         }
     }

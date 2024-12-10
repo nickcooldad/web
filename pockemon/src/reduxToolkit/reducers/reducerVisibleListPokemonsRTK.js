@@ -7,13 +7,15 @@ export const getVisibleListPokemonsSlice = createSlice({
     initialState : [],
     reducers : {
         fetchSuccess : (state, action) => {
-            return action.list
+            return action.payload.list
         }
     },
     extraReducers : (builder) => {
-        builder.addCase(fetchPokemonsAsyncThunk.fulfilled, (state, action) => {
-            state = action.payload.results
-            console.log(action)
+        builder
+        .addCase(fetchPokemonsAsyncThunk.fulfilled, (state, action) => {
+            console.log(state)
+            return action.payload.results
+           
         })
     }
 })

@@ -14,20 +14,21 @@ const paginationPokemonsSlice = createSlice({
         },
         fetchSuccess : (state, action) => {
             state.loading = false
-            state.count = action.count
+            state.count = action.payload
         },
         pageSelect : (state, action) => {
+            console.log('AAAAAAA=]==', action)
             state.pageData = {
-                number : Math.floor(state.pageData.number*state.pageData.size/action.sizeSelect),
-                size : action.sizeSelect
+                number : Math.floor(state.pageData.number*state.pageData.size/action.payload),
+                size : action.payload
             }
         },
         nextPage : (state) => {
-            state.pageData.number = state.pageData.number + 1
+           state.pageData.number += 1
         
         },
         backPage : (state) => {
-            state.pageData.number = state.pageData.number - 1
+            state.pageData.number = state.pageData.number -= 1
         }
 
     }
