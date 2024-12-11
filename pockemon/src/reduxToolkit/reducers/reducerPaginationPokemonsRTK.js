@@ -1,5 +1,6 @@
 
 import { createSlice } from '@reduxjs/toolkit'
+import { fetchPokemonsAsyncThunk } from './fetchPokemonsAsyncThunk'
 
 const paginationPokemonsSlice = createSlice({
     name : 'paginationPokenons',
@@ -9,15 +10,7 @@ const paginationPokemonsSlice = createSlice({
         count : 0
     },
     reducers : {
-        fetchRequest : (state) => {
-            state.loading = true
-        },
-        fetchSuccess : (state, action) => {
-            state.loading = false
-            state.count = action.payload
-        },
         pageSelect : (state, action) => {
-            console.log('AAAAAAA=]==', action)
             state.pageData = {
                 number : Math.floor(state.pageData.number*state.pageData.size/action.payload),
                 size : action.payload
@@ -28,9 +21,15 @@ const paginationPokemonsSlice = createSlice({
         
         },
         backPage : (state) => {
-            state.pageData.number = state.pageData.number -= 1
+            state.pageData.number -= 1
         }
-
+    },
+    extraReducers : (builder) => {
+        builder
+        .addCase(fetchPokemonsAsyncThunk.fulfilled, (state, action) => {
+            state.count = action.payload.count
+            state.loading = false
+        })
     }
 })
 

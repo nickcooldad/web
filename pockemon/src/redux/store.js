@@ -52,7 +52,7 @@ const m2 = storeApi => next => action => {
 const paginationMiddleware = storeApi => next => action => {
     next(action)
     if(action.type === 'pageSelect' || action.type === 'nextPage' || action.type === 'backPage'){
-        storeApi.dispatch(actionFetchPokemons())
+        storeApi.dispatch(fetchPokemonsAsyncThunk())
     }
 }
 
@@ -79,7 +79,7 @@ const store = configureStore({
     reducer : {
         caughtPokemons : reducerCaughtPokemons,
         list : reducerGetVisibleListPokemon,
-        pagination : reducerPagination
+        pagination : reducerPagination,
     },
 
     middleware: (getDefaultMiddleware) =>
@@ -90,7 +90,8 @@ const store = configureStore({
         m1,
         m2,
         thunk
-    ]
+    ],
+    preloadedState
     
 })
 

@@ -11,6 +11,8 @@ import {useSelector, useDispatch} from 'react-redux'
 import { actionFetchPokemons } from './redux/actions/actionFetchPokemons';
 import { catchOrReleasePokemons } from './reduxToolkit/reducers/reducerCaughtPokemonsRTK';
 import { fetchRequest, fetchSuccess, pageSelect, nextPage, backPage } from './reduxToolkit/reducers/reducerPaginationPokemonsRTK';
+import { fetchPokemonsAsyncThunk } from './reduxToolkit/reducers/fetchPokemonsAsyncThunk';
+import store from './redux/store';
 //fetchPokemons()
 // async function catchPokemonApi(id) {
 //   await new Promise(resolve => setTimeout(resolve, 1000));
@@ -93,35 +95,28 @@ function App() {
     //console.log(pageData.number,'>>>><<')  
 
   const hundlClickSelect = (sizeSelect) => {
-    // setPageData((prev) => ({
-    //   number: Math.floor(prev.number*prev.size/sizeSelect),
-    //   size: sizeSelect,
-    // }))
     dispatch(pageSelect(sizeSelect))
     //dispatch(enteredSelectPage(sizeSelect))
+    const { number, size } = store.getState().pagination.pageData;
+    dispatch(fetchPokemonsAsyncThunk({ number, size }));
   }
 
   const hundleClickBottonBack = async () => {
-    //setPageData((prev) => ({...prev, number : prev.number - 1}))
-    dispatch(enteredPageBack())
+    //dispatch(enteredPageBack())
+    dispatch(backPage())
+    const { number, size } = store.getState().pagination.pageData;
+    dispatch(fetchPokemonsAsyncThunk({ number, size }));
   }
 
   const hundleClickBottonNext = async () => {
-    //setPageData((prev) => ({...prev, number : prev.number + 1}))
-    dispatch(enteredPageNext())
+    //dispatch(enteredPageNext())
+    dispatch(nextPage())
+    const { number, size } = store.getState().pagination.pageData;
+    dispatch(fetchPokemonsAsyncThunk({ number, size }));
   }
 
 
   const catchOrReleasePokemon = async (pokemon) => {
-    // setCaughtPokemons(prev => {
-    //   if(prev.includes(pokemon)){
-    //     return prev.filter(item => item !== pokemon);
-    //   } else {
-    //     return [...prev, pokemon];
-    //   }
-
-    // })
-    //dispatch(catchOrReleasePokemons(pokemon))
     dispatch(catchOrReleasePokemons(pokemon))
   }
   const lastNumberPage = getLastPageNumber(count, size)
@@ -133,8 +128,8 @@ function App() {
       <h1 className='counter'>{`${caughtPokemon.length} / ${count}`}</h1>
       <Select hundleclickSelect={hundlClickSelect} pageDataSize={size} selectList={[8,12,20,24,40]}/>
       <div className='buttonsNextAndBack'>
-      <button className='fetchButtonNext' onClick={() => dispatch(nextPage())}  disabled={number === 0 && loading} >Назад...</button>
-      <button className='fetchButtonBack'onClick={() => dispatch(backPage())} disabled={number === lastNumberPage && loading}>Вперед...</button>
+      <button className='fetchButtonBack' onClick={hundleClickBottonBack}  disabled={number === 0 && loading} >Назад...</button>
+      <button className='fetchButtonNext'onClick={hundleClickBottonNext} disabled={number === lastNumberPage && loading}>Вперед...</button>
       </div>
       <div className='note'>{ !loading &&
         list.map(pokemon => {
