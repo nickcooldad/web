@@ -5,11 +5,6 @@ import { fetchPokemonsAsyncThunk } from './fetchPokemonsAsyncThunk';
 export const getVisibleListPokemonsSlice = createSlice({
     name : 'getVisibleListPokenos',
     initialState : [],
-    // reducers : {
-    //     fetchSuccess : (state, action) => {
-    //         return action.payload.list
-    //     }
-    // },
     extraReducers : (builder) => {
         builder
         .addCase(fetchPokemonsAsyncThunk.fulfilled, (state, action) => {

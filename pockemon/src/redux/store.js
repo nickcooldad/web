@@ -8,9 +8,13 @@ import { getDataLocalStorage } from "./getDataLocalStorage.js";
 import { combineReducersNew } from "./combineReducers.js";
 import {configureStore} from '@reduxjs/toolkit'
 import { reducerGetVisibleListPokemon } from "../reduxToolkit/reducers/reducerVisibleListPokemonsRTK.js";
-import { reducerPagination } from "../reduxToolkit/reducers/reducerPaginationPokemonsRTK.js";
+import { backPage, nextPage, pageSelect, reducerPagination } from "../reduxToolkit/reducers/reducerPaginationPokemonsRTK.js";
 import { reducerCaughtPokemons } from "../reduxToolkit/reducers/reducerCaughtPokemonsRTK.js";
 import { fetchPokemonsAsyncThunk } from "../reduxToolkit/reducers/fetchPokemonsAsyncThunk.js";
+import { createListenerMiddleware } from "@reduxjs/toolkit";
+import { catchOrReleasePokemons } from "../reduxToolkit/reducers/reducerCaughtPokemonsRTK.js";
+import { addPokemonToList } from "./middlewairRTK/addPokemonToListMiddleaware.js";
+import { paginationMiddleware } from "./middlewairRTK/paginationPokemonMiddleware.js";
 // const initialState = {
 //     caughtPokemons : [],
 
@@ -23,11 +27,11 @@ import { fetchPokemonsAsyncThunk } from "../reduxToolkit/reducers/fetchPokemonsA
 //     },
 // }
 
-const rootReducer = combineReducersNew({
-    caughtPokemons : caughtOrReleaserPokemons,
-    list : getVisibleListPokemons,
-    pagination : paginationPokemons
-})
+// const rootReducer = combineReducersNew({
+//     caughtPokemons : caughtOrReleaserPokemons,
+//     list : getVisibleListPokemons,
+//     pagination : paginationPokemons
+// })
 
 const thunk = storeApi => next => action => {
     if (typeof action === "function") {
@@ -36,7 +40,6 @@ const thunk = storeApi => next => action => {
         next(action);
     }
 }
-
 
 const m1 = storeApi => next => action => {
     console.log("m1", {storeApi, action, next});
@@ -49,23 +52,6 @@ const m2 = storeApi => next => action => {
     next(action);
 }
 
-const paginationMiddleware = storeApi => next => action => {
-    next(action)
-    if(action.type === 'pageSelect' || action.type === 'nextPage' || action.type === 'backPage'){
-        storeApi.dispatch(fetchPokemonsAsyncThunk())
-    }
-}
-
-const addPokemonToList = storeApi => next => action => {
-    const prevList = storeApi.getState().caughtPokemons
-    const result = next(action)
-    const nextList = storeApi.getState().caughtPokemons
-    console.log(prevList, nextList)
-    if(prevList !== nextList){
-        localStorage.setItem('caughtPokemons', JSON.stringify(nextList))
-    }
-    return result
-}
 
 const preloadedState = {
     caughtPokemons : getDataLocalStorage()
@@ -85,8 +71,8 @@ const store = configureStore({
     middleware: (getDefaultMiddleware) =>
     [
         ...getDefaultMiddleware(),
-        paginationMiddleware,
-        addPokemonToList,
+        paginationMiddleware.middleware,
+        addPokemonToList.middleware,
         m1,
         m2,
         thunk

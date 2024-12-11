@@ -97,22 +97,16 @@ function App() {
   const hundlClickSelect = (sizeSelect) => {
     dispatch(pageSelect(sizeSelect))
     //dispatch(enteredSelectPage(sizeSelect))
-    const { number, size } = store.getState().pagination.pageData;
-    dispatch(fetchPokemonsAsyncThunk({ number, size }));
   }
 
   const hundleClickBottonBack = async () => {
     //dispatch(enteredPageBack())
     dispatch(backPage())
-    const { number, size } = store.getState().pagination.pageData;
-    dispatch(fetchPokemonsAsyncThunk({ number, size }));
   }
 
   const hundleClickBottonNext = async () => {
     //dispatch(enteredPageNext())
     dispatch(nextPage())
-    const { number, size } = store.getState().pagination.pageData;
-    dispatch(fetchPokemonsAsyncThunk({ number, size }));
   }
 
 
