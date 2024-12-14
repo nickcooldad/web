@@ -4,16 +4,11 @@ import { catchOrReleasePokemons } from "../../reduxToolkit/reducers/reducerCaugh
 export const addPokemonToList = createListenerMiddleware()
 
 addPokemonToList.startListening({
-    actionCreator: catchOrReleasePokemons,
-    effect: async (action, listerenApi) => {
-        const prevList = listerenApi.getOriginalState().caughtPokemons
-        const nextList = listerenApi.getState().caughtPokemons
-        console.log(prevList, nextList)
-        if(prevList !== nextList){
-            localStorage.setItem('caughtPokemons', JSON.stringify(nextList))
-        }
-    }
-
+    predicate: (_, currentState, previousState) => currentState.caughtPokemons !== previousState.caughtPokemons,
+    effect: async (_, listerenApi) => {
+        const { caughtPokemons } = listerenApi.getState()
+        localStorage.setItem('caughtPokemons', JSON.stringify(caughtPokemons))
+    },
 })
 
 // const addPokemonToList = storeApi => next => action => {

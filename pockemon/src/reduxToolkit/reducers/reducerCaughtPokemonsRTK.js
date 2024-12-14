@@ -5,7 +5,6 @@ const caughtOrReleaserPokemonsSlice = createSlice({
     initialState: [],
     reducers : {
         catchOrReleasePokemons : (state, action) => {
-            console.log("-=-=-", action.pokemon)
             if(state.includes(action.payload)){
                 return state.filter(el => el !== action.payload)
             } else {
@@ -15,5 +14,6 @@ const caughtOrReleaserPokemonsSlice = createSlice({
     }
 })
 
+console.log(caughtOrReleaserPokemonsSlice)
 export const {catchOrReleasePokemons} = caughtOrReleaserPokemonsSlice.actions;
 export const reducerCaughtPokemons = caughtOrReleaserPokemonsSlice.reducer

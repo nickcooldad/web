@@ -32,6 +32,6 @@ const paginationPokemonsSlice = createSlice({
         })
     }
 })
-
+console.log(paginationPokemonsSlice)
 export const {fetchRequest, fetchSuccess, pageSelect, nextPage, backPage} = paginationPokemonsSlice.actions;
 export const reducerPagination = paginationPokemonsSlice.reducer;

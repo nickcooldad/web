@@ -7,3 +7,4 @@ export const fetchPokemonsAsyncThunk = createAsyncThunk('pokemons/fetchList', as
     const { count, results } = await fetchPokemons(number, size);
     return {count, results}
 })
+ 

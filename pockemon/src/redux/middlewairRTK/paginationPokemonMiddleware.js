@@ -3,30 +3,31 @@ import { nextPage } from "../../reduxToolkit/reducers/reducerPaginationPokemonsR
 import { backPage } from "../../reduxToolkit/reducers/reducerPaginationPokemonsRTK"
 import { fetchPokemonsAsyncThunk } from "../../reduxToolkit/reducers/fetchPokemonsAsyncThunk"
 import { createListenerMiddleware } from "@reduxjs/toolkit"
+import { isAnyOf } from "@reduxjs/toolkit"
 
 export const paginationMiddleware = createListenerMiddleware()
 
 paginationMiddleware.startListening({
-    actionCreator : pageSelect,
+    matcher: isAnyOf(pageSelect, nextPage, backPage),
+    //actionCreator : pageSelect,
     effect : async (action, listerenApi) => {
         await listerenApi.dispatch(fetchPokemonsAsyncThunk())
     },
 })
 
-paginationMiddleware.startListening({
-    actionCreator: nextPage,
-    effect: async (action, listerenApi) => {
-        await listerenApi.dispatch(fetchPokemonsAsyncThunk())
-    }
-})
+// paginationMiddleware.startListening({
+//     actionCreator: nextPage,
+//     effect: async (action, listerenApi) => {
+//         await listerenApi.dispatch(fetchPokemonsAsyncThunk())
+//     }
+// })
 
-paginationMiddleware.startListening({
-    actionCreator: backPage,
-    effect: async (action, listerenApi) => {
-       // console.log(action, '_+_+_', listerenApi)
-        await listerenApi.dispatch(fetchPokemonsAsyncThunk())
-    }
-})
+// paginationMiddleware.startListening({
+//     actionCreator: backPage,
+//     effect: async (action, listerenApi) => {
+//         await listerenApi.dispatch(fetchPokemonsAsyncThunk())
+//     }
+// })
 
 // const paginationMiddleware = storeApi => next => action => {
 //     next(action)
