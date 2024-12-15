@@ -16,7 +16,6 @@ export const createAsyncThunk = (nameThunk, asyncFunction) => {
       },
       (err) => {
         	dispatch({type : `${nameThunk}/rejected`, payload : err})
-					throw err
     	}
 		)
   }
