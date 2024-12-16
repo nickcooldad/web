@@ -1,3 +1,5 @@
+import { stat } from "fs";
+
 const stats = [
     {
       class: "Object",
@@ -59,11 +61,33 @@ interface StatsType {
 }
 
   const topMethods = (stats : StatsType[], limit : number) : string[] => {
-        const statsData = stats.map(method => [method.class, method.methods].flatMap(item => [item.]))
-        console.log(statsData)
-        // const limitData = statsData.map(el => [el.name, el.count])
-        // console.log(limitData)
-        return 
+        const dataMethods = stats.flatMap((stat) => 
+          stat.methods.map(method => ({name: `${stat.class}#${method.name}`, count : method.count}))
+        )
+        
+        const sortedMethods = dataMethods.slice().sort((a,b) => {
+          const diff = b.count - a.count
+          if(diff !== 0){
+            return diff
+          }
+          return a.name.localeCompare(b.name)
+        })
+   
+        const result = []
+        let counter = limit
+        dataMethods.forEach(({name, count}, index, array) => {
+          if(counter > 1){
+            counter -= 1
+            result.push(name)
+          }
+          if(counter === 1){
+            if(count === array[index + 1].count){
+              return
+            }
+          }
+        })
+          return result
+        
   }
   console.log(topMethods(stats, 4));
   console.log(topMethods(stats2, 3));
