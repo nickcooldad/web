@@ -148,4 +148,32 @@ interface StatsType {
   return result
   }
   const isArr = (arr : CatalogType[]) : boolean => arr !== undefined && arr.length !== 0
+
   //7
+   class HttpRouter{
+    response = {}
+  
+    addHandler(API : string, method : string, cb : () => string | string[]) : void{
+      this.response[API + method] = cb
+    }
+  
+    runRequest(API : string, method : string){
+      if(this.response[API + method] !== undefined){
+        return this.response[API + method]()
+      }
+      return "Error 404: Not Found"
+    }
+  }
+
+  //8
+  function findInteger(...arg : ((count : number) => boolean)[]){
+    let count = 1
+    while(true){
+      if(!arg.every(cb => cb(count))){
+        count += 1
+      } else {
+        return count
+      }
+    }
+  }
+  //9
