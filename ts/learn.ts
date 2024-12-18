@@ -1,51 +1,46 @@
-function findAllJavascriptFiles(folder, callback : () => void, result : string[] = []) {
-  let countFolder = 0
-  folder.size((limit) => {
-    for(let i = 0; i < limit; i++){
-      folder.read(i, (file) => {
-        if(typeof file === 'object'){
-          countFolder++
-          findAllJavascriptFiles(file, callback, result)
-        }
-        if(typeof file === 'string' && file.endsWith('.js')){
-          result.push(file)
-        }
-        if(i === limit - 1 && countFolder === 0 ){
-          callback(result)
-        }
-      })
-    }   
-  })
+interface Employees {
+  name : string,
+  level : "junior" | "middle" | "senior" | "teamlead",
+  monthlyWage : number,
+  tenure : number
 }
 
-function Folder(files) {
-  const rand = () => Math.random() * 500;
-
-  return {
-    read: (index, cb) => void setTimeout(cb, rand(), files[index]),
-    size: (cb) => void setTimeout(cb, rand(), files.length),
-  };
+function totalIncome(employees : Employees[]) : number {
+  return employees.reduce((acc : number, user) => {
+    return user.monthlyWage + acc
+  }, 0)
 }
 
-const root = Folder([
-  "1.js",
-  "2.js",
-  Folder([
-    Folder([
-      "3.txt",
-    ]),
-    "4.js",
-  ]),
-  Folder([
-    "5.png",
-    "6.js",
-    Folder([
-      "7.txt",
-    ]),
-  ]),
-  "8.html",
-]);
-
-findAllJavascriptFiles(root, arr => {
-  console.log(arr); // arr === ["1.js", "2.js", "4.js", "6.js"]
-})
+const employees = [
+  {
+    name: "Andrew Clark",
+    level: "junior",
+    monthlyWage: 5000,
+    tenure: 2,
+  },
+  {
+    name: "Dan Abramov",
+    level: "middle",
+    monthlyWage: 6000,
+    tenure: 4,
+  },
+  {
+    name: "Sebastian Markbåge",
+    level: "teamlead",
+    monthlyWage: 10000,
+    tenure: 10,
+  },
+  {
+    name: "Sophie Alpert",
+    level: "senior",
+    monthlyWage: 9000,
+    tenure: 9,
+  },
+  {
+    name: "Tianyu Yao",
+    level: "middle",
+    monthlyWage: 7000,
+    tenure: 3,
+  },
+];
+console.log(totalIncome(employees))

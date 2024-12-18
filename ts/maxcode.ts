@@ -1,5 +1,5 @@
 //1
-type InputObject = {
+interface InputObject {
     firstName : string,
     lastName: string
     country: string
@@ -19,12 +19,9 @@ type InputObject = {
   }
 
   //2
-  interface StringToNumberMap {
-    [key : string] : number
-}
 
 function sortByFreq(str : string) : string {
-    const data : StringToNumberMap = {}
+    const data :  Record<string, number> = {}
 
     for(const part of str.split(' ')){
         data[part] = (data[part] || 0) + 1
@@ -133,10 +130,8 @@ interface StatsType {
     name : string,
     children : CatalogType[]
   }
-  interface expectedIdChildren {
-    [key : string] : string | null
-  }
-  function id2parent(catalog : CatalogType, parent : string | null = null) : expectedIdChildren {
+
+  function id2parent(catalog : CatalogType, parent : string | null = null) : Record<string, string | null> {
     let result = {}
     result[catalog.id] = parent
     if(isArr(catalog.children)){
@@ -177,3 +172,80 @@ interface StatsType {
     }
   }
   //9
+  function findAllJavascriptFiles(folder : Folder, callback : (arr : string[]) => void, result : string[] = []) : void {
+    let countFolder = 0
+    folder.size((limit) => {
+      for(let i = 0; i < limit; i++){
+        folder.read(i, (file) => {
+          if(typeof file === 'object'){
+            countFolder++
+            findAllJavascriptFiles(file, callback, result)
+          }
+          if(typeof file === 'string' && file.endsWith('.js')){
+            result.push(file)
+          }
+          if(i === limit - 1 && countFolder === 0 ){
+            callback(result)
+          }
+        })
+      }   
+    })
+  }
+  interface Folder {
+    size(cb: (len: number) => void): void;
+    read(index: number, cb: (file: Folder | string) => void): void;
+  }
+  
+  function Folder(files : (string| Folder)[] ) : Folder  {
+    const rand = () => Math.random() * 500;
+  
+    return {
+      read: (index, cb) => void setTimeout(cb, rand(), files[index]),
+      size: (cb) => void setTimeout(cb, rand(), files.length),
+    };
+  } 
+  //10
+  type ColorName = 'r' | 'g' | 'b'
+
+type Color = {
+  [key in `${ColorName}`] : number
+}
+
+function hex2rgb(str : string) : Color  {
+  return {
+    r: parseInt(str.slice(1, 3), 16),
+    g: parseInt(str.slice(3, 5), 16),
+    b: parseInt(str.slice(5), 16),
+    }
+  }
+  //11
+  interface User {
+    username : string,
+    status : string,
+    lastActivity : number
+  }
+  
+  interface UserStatus {
+    online : string[],
+    offline : string[]
+    away : string[]
+  }
+  
+  function whosOnline(friends : User[]) : Partial<UserStatus> {
+    const result = {
+      online : [],
+      offline : [], 
+      away : []
+    }
+    for(let {username, status, lastActivity} of friends){
+      if(status === 'offline'){
+        result.offline.push(username)
+      } 
+      else if(lastActivity <= 10){
+        result.online.push(username)
+      } else {
+        result.away.push(username)
+      }
+    }
+    return Object.fromEntries(Object.entries(result).filter(([status, users]) => users.length > 0))
+  }
