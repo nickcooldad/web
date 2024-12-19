@@ -161,6 +161,66 @@ interface StatsType {
   }
 
   //8
+  class QueryParams {
+    #data : Record<string, string[]> = {}
+    qwe = {}
+  
+    constructor(data : string | Record<string, string[] | string>) {
+      if (typeof data === 'string') {
+        const str = data.split('&')
+        for (const key of str) {
+          const [keyObj, value] = key.split('=')
+          this.#data[keyObj] ??= []
+          this.#data[keyObj].push(value)
+        }
+      } else {
+        for (const key in data) {
+          const value = data[key]
+          this.#data[key] = [...data[key]]
+        }
+      }
+    }
+  
+    append(key : string, value : string) : void {
+      this.#data[key] ??= []
+      this.#data[key].push(value)
+    }
+  
+    toString() : string {
+      return Object.entries(this.#data)
+        .flatMap(([key, value]) => value.map(item => `${key}=${item}`))
+        .join('&')
+    }
+  
+  
+    get(key : string) : string{
+      if (this.#data.hasOwnProperty(key)) {
+        return this.#data[key][0]
+      }
+      return null;
+    }
+    getAll(key : string) : string[] {
+      return this.#data[key] ?? []
+    }
+    set(key : string, value : string) :void {
+      this.#data[key] = [value]
+    }
+  
+    delete(key : string) : void {
+      delete this.#data[key]
+    }
+  
+    has(key : string, value? : string) : boolean {
+      if(value === undefined){
+       return this.#data.hasOwnProperty(key)
+      }
+      if(this.#data.hasOwnProperty(key)){
+        return this.#data[key].includes(value)
+      }
+      return false
+    }
+  }
+//9
   function findInteger(...arg : ((count : number) => boolean)[]){
     let count = 1
     while(true){
@@ -171,7 +231,7 @@ interface StatsType {
       }
     }
   }
-  //9
+//10
   function findAllJavascriptFiles(folder : Folder, callback : (arr : string[]) => void, result : string[] = []) : void {
     let countFolder = 0
     folder.size((limit) => {
@@ -204,7 +264,7 @@ interface StatsType {
       size: (cb) => void setTimeout(cb, rand(), files.length),
     };
   } 
-  //10
+  //11
   type ColorName = 'r' | 'g' | 'b'
 
 type Color = {
@@ -218,7 +278,7 @@ function hex2rgb(str : string) : Color  {
     b: parseInt(str.slice(5), 16),
     }
   }
-  //11
+  //12
   interface User {
     username : string,
     status : string,
@@ -249,3 +309,37 @@ function hex2rgb(str : string) : Color  {
     }
     return Object.fromEntries(Object.entries(result).filter(([status, users]) => users.length > 0))
   }
+  //13
+  interface Employee {
+    name : string,
+    level : "junior" | "middle" | "senior" | "teamlead",
+    monthlyWage : number,
+    tenure : number
+  }
+  
+  function totalIncome(employees : Employee[]) : number {
+    return employees.reduce((acc : number, {name, level, monthlyWage, tenure}) => {
+      console.log(acc)
+      if(level === 'middle'){
+        return acc + Math.round((monthlyWage * 12) * 1.1)
+      }
+      if(level === 'senior'){
+        return acc + Math.round((monthlyWage * 12) * (1.1 + (tenure * 0.05)))
+      } 
+      if(level === 'teamlead'){
+        return acc + Math.round((monthlyWage * 12) * (1.2 + (tenure * 0.1)))
+      }
+  
+      return acc + Math.round(monthlyWage*12)
+    }, 0)
+  }
+  //14
+function filter<T>(array: T[], callback : (item : T, index : number, array: T[]) => Boolean) : T[] {
+  let filterArray = []
+  for(let i = 0; i < array.length; i++){
+      if(callback(array[i], i, array)) {
+          filterArray.push(array[i])
+      }
+  }
+  return filterArray
+}
