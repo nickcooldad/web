@@ -334,7 +334,7 @@ function hex2rgb(str : string) : Color  {
     }, 0)
   }
   //14
-function filter<T>(array: T[], callback : (item : T, index : number, array: T[]) => Boolean) : T[] {
+function filter<T>(array: T[], callback : (item : T, index : number, array: T[]) => boolean) : T[] {
   let filterArray = []
   for(let i = 0; i < array.length; i++){
       if(callback(array[i], i, array)) {
@@ -342,4 +342,36 @@ function filter<T>(array: T[], callback : (item : T, index : number, array: T[])
       }
   }
   return filterArray
+}
+//15
+function forEach<T>(array : T[], callback: (item : T, index : number , array : T[]) => void) : void {
+  for(let i = 0; i < array.length; i++){
+    callback(array[i], i, array)
+  }
+}
+
+//16
+function sort<T>(arr : T[], compareFn : (a : T, b : T) => number  = defaultCompare) {
+  for(let start = 0; start < arr.length; start++) {
+    let minIndex = start;
+    for(let i = start; i < arr.length; i++) {
+      if (compareFn(arr[i], arr[minIndex]) < 0) {
+        minIndex = i;
+      }
+    }
+    [arr[minIndex], arr[start]] = [arr[start], arr[minIndex]];
+  }
+}
+
+function defaultCompare<T>(a : T , b : T) : number {
+  const strA = String(a);
+  const strB = String(b);
+
+  if (strA < strB) {
+    return -1;
+  }
+  if (strA > strB) {
+    return 1;
+  }
+  return 0;
 }
