@@ -375,3 +375,11 @@ function defaultCompare<T>(a : T , b : T) : number {
   }
   return 0;
 }
+//17
+function map<T, U>(array : T[], callback: (item: T, index: number, array: T[]) => U) : U[] {
+  const data: U[] = []
+  for(let i = 0; i < array.length; i++){
+    data.push(callback(array[i], i, array))
+  }
+  return data
+}
