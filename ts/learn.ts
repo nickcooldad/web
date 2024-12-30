@@ -1,7 +1,13 @@
-function reduce<T>(array: [], callback: (acc: T, item: T, index: number, array: T[]) => T): T;
+// function reduce<T>(array: T[], callback: (acc: T, item: T, index: number, array: T[]) => T): T;
+// function reduce<T, U>(array: T[], callback: (acc: U, item: T, index: number, array: T[]) => U, initialValue: U): U;
+// function reduce<T, U>(array: T[], callback: (acc: T | U, item: T, index: number, array: T[]) => T | U, initialValue?: T | U): T| U
 
-function reduce<T, U>(array: T[], callback: (acc: U, item: T, index: number, array: T[]) => U, initialValue?: U): U{
+function reduce<T>(array: T[], callback: (acc: T, item: T, index: number, array: T[]) => T): T;
+function reduce<T, U>(array: T[], callback: (acc: U, item: T, index: number, array: T[]) => U, initialValue: U): U;
 
+// https://github.com/WebKit/WebKit/blob/18fc2c8a829238a023b22f9c584ce09756d4b757/Source/JavaScriptCore/builtins/ArrayPrototype.js#L27
+
+function reduce(array, callback, initialValue?) {
   if (array.length === 0 && initialValue === undefined) {
     throw new TypeError('Reduce of empty array with no initial value');
   }
@@ -26,7 +32,9 @@ console.log(reduce([], (a, b) => a + b));
 // TypeError: Reduce of empty array with no initial value
 
 console.log(reduce(["a", "b", "c"], (a, b) => ({ [b]: a }), {}));
-// { "c": { "b": { "a": {} } } }
 
-console.log(reduce(["a", "b", "c"], (a, b) => ({ [b]: a })));
+// { "c": { "b": { "a": {} } } }
+//console.log(reduce(["a", "b", "c"], (a, b) => ({ [b]: a })));
+//console.log(["a", "b", "c"].reduce((a, b) => ({ [b]: a })));
 // { "c": { "b": "a"} }
+

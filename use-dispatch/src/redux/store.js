@@ -8,3 +8,5 @@ export const store = createStore(counter)
 store.subscribe(() => {
   console.log("😈", store.getState());
 })
+
+
