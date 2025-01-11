@@ -714,33 +714,33 @@ function compose(...args: ((arg: any) => any)[]){
   }
 }
 
-const double = (x: number): number => x * 2;
-const cube = (x: number): number => x ** 3;
-const inc = (x: number): number => x + 1;
-const res0 = double(cube(inc(0))); // 2
-const res1 = double(cube(inc(1))); // 16
-const res2 = double(cube(inc(2))); // 54 
-const foo = compose(double, cube, inc);
-const testCompose = compose()
+// const double = (x: number): number => x * 2;
+// const cube = (x: number): number => x ** 3;
+// const inc = (x: number): number => x + 1;
+// const res0 = double(cube(inc(0))); // 2
+// const res1 = double(cube(inc(1))); // 16
+// const res2 = double(cube(inc(2))); // 54 
+// const foo = compose(double, cube, inc);
+// const testCompose = compose()
 
-const resultTestCompose = testCompose('a')
-console.log(resultTestCompose)
+// const resultTestCompose = testCompose('a')
+// console.log(resultTestCompose)
 
-console.log(foo(0)); // 2
-console.log(foo(1)); // 16
-console.log(foo(2)); // 54
-const fill = (x : string) : string[] => Array(3).fill(x);
-const repeat = (x : string): string => x.repeat(5);
-const last = (arr : string[]): string => arr.at(-1)!;
+// console.log(foo(0)); // 2
+// console.log(foo(1)); // 16
+// console.log(foo(2)); // 54
+// const fill = (x : string) : string[] => Array(3).fill(x);
+// //const repeat = (x : string): string => x.repeat(5);
+// const last = (arr : string[]): string => arr.at(-1)!;
 
-const foo1 = compose(fill, repeat, last);
+// const foo1 = compose(fill, repeat, last);
 
-console.log(foo1(["a", "b", "c"]));
-// ["ccccc", "ccccc", "ccccc"]
-const foo2 = compose();
+// console.log(foo1(["a", "b", "c"]));
+// // ["ccccc", "ccccc", "ccccc"]
+// const foo2 = compose();
 
-console.log(foo2("a")); // "a"
-console.log(foo2(5));   // 5
+// console.log(foo2("a")); // "a"
+// console.log(foo2(5));   // 5
 
 
 // 30
@@ -754,3 +754,368 @@ function memo<T, U>(fn: (arg: T) => U) : (arg: T) => U {
     return cache.get(args)!
   }
 }
+//31
+interface SpyParametr<T, R>{
+  callCount : () => number,
+  wasCalledWith : (arg: T) => boolean,
+  returned: (arg: R) => boolean
+}
+
+function spy<T extends unknown[], R>(fn: (...arg: T) => R) : ((...arg: T) => R) & SpyParametr<T[number], R> {
+  
+  const argsArr: T[number][] = []
+  const resultFn: R[] = []
+  let counter: number = 0
+
+  function spyOn(...args: T): R {
+    const result = fn(...args)
+    counter++
+    argsArr.push(...args)
+    resultFn.push(result)
+    return result
+  }
+  
+  spyOn.callCount = () : number => counter
+  spyOn.wasCalledWith = (arg: T[number]): boolean => argsArr.includes(arg);
+  spyOn.returned = (arg : R) : boolean => resultFn.includes(arg)
+
+  return spyOn;
+}
+
+function repeat(str: string, count: number) {
+  return str.repeat(count)
+}
+
+const spyRepeat = spy(repeat);
+
+console.log(spyRepeat("abc", 2)); // === "abcabc"
+console.log(spyRepeat("xx", 4)); // === "xxxxxxxx"
+
+console.log(spyRepeat.callCount()); // === 2
+
+console.log(spyRepeat.wasCalledWith("abc")); // === true
+console.log(spyRepeat.wasCalledWith(4)); // === true
+console.log(spyRepeat.wasCalledWith(5)); // === false
+
+console.log(spyRepeat.returned("xxxxxxxx")); // === true
+console.log(spyRepeat.returned("qwerty")); // === false
+
+//32
+
+
+type StatusObject = Record<'status', 'testing' | 'timeLimit' |'done'>
+
+function polling<T, R extends T>(
+  fetcher: () => Promise<T>,
+  isCompleted: (arg: T) => arg is R,
+  delay: number,
+): Promise<R>{
+  return fetcher().then(value => {
+    if(isCompleted(value) === true){
+      return value
+      }
+    return sleep(delay).then(() => polling(fetcher, isCompleted, delay))
+  }, () => sleep(delay).then(() => polling(fetcher, isCompleted, delay)))
+}
+
+function sleep(ms: number) : Promise<void>{
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+const okResponse = {
+  status: "done",
+  results: [
+    { name: "Тест #1 ...", ok: true },
+    { name: "Тест #2 ...", ok: true },
+  ]
+};
+
+const testingResponse : Record<'status', 'testing'> = { status: "testing" };
+const timeLimitResponse: Record<'status', 'timeLimit'> = { status: "timeLimit" };
+let i = 0;
+
+const fakeFetcher = async () : Promise<StatusObject> => {
+  return i++ < 3 ? testingResponse : timeLimitResponse;
+}
+
+const result = polling(
+  fakeFetcher,
+  (response) => response.status !== "testing",
+  500,
+);
+
+result.then(data => console.log(data));
+
+type Digit = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+type SmallDigit = 0 | 1 | 2 | 3;
+
+// never < 0 < SmallDigit < Digit < number < PropertyKey < unknown
+
+// type MyType<T> = ...
+
+type p1 = Exclude<6, 6>
+
+function assertNever(x: never) {};
+
+function foo(x: 0 | 1 | 2): string {
+  if (x === 0) return "A";
+  if (x === 1) return "B";
+  if (x === 2) return "C";
+
+  assertNever(x);
+
+  return "";
+}
+
+const fakeFetcher1 = async () => {
+  return Math.floor(10 * Math.random()) as Digit;
+}
+
+const okResponse1 = {
+  status: 'done',
+  results: [
+    {user: 'user1', ok: true},
+    {user: 'user2', ok: true}
+  ]
+}
+
+// type guard
+
+function isSmallDigit(digit: Digit): digit is SmallDigit {
+  return digit <= 3;
+}
+
+// const x = Math.random() < 0.5 ? 3 : 7;
+
+// if (isSmallDigit(x)) {
+//   x
+// }
+
+
+const result1 = polling(
+  fakeFetcher1,
+  isSmallDigit,
+  500
+)
+
+result1.then(data => console.log(data))
+//33
+// function promisify<T extends unknown[], R>(fn: (...args: [...T, (err: 'error' | null, result?: R) => void]) => void) : (...args: T) => Promise<R> {
+//   return (...args: T): Promise<R> => {
+//     return new Promise((resolve, reject) => {
+//       fn(...args, (err : 'error' | null, result?: R) => {
+//         if (err === null) {
+//           resolve(result as R);
+//         } else {
+//           reject(err);
+//         }
+//       });
+//     });
+//   };
+// }
+
+// function sum(a: number, b: number, cb: (err: (null | 'error'), result?: number) => void): void {
+//   setTimeout(() => {
+//     if (Math.random() < 0.5) {
+//       cb(null, a + b); // success
+//     } else {
+//       cb("error"); // bad luck
+//     }
+//   }, 0);
+// }
+
+// // Пример использования
+// sum(2, 5, (err, result) => {
+//   if (err === null) {
+//     console.log(result); // 7
+//   }
+// });
+
+// const promisifiedSum = promisify(sum);
+
+// // Пример использования промисифицированной функции
+// promisifiedSum(3, 4).then(
+//   value => console.log(value), // 7
+//   reason => console.log(reason), // "error"
+// );
+
+//34
+class TimeLimitedCache<T,K> {
+  #cache = new Map<T,K>()
+  #timeout = new Map<T, ReturnType<typeof setTimeout>>()
+
+  set(key: T, value: K, duration: number): boolean {
+    const timerId : ReturnType<typeof setTimeout> = setTimeout(() => {
+      this.#cache.delete(key)
+      this.#timeout.delete(key)
+    }, duration)
+
+    clearTimeout(this.#timeout.get(key))
+
+    if(this.#cache.has(key)){
+      this.#cache.set(key, value)
+      this.#timeout.set(key, timerId)
+      return true
+    }
+
+    this.#cache.set(key, value)
+    this.#timeout.set(key, timerId)
+
+    return false
+  }
+
+  get(key: T) : K | number {
+    return this.#cache.get(key) ?? -1
+  }
+
+  count() : number {
+    return this.#cache.size
+  }
+}
+
+const cache = new TimeLimitedCache();
+
+setTimeout(() => console.log(cache.set(1, 500, 450)),   0);   // false
+setTimeout(() => console.log(cache.get(1)),           100);   // 500
+setTimeout(() => console.log(cache.set(2, 600, 350)), 200);   // false
+setTimeout(() => console.log(cache.get(2)),           300);   // 600
+setTimeout(() => console.log(cache.count()),          400);   // 2
+setTimeout(() => console.log(cache.set(2, 800, 250)), 500);   // true
+setTimeout(() => console.log(cache.count()),          600);   // 1
+setTimeout(() => console.log(cache.get(2)),           700);   // 800
+//35
+// export {}
+// declare global {
+//   interface Function {
+//     pipe<T, U, V>(this: (arg: T)=> U, fn: (arg: U) => V): (arg: T) => V;
+//   }
+// }
+
+// Function.prototype.pipe = function <T, U, V>(this: (arg: T) => U, fn: (arg: U) => V): (arg: T) => V {
+//   const self = this
+//   return function(arg: T): V {
+//     return fn(self(arg));
+//   }.bind(this);
+// }
+// const double = (x: number) => x * 2;
+// const cube = (x: number) => x ** 3;
+// const inc = (x: number) => x + 1;
+
+// const foo = compose(double, cube, inc);
+
+//  console.log(foo(2)); // 54
+
+ //36
+ export {}
+declare global{
+  interface Array<T> {
+    map2<R>(cb:(item: T, index: number, array: T[], thisArg?: unknown) => R, thisArg?: unknown) : R[]
+  }
+}
+
+Array.prototype.map2 = function<T,R,C>(this: T[], callback: (item: T, index: number, array: T[]) => R, thisArg?: unknown): R[] {
+  const arr = new Array<R>(this.length)
+  for(let i = 0; i < this.length; i++){
+    if(i in this){
+      if(thisArg !== undefined){
+        arr[i] = callback.call(thisArg, this[i], i, this)
+      } else{
+        arr[i] = callback(this[i], i, this)
+      }
+    }
+  }
+  return arr
+}
+console.log([1, 2, 3].map2(x => x ** 2));
+// [1, 4, 9]
+
+console.log(["a", "b", "c", "d"].map2((x, i) => x.repeat(i)));
+// ["", "b", "cc", "ddd"]
+const multiplicator = {
+  x: 5,
+  multiply(num: number) {
+    return num * this.x;    
+  },
+};
+
+console.log([1, 2, 3].map2(multiplicator.multiply));
+// [NaN, NaN, NaN]
+
+console.log([1, 2, 3].map2(multiplicator.multiply, multiplicator));
+// [5, 10, 15]
+
+//37
+interface Users{
+  name: 'A'| 'B'|'C',
+  age: number,
+  location: string
+}
+
+function extractKey<T extends keyof Users>(objects: Users[], key: T): Users[T][] {
+  return objects.map((item: Users) => item[key])
+}
+
+const users: Users[] = [
+  { name: "A", age: 11, location: "Qwe" },
+  { name: "B", age: 54, location: "Asd" },
+  { name: "C", age: 23, location: "Zxc" },
+];
+
+console.log(extractKey(users, "name")); // ["A", "B", "C"]
+console.log(extractKey(users, "age")); // [11, 54, 23]
+//38
+interface Users{
+  name: 'A'| 'B'|'C',
+  age: number,
+  location: string
+}
+
+function removeKey<T extends keyof Users>(objects : Users[], key: T ) : Omit<Users, T>[] {
+  return objects.map(item => {
+    const result = {...item}
+    delete result[key]
+    return result
+})
+}
+
+
+const users: Users[] = [
+  { name: "A", age: 11, location: "Qwe" },
+  { name: "B", age: 54, location: "Asd" },
+  { name: "C", age: 23, location: "Zxc" },
+];
+
+console.log(removeKey(users, "name")); // ["A", "B", "C"]
+console.log(removeKey(users, "age")); // [11, 54, 23]
+//39
+interface Users{
+  name: 'A'| 'B'|'C',
+  age: number,
+  location: string
+}
+
+function keysProjection<T extends keyof Users>(objects: Users[], keys: T[]): Omit<Users, T>[] {
+  return objects.map(user => Object.fromEntries(Object.entries(user).filter(([key, _]) => keys.includes(key as T)))) as Omit<Users, T>[]
+}
+
+
+
+const users: Users[] = [
+  { name: "A", age: 11, location: "Qwe" },
+  { name: "B", age: 54, location: "Asd" },
+  { name: "C", age: 23, location: "Zxc" },
+];
+
+console.log(keysProjection(users, ["name", "location"]));
+// [
+//   { name: "A", location: "Qwe" },
+//   { name: "B", location: "Asd" },
+//   { name: "C", location: "Zxc" },
+// ]
+
+console.log(keysProjection(users, ["age"]));
+// [
+//   { age: 11 },
+//   { age: 54 },
+//   { age: 23 },
+// ]
