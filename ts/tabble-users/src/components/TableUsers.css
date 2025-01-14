@@ -1,0 +1,49 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.styleTable{
+  width: 80vw;
+  height: auto;
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 18px;
+  text-align: left;
+}
+
+.styleTable thead tr {
+  text-align: center;
+  background-color: #717473;
+  color: #ffffff;
+  }
+
+.styleTable th,
+.styleTable td {
+  padding: 12px 15px;
+  border: 1px solid #dddddd;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.styleButton{
+  background-image: url('../images/sortimage.svg');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 40px;
+  height: 40px;
+  border: none;
+  cursor: pointer;
+  color: transparent;
+  font-size: 0;
+  position: relative;
+  top: 15px;
+  left: 5px;
+  background-color: transparent; /* Убедитесь, что фон кнопки прозрачный */
+}
