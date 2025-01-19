@@ -16,10 +16,10 @@ export interface Point {
   color: string
 }
 
-export interface TableResponse <T, R>{
+export interface TableResponse <T>{
   titleName: string,
-  tableBody: (arg: T) => R
-  tableSort?: (arg: T[]) => T[],
+  tableBody: (arg: T) => React.ReactNode
+  tableSort?: (a: T, b: T) => number,
 }
 
 const users: User[] = [
@@ -32,28 +32,33 @@ const points: Point[] = [
   {x: 6, y: -8, color: 'green'},
   {x: 3, y: 4, color: 'red'}
 ]
-const titleUsers: TableResponse<User, string|number>[]= [{
+ 
+const titleUsers: TableResponse<User>[]= [{
   titleName: 'Fullname', 
   tableBody: (user) => user.firstName + " " + user.lastName,
-  tableSort: (users) => users.toSorted((a,b) => a.firstName.localeCompare(b.firstName) || a.lastName.localeCompare(b.lastName))
+  tableSort: (a, b) => calculateAge(a.birthDate) - calculateAge(b.birthDate)
+  //(users) => users.toSorted((a,b) => a.firstName.localeCompare(b.firstName) || a.lastName.localeCompare(b.lastName))
 },{
   titleName: 'Age',
   tableBody: (user) => calculateAge(user.birthDate),
-  tableSort: (users)=> users.toSorted((a,b) => calculateAge(a.birthDate) - calculateAge(b.birthDate))
+  tableSort: (a, b) => calculateAge(a.birthDate) - calculateAge(b.birthDate)
+    //users.toSorted((a,b) => calculateAge(a.birthDate) - calculateAge(b.birthDate))
 },
 {
   titleName: 'Gender',
   tableBody: (user) => user.gender
 }]
 
-const titlePoints: TableResponse<Point, string|number>[] = [{
+const titlePoints: TableResponse<Point>[] = [{
   titleName: 'Coordinates',
   tableBody: (point: Point) => `(${point.x}, ${point.y})`,
-  tableSort: (points) => points.toSorted((a, b) => a.x - b.x || a.y - b.y)
+  tableSort: (a, b) => a.x - b.x || a.y - b.y
+    //points.toSorted((a, b) => a.x - b.x || a.y - b.y)
 },{
   titleName: 'Distance',
   tableBody: (point) => calculateDistance(point.x, point.y),
-  tableSort: (points) => points.toSorted((a,b) => calculateDistance(a.x,a.y) - calculateDistance(b.x, b.y))
+  tableSort: (a, b) => calculateDistance(a.x,a.y) - calculateDistance(b.x, b.y)
+    //points.toSorted((a,b) => calculateDistance(a.x,a.y) - calculateDistance(b.x, b.y))
 },{
   titleName: 'Color',
   tableBody: (point) => point.color === 'green' ? '🟩' : '🟥'
@@ -65,19 +70,19 @@ const titlePoints: TableResponse<Point, string|number>[] = [{
 
 const App: React.FC = () => {
   
-  const [dataTable, setDataTable] = useState<User[] | Point[]>(points)
-  const [sortOrder, setSortOrder] = useState<boolean>(false)
+  //const [dataTable, setDataTable] = useState<User[] | Point[]>(points)
+  //const [sortOrder, setSortOrder] = useState<boolean>(false)
 
-function handleClickSort<T>(data: T[]): void {
-  setDataTable(sortOrder ? [...data]  : [...data].reverse())
-  setSortOrder(!sortOrder)
-}
+// function handleClickSort<T>(data: T[]): void {
+//   setDataTable(sortOrder ? [...data]  : [...data].reverse())
+//   setSortOrder(!sortOrder)
+// }
   return (
       <div>
           <TableUsers 
           title={titlePoints}
-          dataTable={dataTable}
-          sortData={handleClickSort}
+          dataTable={points}
+          //sortData={handleClickSort}
           />
       </div>
 
