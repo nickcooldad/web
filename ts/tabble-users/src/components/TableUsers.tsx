@@ -1,45 +1,35 @@
 import s from './TableUsers.module.css';
 import cn from 'classnames'
 import { TableResponse } from "../App";
-import { useEffect, useMemo, useState } from 'react';
+import { useState } from 'react';
 interface TableUsersProps <T>{
   title: TableResponse<T>[],
   dataTable: T[],
 }
-
-export function TableUsers<T>({title, dataTable}: TableUsersProps<T>) {
-
 interface SortProperty <T>{
   stateSort : boolean,
-  propertySort: TableResponse<T> | null
-}
+  propertySort: TableResponse<T> | null,
+  data : T[]
+ }
+ 
+export function TableUsers<T>({title, dataTable}: TableUsersProps<T>) {
 
   const [dataSort, setDataSort] = useState<SortProperty<T>>({
     propertySort: null,
-    stateSort : false
+    stateSort : false,
+    data: dataTable
   })
- 
   
 function handleClickSortedProperty(property: TableResponse<T>) {
-  setDataSort(prev => {
-    if(prev.propertySort === property) return  {...prev, stateSort: !prev.stateSort}
-    return  {stateSort : true, propertySort: property}
-  })
-}
+  setDataSort(prev => { 
+    const sorted = prev.data.toSorted((a,b) => property.tableSort ? property.tableSort(a,b) : 0)
+    const result = dataSort.stateSort ? sorted.reverse() : sorted
 
-const [data, setData] = useState(dataTable)
+        if(prev.propertySort === property) return  {...prev, stateSort: !prev.stateSort, data: result}
+        return  {...prev, stateSort : true, propertySort: property, data: result}
+      })
+    }
 
-function handleClickSorted(){
-  setData(prev => {
-    const sorted = prev.toSorted(dataSort.propertySort?.tableSort)
-    if(dataSort.stateSort) return sorted.reverse()
-    return sorted
-  })
-}
-
-useEffect(() => {
-  handleClickSorted()
-}, [dataSort])
 
 
 console.log(dataSort)
@@ -58,7 +48,7 @@ console.log(dataSort)
         </tr>
       </thead>
       <tbody>
-        {data.map((user, rowIndex) => (
+        {dataSort.data.map((user, rowIndex) => (
           <tr key={rowIndex}>
             {title.map((property, colIndex) => (
               <td key={colIndex}>{property.tableBody(user)}</td>
