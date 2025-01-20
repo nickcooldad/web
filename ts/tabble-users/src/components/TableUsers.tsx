@@ -1,7 +1,7 @@
 import s from './TableUsers.module.css';
 import cn from 'classnames'
 import { TableResponse } from "../App";
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 interface TableUsersProps <T>{
   title: TableResponse<T>[],
   dataTable: T[],
@@ -9,14 +9,21 @@ interface TableUsersProps <T>{
 
 export function TableUsers<T>({title, dataTable}: TableUsersProps<T>) {
 
+interface SortProperty <T>{
+  stateSort : boolean,
+  propertySort: TableResponse<T> | null
+}
 
-  const [dataSort, setDataSort] = useState<[TableResponse<T> | null, boolean]>([null, false])
+  const [dataSort, setDataSort] = useState<SortProperty<T>>({
+    propertySort: null,
+    stateSort : false
+  })
  
   
 function handleClickSortedProperty(property: TableResponse<T>) {
-  setDataSort(([name, stateSort]) => {
-    if(name === property) return [name, !stateSort]
-    return [property, true]
+  setDataSort(prev => {
+    if(prev.propertySort === property) return  {...prev, stateSort: !prev.stateSort}
+    return  {stateSort : true, propertySort: property}
   })
 }
 
@@ -24,14 +31,15 @@ const [data, setData] = useState(dataTable)
 
 function handleClickSorted(){
   setData(prev => {
-    if(dataSort[1]) return [...prev].reverse()
-    return prev.toSorted(dataSort[0]?.tableSort)
+    const sorted = prev.toSorted(dataSort.propertySort?.tableSort)
+    if(dataSort.stateSort) return sorted.reverse()
+    return sorted
   })
 }
 
 useEffect(() => {
   handleClickSorted()
-}, dataSort)
+}, [dataSort])
 
 
 console.log(dataSort)
@@ -42,7 +50,7 @@ console.log(dataSort)
           {title.map((property, index) => (
             <th key={index} >
               {property.titleName}
-              {property.tableSort && <button className={cn(s.styleButton, {[s.active] : property === dataSort[0] && dataSort[1]})} onClick={() => {
+              {property.tableSort && <button className={cn(s.styleButton, {[s.active] : property === dataSort.propertySort && dataSort.stateSort})} onClick={() => {
                 handleClickSortedProperty(property)
                 }}></button>}
             </th>
