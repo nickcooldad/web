@@ -1,0 +1,49 @@
+<style>
+  .road {
+    width: 1125px;
+    height: 225px;
+    background-color: bisque;
+  }
+
+  .car {
+    position: relative;
+    left: 0px;
+    /* transition: left 1s linear; */
+  }
+
+  /* .road:hover .car {
+    left: 900px;
+  } */
+</style>
+
+<!-- http://localhost:3000/animate -->
+<!-- npx serve event-loop -->
+
+<div class="road">
+  <img class="car" src="https://i.ibb.co/mNNCdmC/images-Background-Removed.png">
+</div>
+
+<script>
+  const car = document.querySelector(".car");
+  const road = document.querySelector(".road");
+
+  function animate(ms, cb) {
+    // setTimeout(() => {
+    //   cb(0.33333);
+    //   setTimeout(() => {
+    //     cb(0.66666);
+    //     setTimeout(() => {
+    //       cb(1);
+    //     }, 1000)
+    //   }, 1000)
+    // }, 1000)
+  }
+// 
+  car.addEventListener("click", () => {
+
+    animate(3000, progress => { // progress = 0..1
+      car.style.left = progress * 1100 + "px";
+    });
+
+  });
+</script>

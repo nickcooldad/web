@@ -1,0 +1,78 @@
+<script>
+
+  requestAnimationFrame(() => {
+    console.log("A");                  //  raf 1.1 +
+  });
+
+  setTimeout(() => {                   // macro 2
+    console.log("B");                   //+
+    setTimeout(() => {                 // macro 5
+      console.log("C");
+    });
+
+    requestAnimationFrame(() => {       //raf 2.3  +
+      console.log("D");
+    });
+
+    queueMicrotask(() => {           // micro 2.1 +
+      console.log("E");
+      setTimeout(() => {                //macro 6
+        console.log("F");
+      });
+      requestAnimationFrame(() => {    //raf 2.4   +
+        console.log("G");
+      });
+      queueMicrotask(() => {        //micro 2.2  +
+        console.log("H");
+        requestAnimationFrame(() => { // raf 2.5  +
+          console.log("I");
+        });
+      });
+    });
+  });
+
+  queueMicrotask(() => {                     //micro 1.1 +
+    console.log("J");
+    requestAnimationFrame(() => {             //raf 1.3 + 
+      console.log("K");
+      requestAnimationFrame(() => {           // raf 2.2 +
+        console.log("X");
+      });
+    });
+
+    queueMicrotask(() => {                    //micro 1.2 +
+      console.log("L");
+      setTimeout(() => {                        //macro 4
+        console.log("M");                    //+
+        requestAnimationFrame(() => {           
+          console.log("N");                       //raf/ 2.7 +
+          requestAnimationFrame(() => {
+            console.log("Y");                      //raf 3.1 +
+          });
+        });
+      });
+    });
+
+    requestAnimationFrame(() => {                   //raf 1.4 +
+      console.log("O");
+    });
+  });
+
+  setTimeout(() => {                            //macro 3 +
+    console.log("P");   //+
+    requestAnimationFrame(() => {                //raf 2.6 +
+      console.log("Q");
+    });
+  });
+
+  requestAnimationFrame(() => {                 //raf 1.2 +
+    console.log("R");
+    requestAnimationFrame(() => {               // raf 2.1 +
+      console.log("Z");
+    });
+  });
+
+ 
+//   J L  |  A R K O  |  B E H   | P      | M        |  C     |    F    |Z X D G I Q N|    Y   |
+//  micro      raf1      macro2   macro 3   macro 4   macro 5   macro 6       raf2      raf3
+</script>

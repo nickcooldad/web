@@ -72,3 +72,7 @@ body{
 .styleButton.active::before {
   background-image: url('../images/sortUpGreen.svg');
 }
+
+.styleButton.passiv::after {
+  background-image: url('../images/sortDownGreen.svg');
+}
