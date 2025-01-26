@@ -1,0 +1,65 @@
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    height: 70vh;
+    width: 50vw;
+    border: 2px solid black;
+}
+
+.coctail {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    text-align: left;
+    width: 100%; /* Радиокнопка и метка теперь заполняют всю ширину */
+    font-size: 1.5vw;
+    display: flex; /* Используем flex для выравнивания по горизонтали */
+    align-items: center; /* Центрируем текст по вертикали */
+    padding: 10px; /* Для удобства выделения */
+    cursor: pointer; /* Курсор "pointer" для удобства */
+}
+
+/* Скрываем стандартные радиокнопки */
+.custom_radio {
+    display: none;
+}
+
+/* Стили для метки при выборе радиокнопки */
+.custom_radio:checked + span {
+    background-color: #b3b3b3;  /* Темный серый фон при выделении */
+    border: 2px solid #8c8c8c;  /* Бордер чуть темнее */
+    width: 100%; /* Метка занимает всю ширину */
+}
+
+/* Стили для метки, когда радиокнопка не выбрана */
+.custom_radio:not(:checked) + span {
+    transition: background-color 0.3s ease;  /* Плавный переход фона */
+    background-color: transparent;  /* Без фона, если не выбрано */
+}
+
+/* Убираем отступы и margin у первого элемента */
+.coctail:first-child {
+    margin-top: 10%;
+}
+
+.menu {
+    display: flex;
+    width: 20%;
+    justify-content: center;
+    align-items: stretch;
+    border-right: 1px solid black;
+}
+
+.menu ul {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.content {
+    width: 80%;
+    flex: 1;
+}
