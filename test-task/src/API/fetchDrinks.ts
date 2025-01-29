@@ -11,10 +11,11 @@ export async function fetchDrinks(coctail: string) {
           typeGlass: drink.strGlass,
           instruction: drink.strInstructions,
           measures : measuresAndIngredients(drink, 'strMeasure'),
-          ingredients: measuresAndIngredients(drink, 'strIngredient')
+          ingredients: measuresAndIngredients(drink, 'strIngredient'),
+          pictures: drink.strDrinkThumb
+          
         }
     })
-    console.log(result)
     return result
 }   
 

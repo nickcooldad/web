@@ -5,11 +5,9 @@ import { fetchDrinksAsyncThunk } from "./slices/fetchDrinksAsyncThunk";
 
 export const store = configureStore({
     reducer: {
-        selectedCoctel: selectedCoctailReducer,
+        selectedCoctail: selectedCoctailReducer,
         dataDrink: getDataDrinkSlice
     }
 })
 
 store.dispatch(fetchDrinksAsyncThunk())
-
-console.log(store.getState())

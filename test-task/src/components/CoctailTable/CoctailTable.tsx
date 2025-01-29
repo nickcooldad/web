@@ -2,15 +2,18 @@ import { ContentContainer } from "../ContentContainer/ContentContainer"
 import { coctail_code } from "../../response/cocktail_code"
 import s from './CoctailTable.module.css'
 import { useDispatch, UseDispatch, useSelector } from "react-redux"
-import { fetchDrinks } from "../../API/fetchDrinks"
+import { choose } from "../../redux/slices/selectedCoctelSlice"
 
 export function CoctailTable () {
 
+const hundlClickSelect = (drink) => {
+  dispatch(choose(drink.target.value))
+}
 const dispatch = useDispatch()
-const dataDrink = useSelector(state => state.dataDrink)
+const coctail = useSelector(state => state.selectedCoctail)
+const dataDrink = useSelector(state => state.dataDrink.data)
+console.log(coctail,'👌', dataDrink)
 
-const result = fetchDrinks('margarita').then(res => res.json())
-result.then(r => console.log(r))
 
 
     return (
@@ -19,14 +22,17 @@ result.then(r => console.log(r))
                 <form>
                     {coctail_code.map(coctail => (
                         <label key={coctail} className={s.coctail}>
-                            <input className={s.custom_radio} type="radio" name="option" id={coctail} value={coctail} />
+                            <input className={s.custom_radio} onChange={(e) => hundlClickSelect(e)}  type="radio" name="option" id={coctail} value={coctail} />
                             <span>{coctail}</span>
                         </label>
                     ))}
                 </form>
             </div>
             <div className={s.content}>
-                <ContentContainer />
+                {dataDrink.map(drink => {
+                    return <ContentContainer coctails={drink}/>
+                })}
+                
             </div>
         </div>
     )

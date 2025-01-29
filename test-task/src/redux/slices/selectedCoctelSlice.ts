@@ -1,19 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-    selectedCoctel : 'margarita',
-    drinks : {}
-}
+const initialState = 'margarita'
 
-export const selectedCoctelSlice = createSlice({
-    name: 'coctel',
+export const selectedCoctailSlice = createSlice({
+    name: 'coctail',
     initialState,
     reducers: {
         choose: (state, action) => {
-            state.selectedCoctel = action.payload
+            return action.payload
         }
     }
 })
 
-export const {choose } = selectedCoctelSlice.actions
-export const selectedCoctailReducer = selectedCoctelSlice.reducer
+export const {choose } = selectedCoctailSlice.actions
+export const selectedCoctailReducer = selectedCoctailSlice.reducer
