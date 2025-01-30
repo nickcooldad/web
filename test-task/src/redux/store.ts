@@ -1,13 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { selectedCoctailReducer} from "./slices/selectedCoctelSlice";
 import { getDataDrinkSlice } from "./slices/dataDrinkSlice";
-import { fetchDrinksAsyncThunk } from "./slices/fetchDrinksAsyncThunk";
+import { coctailApi } from "./slices/dataApiRTKQuery";
 
 export const store = configureStore({
     reducer: {
         selectedCoctail: selectedCoctailReducer,
-        dataDrink: getDataDrinkSlice
-    }
-})
+        [coctailApi.reducerPath] : coctailApi.reducer
+    },
 
-store.dispatch(fetchDrinksAsyncThunk())
+    middleware: (getDefaultMiddleware) => 
+    [...getDefaultMiddleware(), coctailApi.middleware]
+    
+})

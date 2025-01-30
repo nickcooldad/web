@@ -1,36 +1,62 @@
 import { ContentContainer } from "../ContentContainer/ContentContainer"
 import { coctail_code } from "../../response/cocktail_code"
 import s from './CoctailTable.module.css'
-import { useDispatch, UseDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { choose } from "../../redux/slices/selectedCoctelSlice"
+import { useGetDrinksQuery } from "../../redux/slices/dataApiRTKQuery"
+import { useNavigate, useParams } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 
 export function CoctailTable () {
 
+const dispatch = useDispatch();
+const navigate = useNavigate();
+const {pathname} = useLocation()
+const coctailUrl = pathname.slice(1)
+
+
+
+  const { data: drinks, isLoading, isError } = useGetDrinksQuery(coctailUrl);
+
+
 const hundlClickSelect = (drink) => {
-  dispatch(choose(drink.target.value))
+  dispatch(choose(drink))
+  navigate(`/${drink}`)
 }
-const dispatch = useDispatch()
-const coctail = useSelector(state => state.selectedCoctail)
-const dataDrink = useSelector(state => state.dataDrink.data)
-console.log(coctail,'👌', dataDrink)
+console.log(coctailUrl,'👌', drinks)
+
+if (isLoading) {
+  return <div className={s.container}>Loading cocktails...</div>
+}
+
+if (isError) {
+  return <div className={s.container}>Error loading data</div>
+}
 
 
 
-    return (
+   return (
         <div className={s.container}>
             <div className={s.menu}>
                 <form>
-                    {coctail_code.map(coctail => (
-                        <label key={coctail} className={s.coctail}>
-                            <input className={s.custom_radio} onChange={(e) => hundlClickSelect(e)}  type="radio" name="option" id={coctail} value={coctail} />
-                            <span>{coctail}</span>
+                    {coctail_code.map(coctailName => (
+                        <label key={coctailName} className={s.coctail}>
+                            <input 
+                            className={s.custom_radio} 
+                            onChange={() => hundlClickSelect(coctailName)}  
+                            type="radio" name="option" 
+                            id={coctailName} 
+                            value={coctailName} 
+                            checked={coctailUrl === coctailName}
+                            />
+                            <span>{coctailName}</span>
                         </label>
                     ))}
                 </form>
             </div>
             <div className={s.content}>
-                {dataDrink.map(drink => {
-                    return <ContentContainer coctails={drink}/>
+                {drinks.map((drink, index) => {
+                    return <ContentContainer key={index}  coctails={drink}/>
                 })}
                 
             </div>
