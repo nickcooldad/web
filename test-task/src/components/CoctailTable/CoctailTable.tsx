@@ -4,7 +4,7 @@ import s from './CoctailTable.module.css'
 import { useDispatch } from "react-redux"
 import { choose } from "../../redux/slices/selectedCoctelSlice"
 import { useGetDrinksQuery } from "../../redux/slices/dataApiRTKQuery"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate} from "react-router-dom"
 import { useLocation } from "react-router-dom"
 
 export function CoctailTable () {
@@ -19,11 +19,10 @@ const coctailUrl = pathname.slice(1)
   const { data: drinks, isLoading, isError } = useGetDrinksQuery(coctailUrl);
 
 
-const hundlClickSelect = (drink) => {
+const hundlClickSelect = (drink: string) => {
   dispatch(choose(drink))
   navigate(`/${drink}`)
 }
-console.log(coctailUrl,'👌', drinks)
 
 if (isLoading) {
   return <div className={s.container}>Loading cocktails...</div>
@@ -55,7 +54,7 @@ if (isError) {
                 </div>
             </div>
             <div className={s.content}>
-                {drinks.map((drink, index) => {
+                {drinks!.map((drink, index) => {
                     return <ContentContainer key={index}  coctails={drink}/>
                 })}
                 

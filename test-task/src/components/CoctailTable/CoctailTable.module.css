@@ -42,8 +42,8 @@
 }
 
 .small-h1 {
-    font-size: 10px; /* Установите нужный размер текста */
-    margin: 0; /* Опционально: уберите стандартные отступы */
+    font-size: 10px;
+    margin: 0;
   }
 @media (max-width: 768px) {
     .container {

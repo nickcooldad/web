@@ -2,14 +2,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 
-const measuresAndIngredients = (drink: Record<string, unknown>, necessary: string): string[] => {
+const measuresAndIngredients = (drink: Record<PropertyKey, string>, necessary: string): string[] => {
     const result: string[] = []
     let count = 1
     
     while(true) {
       const key = `${necessary}${count}`
       if (drink.hasOwnProperty(key) && typeof drink[key] === 'string') {
-        result.push(drink[key] as string)
+        result.push(drink[key])
         count++
       } else {
         break
@@ -26,7 +26,7 @@ export const coctailApi = createApi({
         endpoints: (builder) => ({
             getDrinks: builder.query({
                 query: (coctail: string) => `search.php?s=${coctail}`,
-                transformResponse: (response: {drinks: Record<PropertyKey, unknown>[]}) => {
+                transformResponse: (response: {drinks: Record<PropertyKey, string>[]}) => {
                     console.log(response.drinks)
                     if(!response.drinks) return []
         

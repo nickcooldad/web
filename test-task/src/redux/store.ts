@@ -1,6 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { selectedCoctailReducer} from "./slices/selectedCoctelSlice";
-import { getDataDrinkSlice } from "./slices/dataDrinkSlice";
 import { coctailApi } from "./slices/dataApiRTKQuery";
 
 export const store = configureStore({
@@ -10,6 +9,6 @@ export const store = configureStore({
     },
 
     middleware: (getDefaultMiddleware) => 
-    [...getDefaultMiddleware(), coctailApi.middleware]
+    getDefaultMiddleware().concat(coctailApi.middleware)
     
 })

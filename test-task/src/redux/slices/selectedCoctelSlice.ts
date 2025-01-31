@@ -6,7 +6,7 @@ export const selectedCoctailSlice = createSlice({
     name: 'coctail',
     initialState,
     reducers: {
-        choose: (state, action) => {
+        choose: (_, action) => {
             return action.payload
         }
     }
