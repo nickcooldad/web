@@ -5,26 +5,31 @@
       "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist", 
-        "cleanUrls": true
+        "distDir": "dist"
       }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/cocktail/(.*)",
-      "dest": "https://www.thecocktaildb.com/api/json/v1/1/$1",
-      "headers": {
-        "Access-Control-Allow-Origin": "*"
-      }
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html",
-      "status": 200
     }
   ],
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
-  ]
+    {
+      "source": "/api/cocktail/(.*)",
+      "destination": "https://www.thecocktaildb.com/api/json/v1/1/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/cocktail/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
+    }
+  ],
+  "cleanUrls": true,
+  "trailingSlash": false
 }
