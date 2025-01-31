@@ -1,113 +1,63 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
 .container {
+    max-width: 1024px;
+    min-width: 360px;
+    margin: 0 auto;
     display: flex;
-    height: 70vh;
-    width: 50vw;
-    max-width: 1024px; /* Максимальная ширина */
-    min-width: 360px; /* Минимальная ширина */
-    margin: 0 auto; /* Центрирование контейнера */
-    border: 2px solid black;
-    overflow: hidden; /* Скрываем содержимое, выходящее за границы */
+    gap: 20px;
+    border: 1px solid black;
 }
 
 .menu {
-    display: flex;
-    width: 20%;
-    justify-content: center;
-    align-items: flex-start; /* Выравниваем элементы по верхнему краю */
+    width: 200px;
+    flex-shrink: 0;
     border-right: 1px solid black;
-    padding: 16px; /* Добавляем отступы */
-    background-color: #f5f5f5; /* Светлый фон для меню */
-}
-
-.menu ul {
-    width: 100%;
-    padding: 0;
-    margin: 0;
-    list-style-type: none; /* Убираем маркеры списка */
 }
 
 .coctail {
-    margin: 8px 0; /* Отступы между элементами */
-    padding: 0;
-    text-align: left;
-    width: 100%; /* Радиокнопка и метка занимают всю ширину */
-    font-size: 1.5vw;
-    display: flex; /* Используем flex для выравнивания */
-    align-items: center; /* Центрируем текст по вертикали */
-    cursor: pointer; /* Курсор "pointer" для удобства */
-    transition: background-color 0.3s ease; /* Плавный переход фона */
-    position: relative; /* Для псевдоэлементов */
+    display: flex;
+    padding: 2px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer
 }
 
-/* Стили для метки при наведении */
-.coctail:hover {
-    background-color: #e0e0e0; /* Серый фон при наведении */
-}
-
-/* Скрываем стандартные радиокнопки */
 .custom_radio {
     display: none;
 }
 
-/* Стили для метки при выборе радиокнопки */
-.custom_radio:checked + span {
-    background-color: #d1e8ff; /* Голубой фон при выделении */
-    border-left: 4px solid #007bff; /* Синяя полоса слева */
-    color: #007bff; /* Синий цвет текста */
-    font-weight: bold; /* Жирный текст */
-}
-
-/* Стили для метки, когда радиокнопка не выбрана */
-.custom_radio:not(:checked) + span {
-    background-color: transparent; /* Без фона, если не выбрано */
-    padding: 8px; /* Добавляем отступы */
-    border-left: 4px solid transparent; /* Прозрачная полоса слева */
-    transition: all 0.3s ease; /* Плавный переход для всех свойств */
-}
-
-/* Убираем изменение размера при выделении */
-.custom_radio:checked + span,
-.custom_radio:not(:checked) + span {
-    width: 100%; /* Метка занимает всю ширину */
-    padding: 8px; /* Отступы внутри метки */
-    border-radius: 4px; /* Скругляем углы */
-    display: block; /* Занимает всю ширину */
+.coctail input[type="radio"]:checked + span {
+    background-color: #ccc;
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    outline: 1px solid black;
 }
 
 .content {
-    width: 80%;
-    flex: 1;
-    padding: 16px; /* Добавляем отступы */
-    overflow-y: auto; /* Добавляем вертикальный скролл, если контент не помещается */
-    background-color: #ffffff; /* Белый фон для контента */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+   
 }
 
-/* Адаптивные стили для маленьких экранов */
+.small-h1 {
+    font-size: 10px; /* Установите нужный размер текста */
+    margin: 0; /* Опционально: уберите стандартные отступы */
+  }
 @media (max-width: 768px) {
     .container {
-        flex-direction: column; /* Меняем направление на вертикальное */
-        height: auto; /* Автоматическая высота */
-        width: 100%; /* Занимает всю ширину */
+        flex-direction: column;
     }
 
     .menu {
-        width: 100%; /* Меню занимает всю ширину */
-        border-right: none; /* Убираем границу */
-        border-bottom: 1px solid black; /* Добавляем границу снизу */
-        padding: 8px; /* Уменьшаем отступы */
-    }
-
-    .content {
-        width: 100%; /* Контент занимает всю ширину */
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid black;
     }
 
     .coctail {
-        font-size: 4vw; /* Увеличиваем размер шрифта для маленьких экранов */
+        text-align: center;
+        padding: 8px;
     }
 }

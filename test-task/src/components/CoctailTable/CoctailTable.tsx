@@ -38,7 +38,7 @@ if (isError) {
    return (
         <div className={s.container}>
             <div className={s.menu}>
-                <form>
+                <div>
                     {coctail_code.map(coctailName => (
                         <label key={coctailName} className={s.coctail}>
                             <input 
@@ -49,10 +49,10 @@ if (isError) {
                             value={coctailName} 
                             checked={coctailUrl === coctailName}
                             />
-                            <span>{coctailName}</span>
+                            <span className={s.textRadio}>{coctailName}</span>
                         </label>
                     ))}
-                </form>
+                </div>
             </div>
             <div className={s.content}>
                 {drinks.map((drink, index) => {

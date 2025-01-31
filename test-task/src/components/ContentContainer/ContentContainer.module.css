@@ -1,0 +1,87 @@
+.container {
+  padding-top: 15px;
+  max-width: 824px;
+  min-width: 160px;
+  border-bottom: 1px solid black;
+  font-family: Arial, sans-serif;
+  margin-left: -20px;
+}
+.container:last-child {
+  border-bottom: none;
+}
+.topOfPage {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  margin-bottom: 20px;
+
+}
+
+.textContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
+.name,
+.category,
+.typeAlcoholic,
+.typeGlass,
+.instructions {
+  width: 100%;    
+  padding: 10px;
+  box-sizing: border-box; 
+  border: 1px solid black;
+}
+
+.imgCoctail {
+  padding: 10px;
+  width: 300px;    
+  height: 300px;
+  object-fit: cover;
+  align-self: flex-start; 
+}
+
+.titleInstr,
+.titleIngredients {
+  width: 100%;  
+  padding: 0px;
+  font-size: 14px;
+}
+
+.ingredients {
+  width: 100%;    
+  padding: 10px;
+  box-sizing: border-box; 
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+}
+
+.ingredientsAndMeasure {
+  display: flex;
+  justify-content: space-between; /* Размещаем элементы по краям */
+  align-items: center; /* Выравниваем по центру */
+  padding: 5px 0; /* Отступ между строками */
+}
+
+.measure, .ingredient{
+  border: 1px solid black;
+  width: 48%;
+}
+
+
+@media (max-width: 768px) {
+  .topOfPage {
+      flex-direction: column;
+  }
+  
+  .imgCoctail {
+      width: 100%;
+      height: auto;
+  }
+}

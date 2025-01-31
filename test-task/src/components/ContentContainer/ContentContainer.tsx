@@ -1,38 +1,37 @@
-export function ContentContainer({coctails}){
-    return(
-    <div>
-        <div>
-            <img src={coctails.pictures} alt="Описание изображения" />
-        </div>
-        <div>pictures</div>
-        <span>{coctails.nameDrink}</span>
-        <span>{coctails.categoryDrink}</span>
-        <span>{coctails.typeAlcoholic}</span>
-        <span>{coctails.typeGlass}</span>
-        <div>
-            instruction:
-            <span>{coctails.instruction}</span>
-        </div>
-        <div>
-            list of gridient
-            {coctails.measures.map(measure => {
-                return <span>{measure}</span>
-            })}
+import sn from './ContentContainer.module.css';
 
-            {coctails.ingredients.map(ingredient => {
-                return <span>{ingredient}</span>
-            })}
-        </div>
-    </div>
-    )
+export function ContentContainer({coctails}) {
+  console.log(coctails)
+  return (
+      <div className={sn.container}>
+          <div className={sn.topOfPage}>
+              <div className={sn.textContent}>
+                  <div className={sn.nameDrink}>{coctails.name}</div>
+                  <div className={sn.category}>{coctails.categoryDrink}</div>
+                  <div className={sn.typeAlcoholic}>{coctails.typeAlcoholic}</div>
+                  <div className={sn.typeGlass}>{coctails.typeGlass}</div>
+                  <div className={sn.instructions}>
+                      <h1 className={sn.titleInstr}>Instructions:</h1>
+                      {coctails.instruction}
+                  </div>
+              </div>
+              <img 
+                  loading="lazy" 
+                  className={sn.imgCoctail} 
+                  src={coctails.pictures} 
+                  alt="Cocktail illustration" 
+              />
+          </div>
+
+          <div className={sn.ingredients}>
+              <h1 className={sn.titleIngredients}>List of ingredients</h1>
+              {coctails.measures.map((measure, index) => (
+                  <div key={index} className={sn.ingredientsAndMeasure}>
+                      <div className={sn.measure}>{measure}</div>
+                      <div className={sn.ingredient}>{coctails.ingredients[index]}</div>
+                  </div>
+              ))}
+          </div>
+      </div>
+  )
 }
-// return  {
-//     nameDrink: drink.strDrink,
-//     categoryDrink: drink.strCategory,
-//     typeAlcoholic: drink.strAlcoholic,
-//     typeGlass: drink.strGlass,
-//     instruction: drink.strInstructions,
-//     measures : measuresAndIngredients(drink, 'strMeasure'),
-//     ingredients: measuresAndIngredients(drink, 'strIngredient')
-//   }
-// })
