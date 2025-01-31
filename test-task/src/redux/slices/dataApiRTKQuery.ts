@@ -31,13 +31,13 @@ const measuresAndIngredients = (drink: Record<PropertyKey, string>, necessary: s
 export const coctailApi = createApi({
     reducerPath: 'coctailApi',
     baseQuery: fetchBaseQuery({
-      baseUrl: 'https://www.thecocktaildb.com/api/json/v1/1/',
+      baseUrl: process.env.REACT_APP_COCKTAIL_API_URL || 'https://www.thecocktaildb.com/api/json/v1/1/',
       }),
         endpoints: (builder) => ({
             getDrinks: builder.query({
                 query: (coctail: string) => `search.php?s=${coctail}`,
                 transformResponse: (response: {drinks: Record<PropertyKey, string>[]}) : CocktailType[] => {
-                  console.log(response)
+                  
                     if(!response.drinks) return []
         
                     return response.drinks.map(drink => ({ 
