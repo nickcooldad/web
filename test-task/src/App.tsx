@@ -1,4 +1,3 @@
-import { CoctailTable } from "./components/CoctailTable/CoctailTable"
 import { AppRouter } from "./router/AppRouter"
 function App() {
 

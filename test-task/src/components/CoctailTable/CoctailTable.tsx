@@ -1,5 +1,5 @@
 import { ContentContainer } from "../ContentContainer/ContentContainer"
-import { coctail_code } from "../../response/cocktail_code"
+import {cocktail_code } from "../../response/cocktail_code"
 import s from './CoctailTable.module.css'
 import { useDispatch } from "react-redux"
 import { choose } from "../../redux/slices/selectedCoctelSlice"
@@ -7,16 +7,16 @@ import { useGetDrinksQuery } from "../../redux/slices/dataApiRTKQuery"
 import { useNavigate} from "react-router-dom"
 import { useLocation } from "react-router-dom"
 
-export function CoctailTable () {
+export function СocktailTable () {
 
 const dispatch = useDispatch();
 const navigate = useNavigate();
 const {pathname} = useLocation()
-const coctailUrl = pathname.slice(1)
+const cocktaillUrl = pathname.slice(1)
 
 
 
-  const { data: drinks, isLoading, isError } = useGetDrinksQuery(coctailUrl);
+  const { data: drinks, isLoading, isError } = useGetDrinksQuery(cocktaillUrl);
 
 
 const hundlClickSelect = (drink: string) => {
@@ -38,7 +38,7 @@ if (isError) {
         <div className={s.container}>
             <div className={s.menu}>
                 <div>
-                    {coctail_code.map(coctailName => (
+                    {cocktail_code.map(coctailName => (
                         <label key={coctailName} className={s.coctail}>
                             <input 
                             className={s.custom_radio} 
@@ -46,7 +46,7 @@ if (isError) {
                             type="radio" name="option" 
                             id={coctailName} 
                             value={coctailName} 
-                            checked={coctailUrl === coctailName}
+                            checked={cocktaillUrl === coctailName}
                             />
                             <span className={s.textRadio}>{coctailName}</span>
                         </label>
