@@ -31,7 +31,7 @@ const measuresAndIngredients = (drink: Record<PropertyKey, string>, necessary: s
 export const coctailApi = createApi({
     reducerPath: 'coctailApi',
     baseQuery: fetchBaseQuery({
-      baseUrl: process.env.REACT_APP_COCKTAIL_API_URL || 'https://www.thecocktaildb.com/api/json/v1/1/',
+      baseUrl: 'https://www.thecocktaildb.com/api/json/v1/1/',
       }),
         endpoints: (builder) => ({
             getDrinks: builder.query({
