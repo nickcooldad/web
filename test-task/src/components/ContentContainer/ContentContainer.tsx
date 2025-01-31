@@ -1,14 +1,5 @@
 import sn from './ContentContainer.module.css';
-interface CocktailType{
-    nameDrink: string,
-    categoryDrink: string,
-    typeAlcoholic: string,
-    typeGlass: string,
-    instruction: string,
-    pictures: string,
-    measures: string[],
-    ingredients: string[]
-}
+import { CocktailType } from '../../redux/slices/dataApiRTKQuery';
 
 interface CocktailProps {
     coctails: CocktailType

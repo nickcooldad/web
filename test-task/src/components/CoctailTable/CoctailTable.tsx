@@ -6,7 +6,6 @@ import { choose } from "../../redux/slices/selectedCoctelSlice"
 import { useGetDrinksQuery } from "../../redux/slices/dataApiRTKQuery"
 import { useNavigate} from "react-router-dom"
 import { useLocation } from "react-router-dom"
-
 export function СocktailTable () {
 
 const dispatch = useDispatch();

@@ -1,6 +1,16 @@
 
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+export interface CocktailType{
+  nameDrink: string,
+  categoryDrink: string,
+  typeAlcoholic: string,
+  typeGlass: string,
+  instruction: string,
+  pictures: string,
+  measures: string[],
+  ingredients: string[]
+}
 
 const measuresAndIngredients = (drink: Record<PropertyKey, string>, necessary: string): string[] => {
     const result: string[] = []
@@ -26,11 +36,11 @@ export const coctailApi = createApi({
         endpoints: (builder) => ({
             getDrinks: builder.query({
                 query: (coctail: string) => `search.php?s=${coctail}`,
-                transformResponse: (response: {drinks: Record<PropertyKey, string>[]}) => {
-                    console.log(response.drinks)
+                transformResponse: (response: {drinks: Record<PropertyKey, string>[]}) : CocktailType[] => {
+                  
                     if(!response.drinks) return []
         
-                    return response.drinks.map(drink => ({
+                    return response.drinks.map(drink => ({ 
                         nameDrink: drink.strDrink,
                         categoryDrink: drink.strCategory,
                         typeAlcoholic: drink.strAlcoholic,
