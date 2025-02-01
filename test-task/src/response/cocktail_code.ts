@@ -1,1 +1,0 @@
-export const cocktail_code: string[] = ["margarita", "mojito", "a1", "kir"]

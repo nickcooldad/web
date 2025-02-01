@@ -1,38 +1,38 @@
 import sn from './ContentContainer.module.css';
-import { CocktailType } from '../../redux/slices/dataApiRTKQuery';
+import { Drink } from '../../domain/core/Drink';
 
 interface CocktailProps {
-    coctails: CocktailType
+    cocktail: Drink
 }
-export function ContentContainer({coctails: cocktails}: CocktailProps) {
+export function ContentContainer({cocktail}: CocktailProps) {
 
   return (
       <div className={sn.container}>
           <div className={sn.topOfPage}>
               <div className={sn.textContent}>
-                  <div className={sn.name}>{cocktails.nameDrink}</div>
-                  <div className={sn.category}>{cocktails.categoryDrink}</div>
-                  <div className={sn.typeAlcoholic}>{cocktails.typeAlcoholic}</div>
-                  <div className={sn.typeGlass}>{cocktails.typeGlass}</div>
+                  <div className={sn.name}>{cocktail.drink}</div>
+                  <div className={sn.category}>{cocktail.category}</div>
+                  <div className={sn.typeAlcoholic}>{cocktail.alcoholic}</div>
+                  <div className={sn.typeGlass}>{cocktail.glass}</div>
                   <div className={sn.instructions}>
                       <h1 className={sn.titleInstr}>Instructions:</h1>
-                      {cocktails.instruction}
+                      {cocktail.instructions}
                   </div>
               </div>
               <img 
                   loading="lazy" 
                   className={sn.imgCoctail} 
-                  src={cocktails.pictures} 
+                  src={cocktail.drinkThumb} 
                   alt="Cocktail illustration" 
               />
           </div>
 
           <div className={sn.ingredients}>
               <h1 className={sn.titleIngredients}>List of ingredients</h1>
-              {cocktails.measures.map((measure, index) => (
+              {cocktail.measures.map((measure, index) => (
                   <div key={index} className={sn.ingredientsAndMeasure}>
                       <div className={sn.measure}>{measure}</div>
-                      <div className={sn.ingredient}>{cocktails.ingredients[index]}</div>
+                      <div className={sn.ingredient}>{cocktail.ingredients[index]}</div>
                   </div>
               ))}
           </div>

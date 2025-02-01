@@ -22,16 +22,9 @@
     cursor: pointer
 }
 
-.custom_radio {
-    display: none;
-}
 
-.coctail input[type="radio"]:checked + span {
-    background-color: #ccc;
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    outline: 1px solid black;
+.coctail:global(.active) {
+    background-color: red;
 }
 
 .content {

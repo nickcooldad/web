@@ -1,16 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { CocktailCode } from "../../domain/core/cocktailCodes";
 
-const initialState = 'margarita'
 
 export const selectedCoctailSlice = createSlice({
-    name: 'coctail',
-    initialState,
+    name: 'cocktail',
+    initialState: 'margarita' as CocktailCode,
     reducers: {
-        choose: (_, action) => {
+        setDrinkType: (_, action: PayloadAction<CocktailCode>) => {
             return action.payload
         }
     }
 })
 
-export const {choose } = selectedCoctailSlice.actions
 export const selectedCoctailReducer = selectedCoctailSlice.reducer
