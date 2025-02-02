@@ -21,7 +21,7 @@ export function ContentContainer({cocktail}: CocktailProps) {
               </div>
               <img 
                   loading="lazy" 
-                  className={sn.imgCoctail} 
+                  className={sn.imgCocktail} 
                   src={cocktail.drinkThumb} 
                   alt="Cocktail illustration" 
               />

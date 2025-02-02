@@ -1,14 +1,14 @@
 import rawResponse from "./response.json";
-import { transformCoctailSearchResponse } from "./transformCoctailSearchResponse";
+import { transformCocktailSearchResponse } from "./transformCocktailSearchResponse";
 import { test, describe, expect } from "vitest";
-import { CoctailSearchResponse } from "../CoctailSearchResponse";
+import { CocktailSearchResponse } from "../CocktailSearchResponse";
 
-const response = rawResponse as CoctailSearchResponse;
+const response = rawResponse as CocktailSearchResponse;
 
 
-describe("transformCoctailSearchResponse", () => {
+describe("cocktailSearchTransformResponse", () => {
   test("Трасформирует моковый респонс из джейсона", () => {
-    const transformedDrinks = transformCoctailSearchResponse(response);
+    const transformedDrinks = transformCocktailSearchResponse(response);
 
     const firstDrinkTransformed = {
       "drink": "Margarita",

@@ -11,6 +11,6 @@ export type ResponseDrink = {
   & Record<`strIngredient${ResonseItemIndex}`, string | null>
   & Record<`strMeasure${ResonseItemIndex}`, string | null>
 
-export interface CoctailSearchResponse {
+export interface CocktailSearchResponse {
   drinks: ResponseDrink[];
 }

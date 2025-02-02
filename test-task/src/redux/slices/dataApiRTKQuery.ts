@@ -1,19 +1,19 @@
 
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { transformCoctailSearchResponse } from "../../domain/dto/transformCoctailSearchResponse/transformCoctailSearchResponse";
+import { transformCocktailSearchResponse } from "../../domain/dto/transformCocktailSearchResponse/transformCocktailSearchResponse";
 import { CocktailCode } from "../../domain/core/cocktailCodes";
 
-export const coctailApi = createApi({
-  reducerPath: 'coctailApi',
+export const cocktailApi = createApi({
+  reducerPath: 'cocktailApi',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://www.thecocktaildb.com/api/json/v1/1/',
   }),
   endpoints: (builder) => ({
     getDrinks: builder.query({
-      query: (coctail: CocktailCode) => `search.php?s=${coctail}`,
-      transformResponse: transformCoctailSearchResponse,
+      query: (cocktail: CocktailCode) => `search.php?s=${cocktail}`,
+      transformResponse: transformCocktailSearchResponse
     })
   })
 })
 
-export const { useGetDrinksQuery } = coctailApi
+export const { useGetDrinksQuery } = cocktailApi

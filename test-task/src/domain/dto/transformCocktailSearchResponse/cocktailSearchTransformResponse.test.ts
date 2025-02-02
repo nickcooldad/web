@@ -1,15 +1,16 @@
 import rawResponse from "./response.json";
-import { transformCoctailSearchResponse } from "./transformCoctailSearchResponse";
+import { transformCocktailSearchResponse } from "./transformCocktailSearchResponse";
 import { test, describe, expect } from "vitest";
-import { CoctailSearchResponse } from "../CoctailSearchResponse";
+import { CocktailSearchResponse } from "../CocktailSearchResponse";
 
-const response = rawResponse as CoctailSearchResponse;
+const response = rawResponse as CocktailSearchResponse;
 
 
-describe("transformCoctailSearchResponse", () => {
+describe("transformCocktailSearchResponse", () => {
   test("Трасформирует моковый респонс из джейсона", () => {
-    
-  const transformedDrinks = transformCoctailSearchResponse(response);
+
+    const transformedDrinks = transformCocktailSearchResponse(response);
+    console.log(transformedDrinks[0])
 
     const firstDrinkTransformed = {
       "drink": "Margarita",
@@ -21,13 +22,6 @@ describe("transformCoctailSearchResponse", () => {
       "measures": ["1 1\/2 oz ", "1\/2 oz ", "1 oz "],
       "drinkThumb": "https:\/\/www.thecocktaildb.com\/images\/media\/drink\/5noda61589575158.jpg",
     };
-
-
-    // "strIngredient5": null,
-
-    const instructions = Object.keys(obj)
-      .filter(key => /^strIngredient/.test(key))
-      .map(key => obj[key]);
 
     expect(transformedDrinks[0]).toEqual(firstDrinkTransformed);
   });

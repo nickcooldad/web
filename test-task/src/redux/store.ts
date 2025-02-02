@@ -1,14 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { selectedCoctailReducer } from "./slices/selectedCoctelSlice";
-import { coctailApi } from "./slices/dataApiRTKQuery";
+import { cocktailApi } from "./slices/dataApiRTKQuery";
 
 export const store = configureStore({
-    reducer: {
-        selectedCoctail: selectedCoctailReducer,
-        [coctailApi.reducerPath]: coctailApi.reducer
-    },
+  reducer: {
+    [cocktailApi.reducerPath]: cocktailApi.reducer
+  },
 
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(coctailApi.middleware)
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(cocktailApi.middleware)
 
 })
