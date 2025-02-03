@@ -1,13 +1,13 @@
 import { useParams } from "react-router-dom";
 import {СocktailTable} from '../CocktailTable/CocktailTable.tsx'
-import {         cocktailCodes } from "../../domain/core/cocktailCodes.ts";
+import {CocktailCode, cocktailCodes } from "../../domain/core/cocktailCodes.ts";
 import { NotFoundPage } from "../NotFoundPage/NotFoundPage.tsx";
 
 export function CocktailPage(){
 
     const {cocktail} = useParams()
     
-    if(!cocktail || !cocktailCodes.includes(cocktail)) return <NotFoundPage/>
+    if(!cocktail || !cocktailCodes.includes(cocktail as CocktailCode)) return <NotFoundPage/>
 
-    return <СocktailTable drinkType={cocktail}/>
+    return <СocktailTable drinkType={cocktail as CocktailCode}/>
 }

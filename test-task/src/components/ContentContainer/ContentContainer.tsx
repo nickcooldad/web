@@ -29,12 +29,14 @@ export function ContentContainer({cocktail}: CocktailProps) {
 
           <div className={sn.ingredients}>
               <h1 className={sn.titleIngredients}>List of ingredients</h1>
-              {cocktail.measures.map((measure, index) => (
+              {cocktail.ingredients.map((ingredient, index) => {
+								const measure = cocktail.measures[index] ?? ''
+								return (
                   <div key={index} className={sn.ingredientsAndMeasure}>
                       <div className={sn.measure}>{measure}</div>
-                      <div className={sn.ingredient}>{cocktail.ingredients[index]}</div>
+                      <div className={sn.ingredient}>{ingredient}</div>
                   </div>
-              ))}
+              )})}
           </div>
       </div>
   )
