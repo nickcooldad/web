@@ -1,22 +1,14 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react-swc';
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/web/',
-  server: {
-    port: 3000,
-  },
-
+  base: '/test-task/', // Убедитесь, что base правильно настроен
   build: {
-    outDir: 'dist',
-    emptyOutDir: true,
+    outDir: 'dist', // Папка для выходных файлов
+    emptyOutDir: true, // Очистка dist перед сборкой
+    rollupOptions: {
+      input: 'index.html', // Входной файл
+    },
   },
-
-  resolve: {
-    alias: [
-      { find: '@', replacement: '/src' }
-    ]
-  }
-})
+});
