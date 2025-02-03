@@ -3,9 +3,9 @@ name: Deploy test-task to GitHub Pages
 on:
   push:
     branches:
-      - main 
+      - main
     paths:
-      - 'test-task/**' 
+      - 'test-task/**'
 
 jobs:
   deploy:
@@ -21,12 +21,15 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        working-directory: ./test-task 
+        working-directory: ./test-task
         run: npm install
 
       - name: Build project
-        working-directory: ./test-task 
+        working-directory: ./test-task
         run: npm run build
+
+      - name: Disable Jekyll
+        run: touch ./test-task/dist/.nojekyll
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
