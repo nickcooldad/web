@@ -1,39 +1,47 @@
+# .github/workflows/deploy.yml
 name: Deploy test-task to GitHub Pages
 
 on:
   push:
     branches:
-      - main
+      - main # Триггерится при пуше в ветку main
     paths:
-      - 'test-task/**'
+      - 'test-task/**' # Только изменения в папке test-task запускают workflow
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # Используется последняя версия Ubuntu
 
     steps:
+      # Шаг 1: Получить код репозитория
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Шаг 2: Настроить Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 18 # Указываем версию Node.js
 
+      # Шаг 3: Установить зависимости
       - name: Install dependencies
-        working-directory: ./test-task
+        working-directory: ./test-task # Переходим в папку test-task
         run: npm install
 
+      # Шаг 4: Собрать проект
       - name: Build project
         working-directory: ./test-task
         run: npm run build
 
+      # Шаг 5: Отключить Jekyll
       - name: Disable Jekyll
         run: touch ./test-task/dist/.nojekyll
+        # Файл .nojekyll отключает обработку Jekyll для GitHub Pages
 
+      # Шаг 6: Развернуть на GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./test-task/dist
-          publish_branch: gh-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }} # Токен для доступа к GitHub Pages
+          publish_dir: ./test-task/dist # Папка с собранной версией проекта
+          publish_branch: gh-pages # Ветка, куда будет загружена сборка
