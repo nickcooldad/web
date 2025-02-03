@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "deploy": "vite build && npx gh-pages -d dist"
+    "deploy": "node --max-old-space-size=4096 npx vite build && npx gh-pages -d dist -r https://github.com/nickcooldad/web.git"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.5.1",

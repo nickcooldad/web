@@ -3,12 +3,12 @@ import react from '@vitejs/plugin-react-swc';
 
 export default defineConfig({
   plugins: [react()],
-  base: '/test-task/', // Убедитесь, что base правильно настроен
+  base: '/',
   build: {
-    outDir: 'dist', // Папка для выходных файлов
-    emptyOutDir: true, // Очистка dist перед сборкой
+    outDir: 'dist',
+    emptyOutDir: true,
     rollupOptions: {
-      input: 'index.html', // Входной файл
+      input: 'index.html',
     },
   },
 });
