@@ -9,14 +9,8 @@ export function AppRouter() {
   return (
     <Router>
       <Routes>
-        {<Route path="/" element={<Navigate to={`/${firstMenuItem}`} replace />} />}
-        {cocktailCodes.map((cocktailName) =>
-          <Route
-            key={cocktailName}
-            path={`/:cocktail`}
-            element={<CocktailPage/>}
-          />
-        )}
+        <Route path="/" element={<Navigate to={`/${firstMenuItem}`} replace />} />
+        <Route path={`/:cocktail`} element={<CocktailPage/>}/>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>)

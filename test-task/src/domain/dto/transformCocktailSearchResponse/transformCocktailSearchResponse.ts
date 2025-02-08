@@ -4,11 +4,13 @@ import { ResponseDrink } from "../CocktailSearchResponse";
 
 const ingredients = (obj: ResponseDrink) => Object.keys(obj)
   .filter(key => /^strIngredient/.test(key) && obj[key as keyof ResponseDrink])
-  .map(key => obj[key as keyof ResponseDrink]);
+  .map(key => obj[key as keyof ResponseDrink])
+  .filter(value => value !== null);
 
 const measures = (obj: ResponseDrink) => Object.keys(obj)
-  .filter(key => /^strMeasure/.test(key) && obj[key as keyof ResponseDrink])
-  .map(key => obj[key as keyof ResponseDrink]);
+  .filter(key => /^strMeasure/.test(key))
+  .map(key => obj[key as keyof ResponseDrink])
+  .filter(value => value !== null);
 
 export function transformCocktailSearchResponse(response: CocktailSearchResponse): Drink[] {
   if (!response?.drinks) return []
@@ -23,6 +25,6 @@ export function transformCocktailSearchResponse(response: CocktailSearchResponse
       ingredients: ingredients(drinkResponse),
       measures: measures(drinkResponse),
       drinkThumb: drinkResponse.strDrinkThumb
-    } as Drink
+    }
   })
 }
