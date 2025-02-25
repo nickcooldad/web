@@ -4,7 +4,7 @@ type MoexResponse = {
   data: (string | number | null)[];
 };
 
-type OFZRaw = Record<string, string | number | null>;
+type OFZRaw = Record<string, unknown>;
 
 export function transformMoexResponse(response: MoexResponse): OFZRaw[] {
   const { columns, data } = response;

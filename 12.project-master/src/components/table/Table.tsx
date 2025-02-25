@@ -27,7 +27,8 @@ export function Table() {
 						<th>Название</th>
 						<th>Погашение</th>
 						<th>Лет до погаш.</th>
-						<th>Доходность</th>
+						<th>Доходн</th>
+						<th>Год. куп. дох.</th>
 					</tr>
 				</thead>
 
@@ -38,7 +39,8 @@ export function Table() {
 							<td>{ofz.name}</td>
 							<td>{ofz.repayment}</td>
 							<td>{ofz.yearsUntilRepayment}</td>
-							<td>{ofz.profitability} %</td>
+							<td>{ofz.profitabilityYTM} %</td>
+							<td>{ofz.annualProfitability} %</td>
 						</tr>
 					))}
 				</tbody>
