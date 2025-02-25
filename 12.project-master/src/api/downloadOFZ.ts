@@ -3,7 +3,7 @@ import { transformMoexResponse } from "../domain/transformMoexResponse.ts";
 
 interface OFZRaw {
 	SHORTNAME: string;
-	SETTLEDATE: string;
+	MATDATE: string;
 	COUPONVALUE: number;
 	COUPONPERIOD: number;
 	FACEVALUE: number;
@@ -25,13 +25,13 @@ export function downloadOFZ(): Promise<OFZ[]> {
 			return transformData.map((ofzInfo) => {
 				return {
 					name: ofzInfo.SHORTNAME,
-					repayment: ofzInfo.SETTLEDATE.split('-').reverse().join('.'),
-					yearsUntilRepayment: getYearsUntil(ofzInfo.SETTLEDATE),
+					repayment: ofzInfo.MATDATE.split('-').reverse().join('.'),
+					yearsUntilRepayment: getYearsUntil(ofzInfo.MATDATE),
 					profitability: parseFloat((ofzInfo.COUPONVALUE * Math.floor(365 / ofzInfo.COUPONPERIOD) / ofzInfo.FACEVALUE * 100).toFixed(2)),
 				};
 			})
 		}
-	);
+		);
 }
 
 // https://iss.moex.com/iss/engines/stock/markets/shares/securities/columns.xml

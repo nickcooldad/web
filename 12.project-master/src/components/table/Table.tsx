@@ -7,7 +7,7 @@ import s from "./Table.module.css";
 export function Table() {
 	const dispatch = useDispatch<AppDispatch>();
   const { data, loading, error } = useSelector((state: RootState) => state.ofz);
-
+	console.log(data)
   useEffect(() => {dispatch(fetchOFZ())}, [dispatch]);
 
   if (loading) {
