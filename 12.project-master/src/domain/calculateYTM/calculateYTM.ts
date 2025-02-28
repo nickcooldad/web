@@ -5,7 +5,7 @@ export function calculateYTM(faceValue: number, marketPrice: number, couponValue
 
     // Упрощенная формула YTM
     const ytm = ((annualCoupon + (priceDifference / timeToMaturity)) / averagePrice) * 100;
-    console.log(averagePrice, '❤️')
+
     if (ytm < 0) return 0; // Если YTM отрицательный, возвращаем 0
     if (ytm > 100) return 100
     return +ytm.toFixed(2)
